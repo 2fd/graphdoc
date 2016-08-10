@@ -1,0 +1,29 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 22rem;
+    height: 100%;
+    overflow: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+main {
+    box-sizing: border-box;
+    position: relative;
+    width: 82rem;
+    margin-left: 22rem;
+    padding: 1rem;
+}

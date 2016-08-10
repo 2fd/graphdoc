@@ -1,0 +1,33 @@
+{
+  "name": "@2fd/graphdoc",
+  "version": "0.1.0",
+  "description": "Static page generator for GraphQL.js",
+  "main": "bin/graphdoc",
+  "scripts": {
+    "build": "node ./lib/render.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2fd/graphdoc.git"
+  },
+  "keywords": [
+    "graphql",
+    "documentation"
+  ],
+  "author": "Fede Ramirez <i@2fd.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/2fd/graphdoc/issues"
+  },
+  "homepage": "https://github.com/2fd/graphdoc#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "graphql": "^0.6.2"
+  },
+  "dependencies": {
+    "@types/mustache": "^0.8.28",
+    "@types/node": "^6.0.32",
+    "mustache": "^2.2.1"
+  }
+}
