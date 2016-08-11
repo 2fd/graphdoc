@@ -1,52 +1,64 @@
 import { GraphQLSchema, GraphQLObjectType, GraphQLScalar } from 'graphql';
 
-function createItem(type: GraphQLObjectType | GraphQLScalar) {
+type ItemType = {
+    href: string,
+    text: string,
+}
+
+type SectionType = {
+    title: string,
+    items: ItemType[],
+}
+
+function createItem(type: GraphQLObjectType | GraphQLScalar): ItemType {
     return {
         href: '#type/' + (type.name as string).toLowerCase(),
         text: type.name,
     };
 }
 
-export function creteNavData(schema: GraphQLSchema) {
+function createSection(name: string): SectionType {
+    return {
+        title: name,
+        items: []
+    };
+}
 
-    let types = schema.getTypeMap();
-    let query = schema.getQueryType();
-    let mutation = schema.getMutationType();
-    let subscription = schema.getSubscriptionType();
+function createSchemaSection(schema: GraphQLSchema): SectionType {
 
-    let schema = {
+    let schemaSection = {
         title: 'Schema',
         items: []
     };
 
+    let query = schema.getQueryType();
+    let mutation = schema.getMutationType();
+    let subscription = schema.getSubscriptionType();
+
     if (query)
-        schema.items.push(createItem(query));
+        schemaSection.items.push(createItem(query));
 
     if (mutation)
-        schema.items.push(createItem(mutation));
+        schemaSection.items.push(createItem(mutation));
 
     if (subscription)
-        schema.items.push(createItem(subscription));
+        schemaSection.items.push(createItem(subscription));
 
-    let scalars = {
-        title: 'Scalars',
-        items: []
-    };
+    return schemaSection;
+}
 
-    let objects = {
-        title: 'Objecs',
-        items: []
-    };
+export function creteNavigationData(schema: GraphQLSchema) {
 
-    let enums = {
-        title: 'Objecs',
-        items: []
-    };
+    let types = schema.getTypeMap();
 
-    let others = {
-        title: 'Others',
-        items: []
-    };
+    let sections = createSchemaSection(schema);
+    let scalars = createSection('Scalars');
+    let enums = createSection('Objecs');
+    let objects = createSection('Objecs');
+    let interfaces = createSection('Interfaces');
+    let unions = createSection('Unions');
+    let inputs = createSection('Input Objects');
+    let others = createSection('Others');
 
     Object
         .keys(types)
@@ -58,12 +70,24 @@ export function creteNavData(schema: GraphQLSchema) {
                     scalars.items.push(createItem(type));
                     break;
 
+                case 'GraphQLEnumType':
+                    enums.items.push(createItem(type));
+                    break;
+
                 case 'GraphQLObjectType':
                     objects.items.push(createItem(type));
                     break;
 
-                case 'GraphQLEnumType':
-                    enums.items.push(createItem(type));
+                case 'GraphQLInterfaceType':
+                    interfaces.items.push(createItem(type));
+                    break;
+
+                case 'GraphQLUnionType':
+                    unions.items.push(createItem(type));
+                    break;
+
+                case 'GraphQLInputObjectType':
+                    inputs.items.push(createItem(type));
                     break;
 
                 default:
@@ -76,9 +100,12 @@ export function creteNavData(schema: GraphQLSchema) {
         navs: [
             schema,
             scalars,
-            objects,
             enums,
+            objects,
+            interfaces,
+            unions,
+            inputs,
             others
-        ]
+        ].filter((section: SectionType) => section.items.length > 0)
     };
 }

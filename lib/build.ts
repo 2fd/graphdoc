@@ -1,27 +1,11 @@
 import {resolve} from 'path';
-import {GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString} from 'graphql';
 import {render} from 'mustache';
-import {readTemplate, writeFile} from './fs';
-import {creteNavData} from './data';
+import {readTemplate, writeFile, createBuildFolder} from './fs';
+import {creteNavigationData} from './data';
 
-export const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'Query',
-        description: 'Query description',
-        fields: {
-            timestamp: {
-                description: 'Unix timestamp',
-                type: GraphQLInt,
-                resolve: () => Date.now()
-            },
-            datetime: {
-                description: 'ISO 8106',
-                type: GraphQLString,
-                resolve: () => (new Date).toJSON()
-            }
-        }
-    })
-});
+
+createBuildFolder(resolve('./build'), resolve('./template/slds'))
+    .catch((err) => console.log(err));
 
 /*let data = {
     title: 'Grapql Title',
@@ -53,7 +37,7 @@ data.sections.push({
     code: '<pre>  ' + map.Int.serialize.toString() + '</pre>'
 });*/
 
-
+/*
 Promise.all([
     readTemplate(resolve('./template/slds/index.mustache'),  'utf8'),
     readTemplate(resolve('./template/slds/nav.mustache'),    'utf8'),
@@ -63,8 +47,8 @@ Promise.all([
 ])
     .then((templates) => {
         console.log(templates);
-        console.log(render(templates[1], creteNavData(schema)));
+        console.log(render(templates[1], creteNavigationData(schema)));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err));*/
 
 //writeFileSync(resolve('./build/index.html'), render(template, data, {nav, main, icon}));
