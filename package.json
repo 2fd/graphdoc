@@ -4,7 +4,8 @@
   "description": "Static page generator for GraphQL.js",
   "main": "bin/graphdoc",
   "scripts": {
-    "build": "node ./lib/render.js",
+    "template": "./node_modules/.bin/node-sass --output-style compressed ./template/slds/styles/graphdoc.scss > ./template/slds/styles/graphdoc.css",
+    "build": "rm -rf build/* && node ./test/run.js",
     "test": "mocha"
   },
   "repository": {
@@ -22,8 +23,10 @@
   },
   "homepage": "https://github.com/2fd/graphdoc#readme",
   "devDependencies": {
+    "@salesforce-ux/design-system": "^2.0.3",
     "chai": "^3.5.0",
-    "graphql": "^0.6.2"
+    "graphql": "^0.6.2",
+    "node-sass": "^3.8.0"
   },
   "dependencies": {
     "@types/mustache": "^0.8.28",

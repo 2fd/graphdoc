@@ -1,11 +1,99 @@
-import {resolve} from 'path';
-import {render} from 'mustache';
-import {readTemplate, writeFile, createBuildFolder} from './fs';
-import {creteNavigationData} from './data';
+import { GraphQLSchema } from 'graphql';
+import { resolve } from 'path';
+import { render } from 'mustache';
+import { readTemplate, writeFile, createBuildFolder } from './fs';
+import { createNavigationData, createMainData, sectionCreator } from './data';
+
+let pack = require('../package.json');
 
 
-createBuildFolder(resolve('./build'), resolve('./template/slds'))
-    .catch((err) => console.log(err));
+
+type BuildOptions = {
+    schema: GraphQLSchema;
+    templateDir: string;
+    buildDir: string;
+    icon?: string;
+    documentSections?: sectionCreator[];
+};
+
+type Partials = {
+    index: string,
+    main: string,
+    nav: string,
+}
+
+let defaulIcon = '<header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large">'
+    + '<a href="./" >Schema types</a>'
+    + '</header>';
+
+export function build(options: BuildOptions) {
+
+    let schema = options.schema;
+    let buildDir = resolve(options.buildDir);
+    let templateDir = resolve(options.templateDir);
+    let icon = options.icon || defaulIcon;
+    let documentSections = options.documentSections || [];
+
+    return createBuildFolder(buildDir, templateDir)
+        .then(() => Promise.all([
+            readTemplate(resolve(templateDir, 'index.mustache'), 'utf8'),
+            readTemplate(resolve(templateDir, 'main.mustache'), 'utf8'),
+            readTemplate(resolve(templateDir, 'nav.mustache'), 'utf8'),
+            readTemplate(resolve(templateDir, 'footer.mustache'), 'utf8'),
+        ]))
+        .then((templates: string[]) => {
+            return {
+                index: templates[0],
+                main: templates[1],
+                nav: templates[2],
+                footer: templates[3],
+                icon
+            };
+        })
+        .then((partials: Partials) => {
+
+            let data = Object.assign(
+                {},
+                pack,
+                createNavigationData(schema),
+                createMainData(schema)
+            );
+
+            return writeFile(
+                resolve(buildDir, 'index.html')
+                render(partials.index, data, partials)
+            ).then(() => partials);
+        })
+        .then((partials: Partials) => {
+
+            let types = schema.getTypeMap();
+
+            let writing = Object
+                .keys(types)
+                .map(name => {
+
+                    let type = types[name];
+                    let path = resolve(buildDir, name.toLowerCase() + '.html');
+                    let data = Object.assign(
+                        {},
+                        pack,
+                        createNavigationData(schema, type),
+                        createMainData(type)
+                    );
+
+                    return writeFile(
+                        path
+                        render(partials.index, data, partials)
+                    ).then(() => path);
+                });
+
+            return Promise.all(writing);
+        })
+        .then((result) => console.log(result))
+        .catch((err) => console.log(err));
+}
+
+
 
 /*let data = {
     title: 'Grapql Title',
@@ -50,5 +138,3 @@ Promise.all([
         console.log(render(templates[1], creteNavigationData(schema)));
     })
     .catch((err) => console.log(err));*/
-
-//writeFileSync(resolve('./build/index.html'), render(template, data, {nav, main, icon}));
