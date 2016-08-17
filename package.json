@@ -5,7 +5,7 @@
   "main": "bin/graphdoc",
   "scripts": {
     "template": "./node_modules/.bin/node-sass --output-style compressed ./template/slds/styles/graphdoc.scss > ./template/slds/styles/graphdoc.css",
-    "build": "rm -rf build/* && node ./test/run.js",
+    "build": "rm -rf build/* && npm run template && node ./test/run.js",
     "test": "mocha"
   },
   "repository": {

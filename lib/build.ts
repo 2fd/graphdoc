@@ -2,16 +2,17 @@ import { GraphQLSchema } from 'graphql';
 import { resolve } from 'path';
 import { render } from 'mustache';
 import { readTemplate, writeFile, createBuildFolder } from './fs';
-import { createNavigationData, createMainData, sectionCreator } from './data';
+import { DataTranslator } from './data';
+import { serializeFunction, parseLiteralFunction, parseValueFunction } from './section/code';
+import { printTypeFunction } from './section/print';
 
 let pack = require('../package.json');
-
-
 
 type BuildOptions = {
     schema: GraphQLSchema;
     templateDir: string;
     buildDir: string;
+    baseUrl?: string;
     icon?: string;
     documentSections?: sectionCreator[];
 };
@@ -22,17 +23,26 @@ type Partials = {
     nav: string,
 }
 
-let defaulIcon = '<header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large">'
-    + '<a href="./" >Schema types</a>'
+let defaulIcon = (baseUrl: string) => '<header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large">'
+    + '<a href="' + baseUrl + '" >Schema types</a>'
     + '</header>';
 
 export function build(options: BuildOptions) {
 
     let schema = options.schema;
+    let baseUrl = baseUrl || './';
     let buildDir = resolve(options.buildDir);
     let templateDir = resolve(options.templateDir);
-    let icon = options.icon || defaulIcon;
+    let icon = options.icon || defaulIcon(baseUrl);
     let documentSections = options.documentSections || [];
+    let sectionCreators = [
+        printTypeFunction,
+        serializeFunction,
+        parseValueFunction,
+        parseLiteralFunction,
+    ];
+
+    let dataTranslator = new DataTranslator(schema, sectionCreators, baseUrl);
 
     return createBuildFolder(buildDir, templateDir)
         .then(() => Promise.all([
@@ -55,8 +65,8 @@ export function build(options: BuildOptions) {
             let data = Object.assign(
                 {},
                 pack,
-                createNavigationData(schema),
-                createMainData(schema)
+                dataTranslator.getNavigationData() ,
+                dataTranslator.getMainData(schema)
             );
 
             return writeFile(
@@ -73,16 +83,16 @@ export function build(options: BuildOptions) {
                 .map(name => {
 
                     let type = types[name];
-                    let path = resolve(buildDir, name.toLowerCase() + '.html');
+                    let path = resolve(buildDir, dataTranslator.getUrl(type));
                     let data = Object.assign(
                         {},
                         pack,
-                        createNavigationData(schema, type),
-                        createMainData(type)
+                        dataTranslator.getNavigationData(type),
+                        dataTranslator.getMainData(type)
                     );
 
                     return writeFile(
-                        path
+                        path,
                         render(partials.index, data, partials)
                     ).then(() => path);
                 });
@@ -92,49 +102,3 @@ export function build(options: BuildOptions) {
         .then((result) => console.log(result))
         .catch((err) => console.log(err));
 }
-
-
-
-/*let data = {
-    title: 'Grapql Title',
-    navs: [],
-    description: '',
-    sections: [
-        { title: 'Schema', code: '<pre>    scaler Int<pre>'}
-    ]
-};
-*/
-/*let map = schema.getTypeMap();*/
-/*
-data.navs.push({
-    title: 'Others',
-    items: Object.keys(map)
-    .filter((name) => name[0] !== '_' && name[1] !== '_')
-    .map((name) => {
-        return {
-            text: name,
-            href: '#'
-        };
-    })
-});*/
-
-/*data.title = map.Int.name;
-data.description = map.Int.description;
-data.sections.push({
-    title: 'serialize',
-    code: '<pre>  ' + map.Int.serialize.toString() + '</pre>'
-});*/
-
-/*
-Promise.all([
-    readTemplate(resolve('./template/slds/index.mustache'),  'utf8'),
-    readTemplate(resolve('./template/slds/nav.mustache'),    'utf8'),
-    readTemplate(resolve('./template/slds/object.mustache'), 'utf8'),
-    readTemplate(resolve('./template/slds/scalar.mustache'), 'utf8'),
-    readTemplate(resolve('./template/slds/enum.mustache'),   'utf8'),
-])
-    .then((templates) => {
-        console.log(templates);
-        console.log(render(templates[1], creteNavigationData(schema)));
-    })
-    .catch((err) => console.log(err));*/

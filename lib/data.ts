@@ -1,143 +1,157 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLScalar } from 'graphql';
+import { GraphQLSchema, GraphQLObjectType, GraphQLType } from 'graphql';
 
-type ItemType = {
+type NavSectionType = {
+    title: string,
+    items: NavItemType[],
+}
+
+type NavItemType = {
     href: string,
     text: string,
 }
 
-type SectionType = {
+type DocSectionType = {
     title: string,
-    items: ItemType[],
-}
+    description: string,
+};
 
-function createItem(type: GraphQLObjectType | GraphQLScalar, isActive: boolean): ItemType {
-    return {
-        href: './' + (type.name as string).toLowerCase() + '.html',
-        text: type.name,
-        isActive
-    };
-}
 
-function createSection(name: string): SectionType {
-    return {
-        title: name,
-        items: []
-    };
-}
-
-function createSchemaSection(schema: GraphQLSchema, onItem: any): SectionType {
-
-    let schemaSection: SectionType = {
-        title: 'Schema',
-        items: []
-    };
-
-    let query = schema.getQueryType();
-    let mutation = schema.getMutationType();
-    let subscription = schema.getSubscriptionType();
-
-    if (query)
-        schemaSection.items.push(createItem(query, query === onItem));
-
-    if (mutation)
-        schemaSection.items.push(createItem(mutation, mutation === onItem));
-
-    if (subscription)
-        schemaSection.items.push(createItem(subscription, subscription === onItem));
-
-    return schemaSection;
-}
-
-export function createNavigationData(schema: GraphQLSchema, onItem: any) {
-
-    let types = schema.getTypeMap();
-
-    let sections = createSchemaSection(schema, onItem);
-    let scalars = createSection('Scalars');
-    let enums = createSection('Enums');
-    let objects = createSection('Objects');
-    let interfaces = createSection('Interfaces');
-    let unions = createSection('Unions');
-    let inputs = createSection('Input Objects');
-    let others = createSection('GraphQL');
-
-    Object
-        .keys(types)
-        .forEach((name) => {
-
-            let type = types[name];
-
-            if (name[0] === '_' && name[1] === '_') {
-                others.items.push(createItem(type, type === onItem));
-
-            } else {
-                switch (type.constructor.name) {
-
-                    case 'GraphQLScalarType':
-                        scalars.items.push(createItem(type, type === onItem));
-                        break;
-
-                    case 'GraphQLEnumType':
-                        enums.items.push(createItem(type, type === onItem));
-                        break;
-
-                    case 'GraphQLObjectType':
-                        objects.items.push(createItem(type, type === onItem));
-                        break;
-
-                    case 'GraphQLInterfaceType':
-                        interfaces.items.push(createItem(type, type === onItem));
-                        break;
-
-                    case 'GraphQLUnionType':
-                        unions.items.push(createItem(type, type === onItem));
-                        break;
-
-                    case 'GraphQLInputObjectType':
-                        inputs.items.push(createItem(type, type === onItem));
-                        break;
-
-                    default:
-                        others.items.push(createItem(type, type === onItem));
-                        break;
-                }
-            }
-        });
-
-    return {
-        navs: [
-            sections,
-            scalars,
-            enums,
-            objects,
-            interfaces,
-            unions,
-            inputs,
-            others
-        ].filter((section: SectionType) => section.items.length > 0)
-    };
-}
-
-export type sectionDefinition = {
+export type SectionDefinitionType = {
     title:
     description: string
 }
 
-export type sectionCreator = (type: GraphQLObjectType | GraphQLScalar) => sectionDefinition;
+export type SectionCreator = (type: any) => SectionDefinitionType;
 
-export function createMainData(type: GraphQLObjectType | GraphQLScalar) {
+export class DataTranslator {
 
-    return {
-        title: type.name,
-        description: type.description,
-        sections: [
-            {
-                title: 'Serialize function',
-                description: '<pre>  ' +
-                    (type.serialize ? type.serialize.toString() : '-- NO DATA --' )
-                + '</pre>'
-            }
-        ]
-    };
+    baseUrl: string;
 
+    schema: GraphQLSchema;
+
+    sectionCreators: SectionCreator[];
+
+    constructor(schema: GraphQLSchema, sectionCreators: SectionCreator[], baseUrl: string) {
+        this.schema = schema;
+        this.baseUrl = baseUrl;
+        this.sectionCreators = sectionCreators;
+    }
+
+    getUrl(type: GraphQLType): string {
+        return this.baseUrl + (type.name as string).toLowerCase() + '.doc.html';
+    }
+
+    getNavItem(type: GraphQLType, isActive: boolean): ItemType {
+        return {
+            href: this.getUrl(type),
+            text: type.name,
+            isActive
+        };
+    }
+
+    getNavSection(name: string): SectionType {
+        return {
+            title: name,
+            items: []
+        };
+    }
+
+    getSchemaNavSection(onType: GraphQLType): SectionType {
+
+        let schemaSection: SectionType = this.getNavSection('Schema');
+        let query = this.schema.getQueryType();
+        let mutation = this.schema.getMutationType();
+        let subscription = this.schema.getSubscriptionType();
+
+        if (query)
+            schemaSection.items.push(this.getNavItem(query, query === onType));
+
+        if (mutation)
+            schemaSection.items.push(this.getNavItem(mutation, mutation === onType));
+
+        if (subscription)
+            schemaSection.items.push(this.getNavItem(subscription, subscription === onType));
+
+        return schemaSection;
+    }
+
+    getMainData(type: GraphQLType) {
+        return {
+            title: type.name,
+            description: type.description,
+            sections: this.sectionCreators
+                .map(creator => creator(type))
+                .filter((result) => Boolean(result)),
+        };
+    }
+
+    getNavigationData(onType: GraphQLType) {
+
+        let types = this.schema.getTypeMap();
+
+        let sections = this.getSchemaNavSection(onType);
+        let scalars = this.getNavSection('Scalars');
+        let enums = this.getNavSection('Enums');
+        let objects = this.getNavSection('Objects');
+        let interfaces = this.getNavSection('Interfaces');
+        let unions = this.getNavSection('Unions');
+        let inputs = this.getNavSection('Input Objects');
+        let others = this.getNavSection('GraphQL');
+
+        Object
+            .keys(types)
+            .forEach((name) => {
+
+                let type = types[name];
+
+                if (name[0] === '_' && name[1] === '_') {
+                    others.items.push(this.getNavItem(type, type === onType));
+
+                } else {
+                    switch (type.constructor.name) {
+
+                        case 'GraphQLScalarType':
+                            scalars.items.push(this.getNavItem(type, type === onType));
+                            break;
+
+                        case 'GraphQLEnumType':
+                            enums.items.push(this.getNavItem(type, type === onType));
+                            break;
+
+                        case 'GraphQLObjectType':
+                            objects.items.push(this.getNavItem(type, type === onType));
+                            break;
+
+                        case 'GraphQLInterfaceType':
+                            interfaces.items.push(this.getNavItem(type, type === onType));
+                            break;
+
+                        case 'GraphQLUnionType':
+                            unions.items.push(this.getNavItem(type, type === onType));
+                            break;
+
+                        case 'GraphQLInputObjectType':
+                            inputs.items.push(this.getNavItem(type, type === onType));
+                            break;
+
+                        default:
+                            others.items.push(this.getNavItem(type, type === onType));
+                            break;
+                    }
+                }
+            });
+
+        return {
+            navs: [
+                sections,
+                scalars,
+                enums,
+                objects,
+                interfaces,
+                unions,
+                inputs,
+                others
+            ].filter((section: SectionType) => section.items.length > 0)
+        };
+    }
 }
