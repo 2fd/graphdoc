@@ -1,13 +1,15 @@
 import { GraphQLSchema, GraphQLObjectType, GraphQLType } from 'graphql';
-
-type NavSectionType = {
-    title: string,
-    items: NavItemType[],
-}
+import * as marked from 'marked';
 
 type NavItemType = {
     href: string,
     text: string,
+    isActive: boolean,
+}
+
+type NavSectionType = {
+    title: string,
+    items: NavItemType[],
 }
 
 type DocSectionType = {
@@ -17,8 +19,8 @@ type DocSectionType = {
 
 
 export type SectionDefinitionType = {
-    title:
-    description: string
+    title: string;
+    description: string;
 }
 
 export type SectionCreator = (type: any) => SectionDefinitionType;
@@ -41,7 +43,7 @@ export class DataTranslator {
         return this.baseUrl + (type.name as string).toLowerCase() + '.doc.html';
     }
 
-    getNavItem(type: GraphQLType, isActive: boolean): ItemType {
+    getNavItem(type: GraphQLType, isActive: boolean): NavItemType {
         return {
             href: this.getUrl(type),
             text: type.name,
@@ -49,16 +51,16 @@ export class DataTranslator {
         };
     }
 
-    getNavSection(name: string): SectionType {
+    getNavSection(name: string): NavSectionType {
         return {
             title: name,
             items: []
         };
     }
 
-    getSchemaNavSection(onType: GraphQLType): SectionType {
+    getSchemaNavSection(onType: GraphQLType): NavSectionType {
 
-        let schemaSection: SectionType = this.getNavSection('Schema');
+        let schemaSection: NavSectionType = this.getNavSection('Schema');
         let query = this.schema.getQueryType();
         let mutation = this.schema.getMutationType();
         let subscription = this.schema.getSubscriptionType();
@@ -78,7 +80,7 @@ export class DataTranslator {
     getMainData(type: GraphQLType) {
         return {
             title: type.name,
-            description: type.description,
+            description: marked(type.description || ''),
             sections: this.sectionCreators
                 .map(creator => creator(type))
                 .filter((result) => Boolean(result)),
@@ -151,7 +153,7 @@ export class DataTranslator {
                 unions,
                 inputs,
                 others
-            ].filter((section: SectionType) => section.items.length > 0)
+            ].filter((section: NavSectionType) => section.items.length > 0)
         };
     }
 }

@@ -32,7 +32,7 @@ main, footer {
     position: relative;
 }
 
-h1 + p{
+.title p{
     font-size: $spacing-medium;
     font-weight: $font-weight-light;
     max-width: $size-x-large;
@@ -42,7 +42,7 @@ main section {
     margin-bottom: $spacing-xx-large;
 }
 
-main section .slds-section__title {  
+main section .slds-section__title {
     border-bottom: #{$border-width-thin} solid #{$color-border};
     margin-bottom: $spacing-large;
 }

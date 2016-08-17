@@ -30,16 +30,16 @@ let defaulIcon = (baseUrl: string) => '<header class="slds-theme--alt-inverse sl
 export function build(options: BuildOptions) {
 
     let schema = options.schema;
-    let baseUrl = baseUrl || './';
+    let baseUrl = options.baseUrl || './';
     let buildDir = resolve(options.buildDir);
     let templateDir = resolve(options.templateDir);
     let icon = options.icon || defaulIcon(baseUrl);
     let documentSections = options.documentSections || [];
     let sectionCreators = [
         printTypeFunction,
-        serializeFunction,
-        parseValueFunction,
-        parseLiteralFunction,
+        // serializeFunction,
+        // parseValueFunction,
+        // parseLiteralFunction,
     ];
 
     let dataTranslator = new DataTranslator(schema, sectionCreators, baseUrl);
@@ -70,7 +70,7 @@ export function build(options: BuildOptions) {
             );
 
             return writeFile(
-                resolve(buildDir, 'index.html')
+                resolve(buildDir, 'index.html'),
                 render(partials.index, data, partials)
             ).then(() => partials);
         })

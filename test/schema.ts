@@ -2,9 +2,9 @@ import {GraphQLScalarType, GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQL
 
 let Timestamp = new GraphQLScalarType({
     name: 'Timestamp',
-    serialize: (value) => value;
-    parseValue: (value) => value;
-    parseLiteral: (ast) => ast.value;
+    serialize: (value) => value,
+    parseValue: (value) => value,
+    parseLiteral: (ast) => ast.value,
 });
 
 
