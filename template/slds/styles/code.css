@@ -1,150 +1,124 @@
-.code-view .gutter {
-  background: #ebebeb;
-  color: #333;
-  overflow : hidden;
+.code .gutter {
+  background: #f6f6f6;
+  color: #4D4D4C
 }
 
-.code-view .print-margin {
+.code .print-margin {
   width: 1px;
-  background: #e8e8e8;
+  background: #f6f6f6
 }
 
-.code-view {
+.code {
   background-color: #FFFFFF;
-  color: black;
+  color: #4D4D4C
 }
 
-.code-view .cursor {
-  color: black;
+.code .cursor {
+  color: #AEAFAD
 }
 
-.code-view .invisible {
-  color: rgb(191, 191, 191);
+.code .marker-layer .selection {
+  background: #D6D6D6
 }
 
-.code-view .constant.buildin {
-  color: rgb(88, 72, 246);
+.code.multiselect .selection.start {
+  box-shadow: 0 0 3px 0px #FFFFFF;
 }
 
-.code-view .constant.language {
-  color: rgb(88, 92, 246);
+.code .marker-layer .step {
+  background: rgb(255, 255, 0)
 }
 
-.code-view .constant.library {
-  color: rgb(6, 150, 14);
-}
-
-.code-view .invalid {
-  background-color: rgb(153, 0, 0);
-  color: white;
-}
-.code-view .support.function {
-  color: rgb(60, 76, 114);
-}
-
-.code-view .support.constant {
-  color: rgb(6, 150, 14);
-}
-
-.code-view .support.type,
-.code-view .support.class
-.code-view .support.other {
-  color: rgb(109, 121, 222);
-}
-
-.code-view .variable.parameter {
-  font-style:italic;
-  color:#FD971F;
-}
-.code-view .keyword.operator {
-  color: rgb(104, 118, 135);
-}
-
-.code-view .comment {
-  color: #236e24;
-}
-
-.code-view .comment.doc {
-  color: #236e24;
-}
-
-.code-view .comment.doc.tag {
-  color: #236e24;
-}
-
-.code-view .constant.numeric {
-  color: rgb(0, 0, 205);
-}
-
-.code-view .variable {
-  color: rgb(49, 132, 149);
-}
-
-.code-view .xml-pe {
-  color: rgb(104, 104, 91);
-}
-
-.code-view .entity.name.function {
-  color: #0000A2;
-}
-
-
-.code-view .heading {
-  color: rgb(12, 7, 255);
-}
-
-.code-view .list {
-  color:rgb(185, 6, 144);
-}
-
-.code-view .marker-layer .selection {
-  background: rgb(181, 213, 255);
-}
-
-.code-view .marker-layer .step {
-  background: rgb(252, 255, 0);
-}
-
-.code-view .marker-layer .stack {
-  background: rgb(164, 229, 101);
-}
-
-.code-view .marker-layer .bracket {
+.code .marker-layer .bracket {
   margin: -1px 0 0 -1px;
-  border: 1px solid rgb(192, 192, 192);
+  border: 1px solid #D1D1D1
 }
 
-.code-view .marker-layer .active-line {
-  background: rgba(0, 0, 0, 0.07);
+.code .marker-layer .active-line {
+  background: #EFEFEF
 }
 
-.code-view .gutter-active-line {
-    background-color : #dcdcdc;
+.code .gutter-active-line {
+  background-color : #dcdcdc
 }
 
-.code-view .marker-layer .selected-word {
-  background: rgb(250, 250, 255);
-  border: 1px solid rgb(200, 200, 250);
+.code .marker-layer .selected-word {
+  border: 1px solid #D6D6D6
 }
 
-.code-view .storage,
-.code-view .keyword,
-.code-view .meta.tag {
-  color: rgb(147, 15, 128);
+.code .invisible {
+  color: #D1D1D1
 }
 
-.code-view .string.regex {
-  color: rgb(255, 0, 0)
+.code .keyword,
+.code .meta,
+.code .storage,
+.code .storage.type,
+.code .support.type {
+  color: #8959A8
 }
 
-.code-view .string {
-  color: #1A1AA6;
+.code .keyword.operator {
+  color: #3E999F
 }
 
-.code-view .entity.other.attribute-name {
-  color: #994409;
+.code .constant.character,
+.code .constant.language,
+.code .constant.numeric,
+.code .keyword.other.unit,
+.code .support.constant,
+.code .variable.parameter {
+  color: #F5871F
 }
 
-.code-view .indent-guide {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;
+.code .constant.other {
+  color: #666969
+}
+
+.code .invalid {
+  color: #FFFFFF;
+  background-color: #C82829
+}
+
+.code .invalid.deprecated {
+  color: #FFFFFF;
+  background-color: #8959A8
+}
+
+.code .fold {
+  background-color: #4271AE;
+  border-color: #4D4D4C
+}
+
+.code .entity.name.function,
+.code .support.function,
+.code .variable {
+  color: #4271AE
+}
+
+.code .support.class,
+.code .support.type {
+  color: #C99E00
+}
+
+.code .heading,
+.code .markup.heading,
+.code .string {
+  color: #718C00
+}
+
+.code .entity.name.tag,
+.code .entity.other.attribute-name,
+.code .meta.tag,
+.code .string.regexp,
+.code .variable {
+  color: #C82829
+}
+
+.code .comment {
+  color: #8E908C
+}
+
+.code .indent-guide {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==) right repeat-y
 }

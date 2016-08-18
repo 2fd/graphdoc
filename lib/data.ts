@@ -1,28 +1,25 @@
+import * as marked from 'marked';
 import { GraphQLSchema, GraphQLObjectType, GraphQLType } from 'graphql';
-import { DocumentSection, NavigationItem, DocumentPlugin } from './interface';
+import { DocumentSection, NavigationItem, NavigationSection, DocumentPlugin, ResolveURL } from './interface';
 
 export class DataTranslator {
-
-    baseUrl: string;
 
     schema: GraphQLSchema;
 
     plugins: DocumentPlugin[];
 
-    constructor(schema: GraphQLSchema, plugins: SectionCreator[], baseUrl: string) {
-        this.schema = schema;
-        this.baseUrl = baseUrl;
-        this.plugins = plugins;
-    }
+    url: ResolveURL;
 
-    getUrl(type: GraphQLType): string {
-        return this.baseUrl + (type.name as string).toLowerCase() + '.doc.html';
+    constructor(schema: GraphQLSchema, plugins: DocumentPlugin[], url: ResolveURL) {
+        this.url = url;
+        this.schema = schema;
+        this.plugins = plugins;
     }
 
     getNavigationItem(type: GraphQLType, isActive: boolean): NavigationItem {
         return {
-            href: this.getUrl(type),
-            text: type.name,
+            href: this.url(type),
+            text: type.name as string,
             isActive
         };
     }
@@ -34,9 +31,9 @@ export class DataTranslator {
         };
     }
 
-    getSchemaNavSection(onType: GraphQLType): NavSectionType {
+    getSchemaNavigationSection(onType?: GraphQLType): NavigationSection {
 
-        let schemaSection: NavSectionType = this.getNavSection('Schema');
+        let schemaSection: NavigationSection = this.getNavigationSection('Schema');
         let query = this.schema.getQueryType();
         let mutation = this.schema.getMutationType();
         let subscription = this.schema.getSubscriptionType();
@@ -53,16 +50,17 @@ export class DataTranslator {
         return schemaSection;
     }
 
-    getMainData(type: GraphQLType, name: string) {
+    getMainData(type: GraphQLType, name?: string) {
         return {
             title: name || type.name,
-            description: type.description,
+            description: marked(type.description || ''),
             sections: this.plugins
+                .map(plugin => plugin.getSections(type))
                 .filter((result) => Boolean(result)),
         };
     }
 
-    getNavigationData(onType: GraphQLType) {
+    getNavigationData(onType?: GraphQLType) {
 
         let types = this.schema.getTypeMap();
 
@@ -128,7 +126,7 @@ export class DataTranslator {
                 unions,
                 inputs,
                 others
-            ].filter((section: NavSectionType) => section.items.length > 0)
+            ].filter((section: NavigationSection) => section.items.length > 0)
         };
     }
 }

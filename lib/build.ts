@@ -1,10 +1,12 @@
-import { GraphQLSchema } from 'graphql';
+import { GraphQLSchema, GraphQLType, GraphQLList, GraphQLNonNull } from 'graphql';
 import { resolve } from 'path';
 import { render } from 'mustache';
+import { DocumentPlugin } from './interface';
 import { readTemplate, writeFile, createBuildFolder } from './fs';
 import { DataTranslator } from './data';
 import { serializeFunction, parseLiteralFunction, parseValueFunction } from './section/code';
 import { DocumentSchemaPlugin } from './section/print';
+import { HTMLDocumentSchemaPlugin } from './section/print.html';
 
 let pack = require('../package.json');
 
@@ -14,7 +16,7 @@ type BuildOptions = {
     buildDir: string;
     baseUrl?: string;
     icon?: string;
-    documentSections?: sectionCreator[];
+    plugins?: DocumentSchemaPlugin[];
 };
 
 type Partials = {
@@ -34,12 +36,23 @@ export function build(options: BuildOptions) {
     let buildDir = resolve(options.buildDir);
     let templateDir = resolve(options.templateDir);
     let icon = options.icon || defaulIcon(baseUrl);
-    let documentSections = options.documentSections || [];
-    let sectionCreators = [
-        new DocumentSchemaPlugin('GraphQL Schema definition')
+    let documentSections = options.plugins || [];
+    let resolveUrl = (type) => {
+
+            let t: GraphQLType = type;
+
+            while (t instanceof GraphQLList || t instanceof GraphQLNonNull) {
+                t = t.ofType;
+            }
+
+            return baseUrl + (t.name as string).toLowerCase() + '.doc.html';
+    }
+    let plugins: DocumentPlugin[] = [
+        // new DocumentSchemaPlugin('GraphQL Schema definition'),
+        new HTMLDocumentSchemaPlugin('GraphQL Schema definition', resolveUrl ),
     ];
 
-    let dataTranslator = new DataTranslator(schema, sectionCreators, baseUrl);
+    let dataTranslator = new DataTranslator(schema, plugins, resolveUrl);
 
     return createBuildFolder(buildDir, templateDir)
         .then(() => Promise.all([
@@ -80,7 +93,7 @@ export function build(options: BuildOptions) {
                 .map(name => {
 
                     let type = types[name];
-                    let path = resolve(buildDir, dataTranslator.getUrl(type));
+                    let path = resolve(buildDir, resolveUrl(type));
                     let data = Object.assign(
                         {},
                         pack,

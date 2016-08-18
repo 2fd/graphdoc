@@ -8,11 +8,9 @@ export type NavigationSection = {
 
 export type NavigationItem = {
     href: string,
-    items: string,
+    text: string,
     isActive: boolean,
 }
-
-
 
 export type DocumentSection = {
     title: string,
@@ -20,7 +18,7 @@ export type DocumentSection = {
 };
 
 export interface DocumentPlugin {
-
-    getSections(type: GraphQLType | GraphQLSchema): DocumentSection[];
-
+    getSections(type: GraphQLType | GraphQLSchema): DocumentSection | null;
 }
+
+type ResolveURL = (type: GraphQLType | GraphQLSchema) => string;

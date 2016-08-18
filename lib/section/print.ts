@@ -1,5 +1,5 @@
 import { isNullish } from '../utility';
-import { DocumentPlugin } from '../interface';
+import { DocumentPlugin, DocumentSection } from '../interface';
 import { astFromValue } from 'graphql/utilities/astFromValue';
 import { print } from 'graphql/language/printer';
 import { GraphQLSchema } from 'graphql/type/schema';
@@ -49,7 +49,7 @@ export class DocumentSchemaPlugin implements DocumentPlugin {
     this.title = title;
   }
 
-  getSections(type: GraphQLType | GraphQLSchema) {
+  getSections(type: GraphQLType | GraphQLSchema): DocumentSection | null {
 
     let definition = (type instanceof GraphQLSchema) ?
       this.schema(type) :
@@ -138,11 +138,10 @@ export class DocumentSchemaPlugin implements DocumentPlugin {
       .sort((name1, name2) => name1.localeCompare(name2))
       .map(typeName => typeMap[typeName]);
 
-    return []
+    return [this.schemaDefinition(schema)]
       .concat(
-      this.schemaDefinition(schema),
-      directives.map(directive => this.directive(directive)),
-      types.map((type) => this.type(type))
+        directives.map(directive => this.directive(directive)),
+        types.map((type) => this.type(type) as string)
       )
       .join('\n\n') + '\n';
   }
@@ -189,7 +188,7 @@ export class DocumentSchemaPlugin implements DocumentPlugin {
   }
 
   schemaDefinition(schema: GraphQLSchema): string {
-    const operationTypes = [];
+    const operationTypes: string[] = [];
 
     const queryType = schema.getQueryType();
     if (queryType) {
@@ -209,7 +208,7 @@ export class DocumentSchemaPlugin implements DocumentPlugin {
     return `schema {\n${operationTypes.join('\n')}\n}`;
   }
 
-  type(type: GraphQLType): string {
+  type(type: GraphQLType): string | null {
 
     if (type instanceof GraphQLScalarType) {
       return this.scalar(type);
@@ -238,6 +237,6 @@ export class DocumentSchemaPlugin implements DocumentPlugin {
   }
 
   value(value: any, type: GraphQLType): string {
-    return print(astFromValue(value, type);
+    return print(astFromValue(value, type));
   }
 }
