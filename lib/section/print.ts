@@ -1,3 +1,5 @@
+import { isNullish } from '../utility';
+import { DocumentPlugin } from '../interface';
 import { astFromValue } from 'graphql/utilities/astFromValue';
 import { print } from 'graphql/language/printer';
 import { GraphQLSchema } from 'graphql/type/schema';
@@ -12,19 +14,6 @@ import {
 } from 'graphql/type/definition';
 import { GraphQLString } from 'graphql/type/scalars';
 import { DEFAULT_DEPRECATION_REASON } from 'graphql/type/directives';
-
-export const printTypeFunction = (type) => ({
-    title: 'GraphQL Schema definition',
-    description: '<pre>' + printType(type) + '</pre>'
-});
-
-function isNullish(value) {
-  return value === null || value === undefined || value !== value;
-}
-
-export function printSchema(schema: GraphQLSchema): string {
-  return printFilteredSchema(schema, n => !isSpecDirective(n), isDefinedType);
-}
 
 function isSpecDirective(directiveName: string): boolean {
   return (
@@ -52,141 +41,203 @@ function isBuiltInScalar(typename: string): boolean {
   );
 }
 
-function printFilteredSchema(
-  schema: GraphQLSchema,
-  directiveFilter: (type: string) => boolean,
-  typeFilter: (type: string) => boolean
-): string {
-  const directives = schema.getDirectives()
-    .filter(directive => directiveFilter(directive.name));
-  const typeMap = schema.getTypeMap();
-  const types = Object.keys(typeMap)
-    .filter(typeFilter)
-    .sort((name1, name2) => name1.localeCompare(name2))
-    .map(typeName => typeMap[typeName]);
-  return [ printSchemaDefinition(schema) ].concat(
-    directives.map(printDirective),
-    types.map(printType)
-  ).join('\n\n') + '\n';
-}
+export class DocumentSchemaPlugin implements DocumentPlugin {
 
-function printSchemaDefinition(schema: GraphQLSchema): string {
-  const operationTypes: string[] = [];
+  title: string;
 
-  const queryType = schema.getQueryType();
-  if (queryType) {
-    operationTypes.push(`  query: ${queryType.name}`);
+  constructor(title) {
+    this.title = title;
   }
 
-  const mutationType = schema.getMutationType();
-  if (mutationType) {
-    operationTypes.push(`  mutation: ${mutationType.name}`);
+  getSections(type: GraphQLType | GraphQLSchema) {
+
+    let definition = (type instanceof GraphQLSchema) ?
+      this.schema(type) :
+      this.type(type);
+
+    if (definition)
+      return {
+        title: this.title,
+        description: '<pre>' + definition + '</pre>'
+      };
+
+    return null;
   }
 
-  const subscriptionType = schema.getSubscriptionType();
-  if (subscriptionType) {
-    operationTypes.push(`  subscription: ${subscriptionType.name}`);
+  args(fieldOrDirectives): string {
+
+    if (fieldOrDirectives.args.length === 0) {
+      return '';
+    }
+
+    return '(' +
+      fieldOrDirectives
+        .args
+        .map((arg) => this.inputValue(arg))
+        .join(', ')
+      + ')';
   }
 
-  return `schema {\n${operationTypes.join('\n')}\n}`;
-}
+  deprecated(fieldOrEnumVal): string {
 
-export function printType(type: GraphQLType): string {
-  if (type instanceof GraphQLScalarType) {
-    return printScalar(type);
-  } else if (type instanceof GraphQLObjectType) {
-    return printObject(type);
-  } else if (type instanceof GraphQLInterfaceType) {
-    return printInterface(type);
-  } else if (type instanceof GraphQLUnionType) {
-    return printUnion(type);
-  } else if (type instanceof GraphQLEnumType) {
-    return printEnum(type);
-  } else if (type instanceof GraphQLInputObjectType){
-    return printInputObject(type);
+    const reason = fieldOrEnumVal.deprecationReason;
+
+    if (isNullish(reason)) {
+      return '';
+    }
+
+    if (reason === '' || reason === DEFAULT_DEPRECATION_REASON) {
+      return ' @deprecated';
+    }
+
+    return ' @deprecated(reason: ' + this.value(reason, GraphQLString) + ')';
   }
 
-  return null;
-}
-
-function printScalar(type: GraphQLScalarType): string {
-  return `scalar ${type.name}`;
-}
-
-function printObject(type: GraphQLObjectType): string {
-  const interfaces = type.getInterfaces();
-  const implementedInterfaces = interfaces.length ?
-    ' implements ' + interfaces.map(i => i.name).join(', ') : '';
-  return `type ${type.name}${implementedInterfaces} {\n` +
-    printFields(type) + '\n' +
-  '}';
-}
-
-function printInterface(type: GraphQLInterfaceType): string {
-  return `interface ${type.name} {\n` +
-    printFields(type) + '\n' +
-  '}';
-}
-
-function printUnion(type: GraphQLUnionType): string {
-  return `union ${type.name} = ${type.getTypes().join(' | ')}`;
-}
-
-function printEnum(type: GraphQLEnumType): string {
-  const values = type.getValues();
-  return `enum ${type.name} {\n` +
-    values.map(v => '  ' + v.name + printDeprecated(v)).join('\n') + '\n' +
-  '}';
-}
-
-function printInputObject(type: GraphQLInputObjectType): string {
-  const fieldMap = type.getFields();
-  const fields = Object.keys(fieldMap).map(fieldName => fieldMap[fieldName]);
-  return `input ${type.name} {\n` +
-    fields.map(f => '  ' + printInputValue(f)).join('\n') + '\n' +
-  '}';
-}
-
-function printFields(type) {
-  const fieldMap = type.getFields();
-  const fields = Object.keys(fieldMap).map(fieldName => fieldMap[fieldName]);
-  return fields.map(
-    f => '  ' + f.name + printArgs(f) + ': ' +
-      String(f.type) + printDeprecated(f)
-  ).join('\n');
-}
-
-function printDeprecated(fieldOrEnumVal) {
-  const reason = fieldOrEnumVal.deprecationReason;
-  if (isNullish(reason)) {
-    return '';
+  directive(directive) {
+    return 'directive @' + directive.name + this.args(directive) +
+      ' on ' + directive.locations.join(' | ');
   }
-  if (
-    reason === '' ||
-    reason === DEFAULT_DEPRECATION_REASON
-  ) {
-    return ' @deprecated';
-  }
-  return ' @deprecated(reason: ' +
-    print(astFromValue(reason, GraphQLString)) + ')';
-}
 
-function printArgs(fieldOrDirectives) {
-  if (fieldOrDirectives.args.length === 0) {
-    return '';
+  enum(type: GraphQLEnumType): string {
+    const values = type.getValues();
+    return `enum ${type.name} {\n` +
+      values.map(v => '  ' + v.name + this.deprecated(v)).join('\n') + '\n' +
+      '}';
   }
-  return '(' + fieldOrDirectives.args.map(printInputValue).join(', ') + ')';
-}
 
-function printInputValue(arg) {
-  let argDecl = arg.name + ': ' + String(arg.type);
-  if (!isNullish(arg.defaultValue)) {
-    argDecl += ` = ${print(astFromValue(arg.defaultValue, arg.type))}`;
+  field(field): string {
+    return '  ' + field.name + this.args(field) + ': ' +
+      String(field.type) + this.deprecated(field);
   }
-  return argDecl;
-}
 
-function printDirective(directive) {
-  return 'directive @' + directive.name + printArgs(directive) +
-    ' on ' + directive.locations.join(' | ');
+  fields(type: GraphQLObjectType): string {
+
+    const fieldMap = type.getFields();
+    const fields = Object
+      .keys(fieldMap)
+      .map(fieldName => fieldMap[fieldName]);
+
+    return fields
+      .map(field => this.field(field))
+      .join('\n');
+  }
+
+  filteredSchema(
+    schema: GraphQLSchema,
+    directiveFilter: (type: string) => boolean,
+    typeFilter: (type: string) => boolean
+  ): string {
+    const directives = schema
+      .getDirectives()
+      .filter(directive => directiveFilter(directive.name));
+    const typeMap = schema
+      .getTypeMap();
+    const types = Object
+      .keys(typeMap)
+      .filter(typeFilter)
+      .sort((name1, name2) => name1.localeCompare(name2))
+      .map(typeName => typeMap[typeName]);
+
+    return []
+      .concat(
+      this.schemaDefinition(schema),
+      directives.map(directive => this.directive(directive)),
+      types.map((type) => this.type(type))
+      )
+      .join('\n\n') + '\n';
+  }
+
+  inputObject(type: GraphQLInputObjectType): string {
+    const fieldMap = type.getFields();
+    const fields = Object.keys(fieldMap).map(fieldName => fieldMap[fieldName]);
+    return `input ${type.name} {\n` +
+      fields.map(f => '  ' + this.inputValue(f)).join('\n') + '\n' +
+      '}';
+  }
+
+  inputValue(arg) {
+
+    const defaultValue = isNullish(arg.defaultValue) ?
+      '' : ' = ' + this.value(arg.defaultValue, arg.type);
+
+    return arg.name + ': ' + String(arg.type) + defaultValue;
+  }
+
+  interfaces(type: GraphQLInterfaceType): string {
+    return `interface ${type.name} {\n` +
+      this.fields(type) + '\n' +
+      '}';
+  }
+
+  object(type: GraphQLObjectType): string {
+
+    const interfaces = type.getInterfaces();
+    const implementedInterfaces = interfaces.length ?
+      ' implements ' + interfaces.map(i => i.name).join(', ') : '';
+
+    return `type ${type.name}${implementedInterfaces} {\n` +
+      this.fields(type) + '\n' +
+      '}';
+  }
+
+  scalar(type: GraphQLScalarType): string {
+    return `scalar ${type.name}`;
+  }
+
+  schema(schema: GraphQLSchema): string {
+    return this.filteredSchema(schema, n => !isSpecDirective(n), isDefinedType);
+  }
+
+  schemaDefinition(schema: GraphQLSchema): string {
+    const operationTypes = [];
+
+    const queryType = schema.getQueryType();
+    if (queryType) {
+      operationTypes.push(`  query: ${queryType.name}`);
+    }
+
+    const mutationType = schema.getMutationType();
+    if (mutationType) {
+      operationTypes.push(`  mutation: ${mutationType.name}`);
+    }
+
+    const subscriptionType = schema.getSubscriptionType();
+    if (subscriptionType) {
+      operationTypes.push(`  subscription: ${subscriptionType.name}`);
+    }
+
+    return `schema {\n${operationTypes.join('\n')}\n}`;
+  }
+
+  type(type: GraphQLType): string {
+
+    if (type instanceof GraphQLScalarType) {
+      return this.scalar(type);
+
+    } else if (type instanceof GraphQLObjectType) {
+      return this.object(type);
+
+    } else if (type instanceof GraphQLInterfaceType) {
+      return this.interfaces(type);
+
+    } else if (type instanceof GraphQLUnionType) {
+      return this.union(type);
+
+    } else if (type instanceof GraphQLEnumType) {
+      return this.enum(type);
+
+    } else if (type instanceof GraphQLInputObjectType) {
+      return this.inputObject(type);
+    }
+
+    return null;
+  }
+
+  union(type: GraphQLUnionType): string {
+    return `union ${type.name} = ${type.getTypes().join(' | ')}`;
+  }
+
+  value(value: any, type: GraphQLType): string {
+    return print(astFromValue(value, type);
+  }
 }

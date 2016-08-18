@@ -1,4 +1,4 @@
-import {GraphQLScalarType, GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString} from 'graphql';
+import { GraphQLScalarType, GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString } from 'graphql';
 
 let Timestamp = new GraphQLScalarType({
     name: 'Timestamp',
@@ -6,7 +6,6 @@ let Timestamp = new GraphQLScalarType({
     parseValue: (value) => value,
     parseLiteral: (ast) => ast.value,
 });
-
 
 export const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
