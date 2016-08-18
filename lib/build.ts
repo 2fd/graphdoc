@@ -4,7 +4,7 @@ import { render } from 'mustache';
 import { readTemplate, writeFile, createBuildFolder } from './fs';
 import { DataTranslator } from './data';
 import { serializeFunction, parseLiteralFunction, parseValueFunction } from './section/code';
-import { printTypeFunction } from './section/print';
+import { DocumentSchemaPlugin } from './section/print';
 
 let pack = require('../package.json');
 
@@ -36,10 +36,7 @@ export function build(options: BuildOptions) {
     let icon = options.icon || defaulIcon(baseUrl);
     let documentSections = options.documentSections || [];
     let sectionCreators = [
-        printTypeFunction,
-        serializeFunction,
-        parseValueFunction,
-        parseLiteralFunction,
+        new DocumentSchemaPlugin('GraphQL Schema definition')
     ];
 
     let dataTranslator = new DataTranslator(schema, sectionCreators, baseUrl);
@@ -66,11 +63,11 @@ export function build(options: BuildOptions) {
                 {},
                 pack,
                 dataTranslator.getNavigationData() ,
-                dataTranslator.getMainData(schema)
+                dataTranslator.getMainData(schema, 'Schema')
             );
 
             return writeFile(
-                resolve(buildDir, 'index.html')
+                resolve(buildDir, 'index.html'),
                 render(partials.index, data, partials)
             ).then(() => partials);
         })

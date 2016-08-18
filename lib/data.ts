@@ -1,27 +1,5 @@
 import { GraphQLSchema, GraphQLObjectType, GraphQLType } from 'graphql';
-
-type NavSectionType = {
-    title: string,
-    items: NavItemType[],
-}
-
-type NavItemType = {
-    href: string,
-    text: string,
-}
-
-type DocSectionType = {
-    title: string,
-    description: string,
-};
-
-
-export type SectionDefinitionType = {
-    title:
-    description: string
-}
-
-export type SectionCreator = (type: any) => SectionDefinitionType;
+import { DocumentSection, NavigationItem, DocumentPlugin } from './interface';
 
 export class DataTranslator {
 
@@ -29,19 +7,19 @@ export class DataTranslator {
 
     schema: GraphQLSchema;
 
-    sectionCreators: SectionCreator[];
+    plugins: DocumentPlugin[];
 
-    constructor(schema: GraphQLSchema, sectionCreators: SectionCreator[], baseUrl: string) {
+    constructor(schema: GraphQLSchema, plugins: SectionCreator[], baseUrl: string) {
         this.schema = schema;
         this.baseUrl = baseUrl;
-        this.sectionCreators = sectionCreators;
+        this.plugins = plugins;
     }
 
     getUrl(type: GraphQLType): string {
         return this.baseUrl + (type.name as string).toLowerCase() + '.doc.html';
     }
 
-    getNavItem(type: GraphQLType, isActive: boolean): ItemType {
+    getNavigationItem(type: GraphQLType, isActive: boolean): NavigationItem {
         return {
             href: this.getUrl(type),
             text: type.name,
@@ -49,38 +27,38 @@ export class DataTranslator {
         };
     }
 
-    getNavSection(name: string): SectionType {
+    getNavigationSection(name: string): NavigationSection {
         return {
             title: name,
             items: []
         };
     }
 
-    getSchemaNavSection(onType: GraphQLType): SectionType {
+    getSchemaNavigationSection(onType: GraphQLType): NavigationSection {
 
-        let schemaSection: SectionType = this.getNavSection('Schema');
+        let schemaSection: NavigationSection = this.getNavigationSection('Schema');
         let query = this.schema.getQueryType();
         let mutation = this.schema.getMutationType();
         let subscription = this.schema.getSubscriptionType();
 
         if (query)
-            schemaSection.items.push(this.getNavItem(query, query === onType));
+            schemaSection.items.push(this.getNavigationItem(query, query === onType));
 
         if (mutation)
-            schemaSection.items.push(this.getNavItem(mutation, mutation === onType));
+            schemaSection.items.push(this.getNavigationItem(mutation, mutation === onType));
 
         if (subscription)
-            schemaSection.items.push(this.getNavItem(subscription, subscription === onType));
+            schemaSection.items.push(this.getNavigationItem(subscription, subscription === onType));
 
         return schemaSection;
     }
 
-    getMainData(type: GraphQLType) {
+    getMainData(type: GraphQLType, name: string) {
         return {
-            title: type.name,
+            title: name || type.name,
             description: type.description,
-            sections: this.sectionCreators
-                .map(creator => creator(type))
+            sections: this.plugins
+                .map(plugin => plugin.getSections(type))
                 .filter((result) => Boolean(result)),
         };
     }
@@ -89,14 +67,14 @@ export class DataTranslator {
 
         let types = this.schema.getTypeMap();
 
-        let sections = this.getSchemaNavSection(onType);
-        let scalars = this.getNavSection('Scalars');
-        let enums = this.getNavSection('Enums');
-        let objects = this.getNavSection('Objects');
-        let interfaces = this.getNavSection('Interfaces');
-        let unions = this.getNavSection('Unions');
-        let inputs = this.getNavSection('Input Objects');
-        let others = this.getNavSection('GraphQL');
+        let sections = this.getSchemaNavigationSection(onType);
+        let scalars = this.getNavigationSection('Scalars');
+        let enums = this.getNavigationSection('Enums');
+        let objects = this.getNavigationSection('Objects');
+        let interfaces = this.getNavigationSection('Interfaces');
+        let unions = this.getNavigationSection('Unions');
+        let inputs = this.getNavigationSection('Input Objects');
+        let others = this.getNavigationSection('GraphQL');
 
         Object
             .keys(types)
@@ -105,37 +83,37 @@ export class DataTranslator {
                 let type = types[name];
 
                 if (name[0] === '_' && name[1] === '_') {
-                    others.items.push(this.getNavItem(type, type === onType));
+                    others.items.push(this.getNavigationItem(type, type === onType));
 
                 } else {
                     switch (type.constructor.name) {
 
                         case 'GraphQLScalarType':
-                            scalars.items.push(this.getNavItem(type, type === onType));
+                            scalars.items.push(this.getNavigationItem(type, type === onType));
                             break;
 
                         case 'GraphQLEnumType':
-                            enums.items.push(this.getNavItem(type, type === onType));
+                            enums.items.push(this.getNavigationItem(type, type === onType));
                             break;
 
                         case 'GraphQLObjectType':
-                            objects.items.push(this.getNavItem(type, type === onType));
+                            objects.items.push(this.getNavigationItem(type, type === onType));
                             break;
 
                         case 'GraphQLInterfaceType':
-                            interfaces.items.push(this.getNavItem(type, type === onType));
+                            interfaces.items.push(this.getNavigationItem(type, type === onType));
                             break;
 
                         case 'GraphQLUnionType':
-                            unions.items.push(this.getNavItem(type, type === onType));
+                            unions.items.push(this.getNavigationItem(type, type === onType));
                             break;
 
                         case 'GraphQLInputObjectType':
-                            inputs.items.push(this.getNavItem(type, type === onType));
+                            inputs.items.push(this.getNavigationItem(type, type === onType));
                             break;
 
                         default:
-                            others.items.push(this.getNavItem(type, type === onType));
+                            others.items.push(this.getNavigationItem(type, type === onType));
                             break;
                     }
                 }
