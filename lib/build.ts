@@ -48,7 +48,12 @@ export function build(options: BuildOptions) {
             t = t.ofType;
         }
 
-        return baseUrl + (t.name as string).toLowerCase() + '.doc.html';
+        let name = (t.name as string).toLowerCase();
+
+        if(name[0] === '_' && name[1] === '_')
+            return baseUrl + name.slice(2) + '.native.html';
+
+        return baseUrl + name + '.doc.html';
     };
 
     let plugins: DocumentPlugin[] = [
