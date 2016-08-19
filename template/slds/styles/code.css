@@ -66,8 +66,7 @@
 .code .constant.language,
 .code .constant.numeric,
 .code .keyword.other.unit,
-.code .support.constant,
-.code .variable.parameter {
+.code .support.constant {
   color: #F5871F
 }
 
@@ -92,8 +91,12 @@
 
 .code .entity.name.function,
 .code .support.function,
+.code .variable.parameter,
 .code .variable {
   color: #4271AE
+}
+.code .variable.parameter {
+  cursor: help;
 }
 
 .code .support.class,

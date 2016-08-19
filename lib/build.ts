@@ -29,6 +29,9 @@ let defaulIcon = (baseUrl: string) => '<header class="slds-theme--alt-inverse sl
     + '<a href="' + baseUrl + '" >Schema types</a>'
     + '</header>';
 
+let schemaDescription = (nativeSchemaUrl: string) => 'View [native schema](' + nativeSchemaUrl + ')';
+let nativeSchemaDescription = (baseUrl: string) => 'View [implemented schema](' + baseUrl + ')';
+
 export function build(options: BuildOptions) {
 
     let schema = options.schema;
@@ -39,17 +42,18 @@ export function build(options: BuildOptions) {
     let documentSections = options.plugins || [];
     let resolveUrl = (type) => {
 
-            let t: GraphQLType = type;
+        let t: GraphQLType = type;
 
-            while (t instanceof GraphQLList || t instanceof GraphQLNonNull) {
-                t = t.ofType;
-            }
+        while (t instanceof GraphQLList || t instanceof GraphQLNonNull) {
+            t = t.ofType;
+        }
 
-            return baseUrl + (t.name as string).toLowerCase() + '.doc.html';
-    }
+        return baseUrl + (t.name as string).toLowerCase() + '.doc.html';
+    };
+
     let plugins: DocumentPlugin[] = [
         // new DocumentSchemaPlugin('GraphQL Schema definition'),
-        new HTMLDocumentSchemaPlugin('GraphQL Schema definition', resolveUrl ),
+        new HTMLDocumentSchemaPlugin('GraphQL Schema definition', resolveUrl),
     ];
 
     let dataTranslator = new DataTranslator(schema, plugins, resolveUrl);
@@ -75,12 +79,26 @@ export function build(options: BuildOptions) {
             let data = Object.assign(
                 {},
                 pack,
-                dataTranslator.getNavigationData() ,
-                dataTranslator.getMainData(schema, 'Schema')
+                dataTranslator.getNavigationData(),
+                dataTranslator.getSchemaData(schema, 'Star Wars Schema', schemaDescription(baseUrl + 'native.html'))
             );
 
             return writeFile(
                 resolve(buildDir, 'index.html'),
+                render(partials.index, data, partials)
+            ).then(() => partials);
+        })
+        .then((partials: Partials) => {
+
+            let data = Object.assign(
+                {},
+                pack,
+                dataTranslator.getNavigationData(),
+                dataTranslator.getNativeSchemaData(schema, 'Native Schema', nativeSchemaDescription(baseUrl))
+            );
+
+            return writeFile(
+                resolve(buildDir, 'native.html'),
                 render(partials.index, data, partials)
             ).then(() => partials);
         })
@@ -98,7 +116,7 @@ export function build(options: BuildOptions) {
                         {},
                         pack,
                         dataTranslator.getNavigationData(type),
-                        dataTranslator.getMainData(type)
+                        dataTranslator.getTypeData(type)
                     );
 
                     return writeFile(

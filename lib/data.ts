@@ -2,6 +2,10 @@ import * as marked from 'marked';
 import { GraphQLSchema, GraphQLObjectType, GraphQLType } from 'graphql';
 import { DocumentSection, NavigationItem, NavigationSection, DocumentPlugin, ResolveURL } from './interface';
 
+function note(text: string): string {
+    return ' <sup>' + text.toUpperCase() + '</sup>';
+}
+
 export class DataTranslator {
 
     schema: GraphQLSchema;
@@ -9,6 +13,8 @@ export class DataTranslator {
     plugins: DocumentPlugin[];
 
     url: ResolveURL;
+
+    includeNative: boolean;
 
     constructor(schema: GraphQLSchema, plugins: DocumentPlugin[], url: ResolveURL) {
         this.url = url;
@@ -20,6 +26,48 @@ export class DataTranslator {
         return {
             href: this.url(type),
             text: type.name as string,
+            isActive
+        };
+    }
+
+    getNativeNavigationItem(type: GraphQLType, isActive: boolean): NavigationItem {
+
+        let title: string = type.name as string;
+
+        switch (type.constructor.name) {
+
+            case 'GraphQLScalarType':
+                title += note('scalar');
+                break;
+
+            case 'GraphQLEnumType':
+                title += note('enum');
+                break;
+
+            case 'GraphQLObjectType':
+                title += note('object');
+                break;
+
+            case 'GraphQLInterfaceType':
+                title += note('interface');
+                break;
+
+            case 'GraphQLUnionType':
+                title += note('union');
+                break;
+
+            case 'GraphQLInputObjectType':
+                title += note('input');
+                break;
+
+            default:
+                title += note('other');
+                break;
+        }
+
+        return {
+            href: this.url(type),
+            text: title,
             isActive
         };
     }
@@ -50,12 +98,32 @@ export class DataTranslator {
         return schemaSection;
     }
 
-    getMainData(type: GraphQLType, name?: string) {
+    getTypeData(type: GraphQLType) {
         return {
-            title: name || type.name,
+            title: type.name,
             description: marked(type.description || ''),
             sections: this.plugins
-                .map(plugin => plugin.getSections(type))
+                .map(plugin => plugin.getTypeSection(type))
+                .filter((result) => Boolean(result)),
+        };
+    }
+
+    getSchemaData(schema: GraphQLSchema, name: string, description: string) {
+        return {
+            title: name,
+            description: marked(description),
+            sections: this.plugins
+                .map(plugin => plugin.getIndexSection(schema))
+                .filter((result) => Boolean(result)),
+        };
+    }
+
+    getNativeSchemaData(schema: GraphQLSchema, name: string, description: string) {
+        return {
+            title: name,
+            description: marked(description),
+            sections: this.plugins
+                .map(plugin => plugin.getNativeSection(schema))
                 .filter((result) => Boolean(result)),
         };
     }
@@ -71,7 +139,8 @@ export class DataTranslator {
         let interfaces = this.getNavigationSection('Interfaces');
         let unions = this.getNavigationSection('Unions');
         let inputs = this.getNavigationSection('Input Objects');
-        let others = this.getNavigationSection('GraphQL');
+        let others = this.getNavigationSection('Others');
+        let gql = this.getNavigationSection('GraphQL');
 
         Object
             .keys(types)
@@ -80,9 +149,10 @@ export class DataTranslator {
                 let type = types[name];
 
                 if (name[0] === '_' && name[1] === '_') {
-                    others.items.push(this.getNavigationItem(type, type === onType));
+                    gql.items.push(this.getNativeNavigationItem(type, type === onType));
 
                 } else {
+
                     switch (type.constructor.name) {
 
                         case 'GraphQLScalarType':
@@ -125,7 +195,8 @@ export class DataTranslator {
                 interfaces,
                 unions,
                 inputs,
-                others
+                gql,
+                others,
             ].filter((section: NavigationSection) => section.items.length > 0)
         };
     }

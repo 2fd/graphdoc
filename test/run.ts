@@ -1,8 +1,8 @@
-import {schema} from './schema';
+import {StarWarsSchema} from './schema';
 import {build} from '../lib/build';
 
 build({
-    schema,
+    schema: StarWarsSchema,
     templateDir: './template/slds',
     buildDir: './build'
 });

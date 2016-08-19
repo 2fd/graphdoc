@@ -11,9 +11,22 @@ import {
   GraphQLUnionType,
   GraphQLEnumType,
   GraphQLInputObjectType,
+  GraphQLArgument
 } from 'graphql/type/definition';
 import { GraphQLString } from 'graphql/type/scalars';
 import { DEFAULT_DEPRECATION_REASON } from 'graphql/type/directives';
+
+function keyword(key: string): string {
+  return '<span class="keyword operator ts">' + key + '</span>';
+}
+
+function lang(key: string): string {
+  return '<span class="variable language">' + key + '</span>';
+}
+
+function comment(text: string): string {
+  return '<span class="comment line"># ' + text + '</span>';
+}
 
 function breakText(text: string, len: number): string[] {
   let words = text.split(/\s+/);
@@ -36,12 +49,8 @@ function breakText(text: string, len: number): string[] {
   return lines;
 }
 
-function keyword(key: string): string {
-  return '<span class="keyword operator ts">' + key + '</span>';
-}
-
-function identifier(key: string): string {
-  return '<span class="identifier">' + key + '</span>';
+function identifier(type: GraphQLType): string {
+  return '<span class="identifier">' + type.name + '</span>';
 }
 
 function useIdentifier(type: GraphQLType, url): string {
@@ -61,17 +70,13 @@ function useIdentifier(type: GraphQLType, url): string {
   }
 
   if (usedAs)
-    usedAs = '<span class="variable language">' + usedAs + '</span>'
+    usedAs = '<span class="variable language">' + usedAs + '</span>';
 
   return '<a class="support type" href="' + url + '" title="' + (t.description || t.name) + '">' + t.name + '</a>' + usedAs;
 }
 
-function parameter(key: string): string {
-  return '<span class="variable parameter">' + key + '</span>';
-}
-
-function comment(key: string): string {
-  return '<span class="comment line"># ' + key + '</span>';
+function parameter(arg: GraphQLArgument): string {
+  return '<span class="variable parameter" title="' + arg.description + '">' + arg.name + '</span>';
 }
 
 function property(key: string): string {
@@ -81,8 +86,6 @@ function property(key: string): string {
 function val(key: string): string {
   return '<span class="string">' + key + '</span>';
 }
-
-
 
 function isSpecDirective(directiveName: string): boolean {
   return (
@@ -121,19 +124,25 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
     this.url = url;
   }
 
-  getSections(type: GraphQLType | GraphQLSchema): DocumentSection | null {
+  getTypeSection(type: GraphQLType): DocumentSection {
+    return {
+      title: this.title,
+      description: '<pre class="code">' + this.type(type) + '</pre>'
+    };
+  }
 
-    let definition = (type instanceof GraphQLSchema) ?
-      this.schema(type) :
-      this.type(type);
+  getIndexSection(schema: GraphQLSchema): DocumentSection {
+    return {
+      title: this.title,
+      description: '<pre class="code">' + this.definedSchema(schema) + '</pre>'
+    };
+  }
 
-    if (definition)
-      return {
-        title: this.title,
-        description: '<pre class="code">' + definition + '</pre>'
-      };
-
-    return null;
+  getNativeSection(schema: GraphQLSchema): DocumentSection {
+    return {
+      title: this.title,
+      description: '<pre class="code">' + this.nativeSchema(schema) + '</pre>'
+    };
   }
 
   args(fieldOrDirectives): string {
@@ -150,6 +159,28 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
       + ')';
   }
 
+  argDescription(arg: GraphQLArgument): string {
+
+    if (arg.description) {
+      return this.desc(arg.name + ': ' + arg.description);
+    }
+
+    return this.desc(arg.name + ': <strong><em>' + arg.description + '</em></strong>');
+  }
+
+  argsDescription(fieldOrDirectives): string {
+
+    if (fieldOrDirectives.args.length === 0) {
+      return '';
+    }
+
+    return '  ' + comment('Arguments') + '\n' +
+      fieldOrDirectives
+        .args
+        .map((arg) => this.argDescription(arg))
+        .join('  ' + comment('') + '\n');
+  }
+
   deprecated(fieldOrEnumVal): string {
 
     const reason = fieldOrEnumVal.deprecationReason;
@@ -163,7 +194,7 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
     }
 
     return ' ' + keyword('@deprecated')
-      + '(' + parameter('reason') + ': ' + val(this.value(reason, GraphQLString)) + ')';
+      + '(' + lang('reason') + ': ' + val(this.value(reason, GraphQLString)) + ')';
   }
 
   desc(description: string): string {
@@ -182,14 +213,21 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
 
   enum(type: GraphQLEnumType): string {
     const values = type.getValues();
-    return keyword('enum') + ' ' + identifier(type.name) + ' {\n'
+    return keyword('enum') + ' ' + identifier(type) + ' {\n'
       + values.map(v => '\n' + this.desc(v.description) + '  ' + property(v.name) + this.deprecated(v)).join('\n') + '\n' +
       '}';
   }
 
   field(field): string {
 
-    return '\n' + this.desc(field.description) +
+    const desc = [
+      this.desc(field.description),
+      this.argsDescription(field)
+    ]
+      .filter(d => Boolean(d))
+      .join('  ' + comment('') + '\n');
+
+    return '\n' + desc +
       '  ' + property(field.name) + this.args(field) + ': ' +
       useIdentifier(field.type, this.url(field.type)) + this.deprecated(field);
   }
@@ -206,19 +244,15 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
       .join('\n');
   }
 
-  filteredSchema(
-    schema: GraphQLSchema,
-    directiveFilter: (type: string) => boolean,
-    typeFilter: (type: string) => boolean
-  ): string {
+  definedSchema(schema: GraphQLSchema): string {
     const directives = schema
       .getDirectives()
-      .filter(directive => directiveFilter(directive.name));
+      .filter(directive => !isSpecDirective(directive.name));
     const typeMap = schema
       .getTypeMap();
     const types = Object
       .keys(typeMap)
-      .filter(typeFilter)
+      .filter(isDefinedType)
       .sort((name1, name2) => name1.localeCompare(name2))
       .map(typeName => typeMap[typeName]);
 
@@ -230,24 +264,44 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
       .join('\n\n') + '\n';
   }
 
+  nativeSchema(schema: GraphQLSchema): string {
+    const directives = schema
+      .getDirectives()
+      .filter(directive => isSpecDirective(directive.name));
+    const typeMap = schema
+      .getTypeMap();
+    const types = Object
+      .keys(typeMap)
+      .filter(type => !isDefinedType(type))
+      .sort((name1, name2) => name1.localeCompare(name2))
+      .map(typeName => typeMap[typeName]);
+
+    return []
+      .concat(
+      directives.map(directive => this.directive(directive)),
+      types.map((type) => this.type(type) as string)
+      )
+      .join('\n\n') + '\n';
+  }
+
   inputObject(type: GraphQLInputObjectType): string {
     const fieldMap = type.getFields();
     const fields = Object.keys(fieldMap).map(fieldName => fieldMap[fieldName]);
-    return keyword('input') + ' ' + identifier(type.name) + ' {\n' +
+    return keyword('input') + ' ' + identifier(type) + ' {\n' +
       fields.map(f => '  ' + this.inputValue(f)).join('\n') + '\n' +
       '}';
   }
 
-  inputValue(arg) {
+  inputValue(arg: GraphQLArgument) {
 
     const defaultValue = isNullish(arg.defaultValue) ?
       '' : ' = ' + this.value(arg.defaultValue, arg.type);
 
-    return arg.name + ': ' + useIdentifier(arg.type, this.url(arg.type)) + defaultValue;
+    return parameter(arg) + ': ' + useIdentifier(arg.type, this.url(arg.type)) + defaultValue;
   }
 
   interfaces(type: GraphQLInterfaceType): string {
-    return keyword('interface') + ' ' + identifier(type.name) + ' {\n' +
+    return keyword('interface') + ' ' + identifier(type) + ' {\n' +
       this.fields(type) + '\n' +
       '}';
   }
@@ -262,17 +316,21 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
         .join(', ') :
       '';
 
-    return keyword('type') + ' ' + identifier(type.name) + implementedInterfaces + ' {\n' +
+    return keyword('type') + ' ' + identifier(type) + implementedInterfaces + ' {\n' +
       this.fields(type) + '\n' +
       '}';
   }
 
   scalar(type: GraphQLScalarType): string {
-    return keyword('scalar') + ' ' + identifier(type.name);
+    return keyword('scalar') + ' ' + identifier(type);
   }
 
   schema(schema: GraphQLSchema): string {
-    return this.filteredSchema(schema, n => !isSpecDirective(n), isDefinedType);
+    return this.definedSchema(schema);
+  }
+
+  native(schema: GraphQLSchema): string {
+    return this.nativeSchema(schema);
   }
 
   schemaDefinition(schema: GraphQLSchema): string {
@@ -280,17 +338,17 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
 
     const queryType = schema.getQueryType();
     if (queryType) {
-      operationTypes.push('  ' + property('query') + ': ' + useIdentifier(queryType, this.url(queryType)));
+      operationTypes.push('\n' + this.desc(queryType.description) + '  ' + property('query') + ': ' + useIdentifier(queryType, this.url(queryType)));
     }
 
     const mutationType = schema.getMutationType();
     if (mutationType) {
-      operationTypes.push('  ' + property('mutation') + ': ' + useIdentifier(mutationType, this.url(mutationType)));
+      operationTypes.push('\n' + this.desc(mutationType.description) + '  ' + property('mutation') + ': ' + useIdentifier(mutationType, this.url(mutationType)));
     }
 
     const subscriptionType = schema.getSubscriptionType();
     if (subscriptionType) {
-      operationTypes.push('  ' + property('subscription') + ': ' + useIdentifier(subscriptionType, this.url(subscriptionType)));
+      operationTypes.push('\n' + this.desc(subscriptionType.description) + '  ' + property('subscription') + ': ' + useIdentifier(subscriptionType, this.url(subscriptionType)));
     }
 
     return keyword('schema') + ` {\n${operationTypes.join('\n')}\n}`;

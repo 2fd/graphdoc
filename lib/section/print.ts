@@ -49,7 +49,7 @@ export class DocumentSchemaPlugin implements DocumentPlugin {
     this.title = title;
   }
 
-  getSections(type: GraphQLType | GraphQLSchema): DocumentSection | null {
+  getSection(type: GraphQLType | GraphQLSchema): DocumentSection | null {
 
     let definition = (type instanceof GraphQLSchema) ?
       this.schema(type) :

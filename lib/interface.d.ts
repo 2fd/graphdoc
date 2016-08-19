@@ -18,7 +18,9 @@ export type DocumentSection = {
 };
 
 export interface DocumentPlugin {
-    getSections(type: GraphQLType | GraphQLSchema): DocumentSection | null;
+    getTypeSection(type: GraphQLType): DocumentSection;
+    getIndexSection(schema: GraphQLSchema): DocumentSection;
+    getNativeSection(schema: GraphQLSchema): DocumentSection;
 }
 
 type ResolveURL = (type: GraphQLType | GraphQLSchema) => string;

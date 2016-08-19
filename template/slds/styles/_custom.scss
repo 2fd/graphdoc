@@ -19,6 +19,10 @@ nav {
     overflow: auto;
     box-sizing: border-box;
 }
+nav sup{
+    font-style: italic;
+    opacity: .7;
+}
 
 header a {
     text-decoration: none !important;
