@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
+    <link type="text/css" rel="stylesheet" href="./styles/code.css" />
+    <title>__Type</title>
+</head>
+<body>
+    <nav><header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large"><a href="./" >Schema types</a></header><div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <h4 class="slds-text-heading--label">Schema</h4>
+    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
+        <li >
+            <a href="./query.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Query</a>
+        </li>
+        <li >
+            <a href="./mutation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Mutation</a>
+        </li>
+    </ul>
+</div>
+<div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <h4 class="slds-text-heading--label">Scalars</h4>
+    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
+        <li >
+            <a href="./id.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">ID</a>
+        </li>
+        <li >
+            <a href="./string.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">String</a>
+        </li>
+        <li >
+            <a href="./boolean.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Boolean</a>
+        </li>
+    </ul>
+</div>
+<div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <h4 class="slds-text-heading--label">Enums</h4>
+    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
+        <li >
+            <a href="./episode.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Episode</a>
+        </li>
+    </ul>
+</div>
+<div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <h4 class="slds-text-heading--label">Objects</h4>
+    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
+        <li >
+            <a href="./query.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Query</a>
+        </li>
+        <li >
+            <a href="./human.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Human</a>
+        </li>
+        <li >
+            <a href="./droid.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Droid</a>
+        </li>
+        <li >
+            <a href="./mutation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Mutation</a>
+        </li>
+    </ul>
+</div>
+<div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <h4 class="slds-text-heading--label">Interfaces</h4>
+    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
+        <li >
+            <a href="./character.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Character</a>
+        </li>
+    </ul>
+</div>
+<div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <h4 class="slds-text-heading--label">GraphQL</h4>
+    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
+        <li >
+            <a href="./__schema.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Schema <sup>OBJECT</sup></a>
+        </li>
+        <li class="slds-is-active">
+            <a href="./__type.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Type <sup>OBJECT</sup></a>
+        </li>
+        <li >
+            <a href="./__typekind.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__TypeKind <sup>ENUM</sup></a>
+        </li>
+        <li >
+            <a href="./__field.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Field <sup>OBJECT</sup></a>
+        </li>
+        <li >
+            <a href="./__inputvalue.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__InputValue <sup>OBJECT</sup></a>
+        </li>
+        <li >
+            <a href="./__enumvalue.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__EnumValue <sup>OBJECT</sup></a>
+        </li>
+        <li >
+            <a href="./__directive.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Directive <sup>OBJECT</sup></a>
+        </li>
+        <li >
+            <a href="./__directivelocation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__DirectiveLocation <sup>ENUM</sup></a>
+        </li>
+    </ul>
+</div>
+</nav>
+    <main><section class="title">
+    <h1 class="slds-text-heading--large">__Type</h1>
+    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the <code>__TypeKind</code> enum.</p>
+<p>Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.</p>
+</div>
+</section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
+<pre class="code"><span class="keyword operator ts">type</span> <span class="identifier">__Type</span> {
+
+  <span class="meta">kind</span>: <a class="support type" href="./__typekind.doc.html" title="An enum describing what kind of type a given `__Type` is.">__TypeKind</a><span class="variable language">!</span>
+
+  <span class="meta">name</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
+
+  <span class="meta">description</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
+
+  <span class="comment line"># Arguments</span>
+  <span class="comment line"># includeDeprecated: <strong><em>null</em></strong></span>
+  <span class="meta">fields</span>(<span class="variable parameter" title="null">includeDeprecated</span>: <a class="support type" href="./boolean.doc.html" title="The `Boolean` scalar type represents `true` or `false`.">Boolean</a> = <span class="string">false</span>): <a class="support type" href="./__field.doc.html" title="Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.">__Field</a><span class="variable language">!</span>
+
+  <span class="meta">interfaces</span>: <a class="support type" href="./__type.doc.html" title="The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+
+Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.">__Type</a><span class="variable language">!</span>
+
+  <span class="meta">possibleTypes</span>: <a class="support type" href="./__type.doc.html" title="The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+
+Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.">__Type</a><span class="variable language">!</span>
+
+  <span class="comment line"># Arguments</span>
+  <span class="comment line"># includeDeprecated: <strong><em>null</em></strong></span>
+  <span class="meta">enumValues</span>(<span class="variable parameter" title="null">includeDeprecated</span>: <a class="support type" href="./boolean.doc.html" title="The `Boolean` scalar type represents `true` or `false`.">Boolean</a> = <span class="string">false</span>): <a class="support type" href="./__enumvalue.doc.html" title="One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.">__EnumValue</a><span class="variable language">!</span>
+
+  <span class="meta">inputFields</span>: <a class="support type" href="./__inputvalue.doc.html" title="Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.">__InputValue</a><span class="variable language">!</span>
+
+  <span class="meta">ofType</span>: <a class="support type" href="./__type.doc.html" title="The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+
+Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.">__Type</a>
+}</pre>
+</section>
+</main>
+    <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
+    <p class="slds-text-align--right">created with <a href=https:&#x2F;&#x2F;github.com&#x2F;2fd&#x2F;graphdoc#readme>graphdoc 0.1.0</a></p>
+</div></footer>
+</body>

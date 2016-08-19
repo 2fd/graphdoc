@@ -1,0 +1,52 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    left: $spacing-none;
+    top: $spacing-none;
+    width: $size-medium;
+    padding: $spacing-none;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+}
+nav sup{
+    font-style: italic;
+    opacity: .7;
+}
+
+header a {
+    text-decoration: none !important;
+}
+
+main, footer {
+    max-width: $size-xx-large;
+    margin-left: $size-medium;
+    padding: $spacing-x-large;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.title p{
+    font-size: $spacing-medium;
+    font-weight: $font-weight-light;
+    max-width: $size-x-large;
+}
+
+main section {
+    margin-bottom: $spacing-xx-large;
+}
+
+main section .slds-section__title {
+    border-bottom: #{$border-width-thin} solid #{$color-border};
+    margin-bottom: $spacing-large;
+}
