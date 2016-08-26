@@ -1,14 +1,15 @@
-import * as marked from 'marked';
-import { GraphQLSchema, GraphQLObjectType, GraphQLType } from 'graphql';
-import { DocumentSection, NavigationItem, NavigationSection, DocumentPlugin, ResolveURL } from './interface';
+import { DocumentSection, NavigationItem, NavigationSection, DocumentPlugin, ResolveURL, Schema, TypeRef } from './interface';
+import { SCALAR, OBJECT, ENUM, INPUT_OBJECT, INTERFACE, UNION, getTypeOf } from './introspection';
 
-function note(text: string): string {
+function sup(text: string): string {
     return ' <sup>' + text.toUpperCase() + '</sup>';
 }
 
-export class DataTranslator {
 
-    schema: GraphQLSchema;
+
+export class Data {
+
+    schema: Schema;
 
     plugins: DocumentPlugin[];
 
@@ -16,58 +17,30 @@ export class DataTranslator {
 
     includeNative: boolean;
 
-    constructor(schema: GraphQLSchema, plugins: DocumentPlugin[], url: ResolveURL) {
+    constructor(schema: Schema, plugins: DocumentPlugin[], url: ResolveURL) {
         this.url = url;
         this.schema = schema;
         this.plugins = plugins;
     }
 
-    getNavigationItem(type: GraphQLType, isActive: boolean): NavigationItem {
+    getNavigationItem(type: TypeRef, isActive: boolean): NavigationItem {
+
+        type = getTypeOf(type);
+
         return {
             href: this.url(type),
-            text: type.name as string,
+            text: type.name,
             isActive
         };
     }
 
-    getNativeNavigationItem(type: GraphQLType, isActive: boolean): NavigationItem {
+    getNativeNavigationItem(type: TypeRef, isActive: boolean): NavigationItem {
 
-        let title: string = type.name as string;
-
-        switch (type.constructor.name) {
-
-            case 'GraphQLScalarType':
-                title += note('scalar');
-                break;
-
-            case 'GraphQLEnumType':
-                title += note('enum');
-                break;
-
-            case 'GraphQLObjectType':
-                title += note('object');
-                break;
-
-            case 'GraphQLInterfaceType':
-                title += note('interface');
-                break;
-
-            case 'GraphQLUnionType':
-                title += note('union');
-                break;
-
-            case 'GraphQLInputObjectType':
-                title += note('input');
-                break;
-
-            default:
-                title += note('other');
-                break;
-        }
+        type = getTypeOf(type);
 
         return {
             href: this.url(type),
-            text: title,
+            text: type.name + sup(type.kind),
             isActive
         };
     }
@@ -79,125 +52,87 @@ export class DataTranslator {
         };
     }
 
-    getSchemaNavigationSection(onType?: GraphQLType): NavigationSection {
+    getSchemaNavigationSection(onType?: string): NavigationSection {
 
         let schemaSection: NavigationSection = this.getNavigationSection('Schema');
-        let query = this.schema.getQueryType();
-        let mutation = this.schema.getMutationType();
-        let subscription = this.schema.getSubscriptionType();
 
-        if (query)
-            schemaSection.items.push(this.getNavigationItem(query, query === onType));
+        if (this.schema.queryType)
+            schemaSection.items.push(this.getNavigationItem(this.schema.queryType, this.schema.queryType.name === onType));
 
-        if (mutation)
-            schemaSection.items.push(this.getNavigationItem(mutation, mutation === onType));
+        if (this.schema.mutationType)
+            schemaSection.items.push(this.getNavigationItem(this.schema.mutationType, this.schema.mutationType.name === onType));
 
-        if (subscription)
-            schemaSection.items.push(this.getNavigationItem(subscription, subscription === onType));
+        if (this.schema.subscriptionType)
+            schemaSection.items.push(this.getNavigationItem(this.schema.mutationType, this.schema.mutationType.name === onType));
 
         return schemaSection;
     }
 
-    getTypeData(type: GraphQLType) {
+    getTypeData(type: TypeRef) {
+
+        const t = getTypeOf(type);
+
         return {
-            title: type.name,
-            description: marked(type.description || ''),
+            title: t.name,
+            description: marked(t.description || ''),
             sections: this.plugins
                 .map(plugin => plugin.getTypeSection(type))
                 .filter((result) => Boolean(result)),
         };
     }
 
-    getSchemaData(schema: GraphQLSchema, name: string, description: string) {
+    getSchemaData(name: string, description: string) {
         return {
             title: name,
             description: marked(description),
             sections: this.plugins
-                .map(plugin => plugin.getIndexSection(schema))
+                .map(plugin => plugin.getIndexSection(this.schema))
                 .filter((result) => Boolean(result)),
         };
     }
 
-    getNativeSchemaData(schema: GraphQLSchema, name: string, description: string) {
+    getNativeSchemaData(name: string, description: string) {
         return {
             title: name,
             description: marked(description),
             sections: this.plugins
-                .map(plugin => plugin.getNativeSection(schema))
+                .map(plugin => plugin.getNativeSection(this.schema))
                 .filter((result) => Boolean(result)),
         };
     }
 
-    getNavigationData(onType?: GraphQLType) {
+    getNavigationData(onType?: string) {
 
-        let types = this.schema.getTypeMap();
+        let types = this.schema.types;
+        let navs = {
+            SCHEMA: this.getSchemaNavigationSection(onType),
+            [SCALAR]: this.getNavigationSection('Scalars'),
+            [ENUM]: this.getNavigationSection('Enums'),
+            [OBJECT]: this.getNavigationSection('Objects'),
+            [INTERFACE]: this.getNavigationSection('Interfaces'),
+            [UNION]: this.getNavigationSection('Unions'),
+            [INPUT_OBJECT]: this.getNavigationSection('Input Objects'),
+            GQL: this.getNavigationSection('GraphQL'),
+        };
 
-        let sections = this.getSchemaNavigationSection(onType);
-        let scalars = this.getNavigationSection('Scalars');
-        let enums = this.getNavigationSection('Enums');
-        let objects = this.getNavigationSection('Objects');
-        let interfaces = this.getNavigationSection('Interfaces');
-        let unions = this.getNavigationSection('Unions');
-        let inputs = this.getNavigationSection('Input Objects');
-        let others = this.getNavigationSection('Others');
-        let gql = this.getNavigationSection('GraphQL');
+        types
+            .forEach((type) => {
 
-        Object
-            .keys(types)
-            .forEach((name) => {
+                if (type.name[0] === '_' && type.name[1] === '_') {
+                    navs.GQL.items.push(this.getNativeNavigationItem(type, type.name === onType));
 
-                let type = types[name];
-
-                if (name[0] === '_' && name[1] === '_') {
-                    gql.items.push(this.getNativeNavigationItem(type, type === onType));
+                } else if (navs[type.kind]) {
+                    navs[type.kind].items.push(this.getNavigationItem(type, type.name === onType));
 
                 } else {
-
-                    switch (type.constructor.name) {
-
-                        case 'GraphQLScalarType':
-                            scalars.items.push(this.getNavigationItem(type, type === onType));
-                            break;
-
-                        case 'GraphQLEnumType':
-                            enums.items.push(this.getNavigationItem(type, type === onType));
-                            break;
-
-                        case 'GraphQLObjectType':
-                            objects.items.push(this.getNavigationItem(type, type === onType));
-                            break;
-
-                        case 'GraphQLInterfaceType':
-                            interfaces.items.push(this.getNavigationItem(type, type === onType));
-                            break;
-
-                        case 'GraphQLUnionType':
-                            unions.items.push(this.getNavigationItem(type, type === onType));
-                            break;
-
-                        case 'GraphQLInputObjectType':
-                            inputs.items.push(this.getNavigationItem(type, type === onType));
-                            break;
-
-                        default:
-                            others.items.push(this.getNavigationItem(type, type === onType));
-                            break;
-                    }
+                    navs.OTHER.items.push(this.getNavigationItem(type, type.name === onType))
                 }
             });
 
         return {
-            navs: [
-                sections,
-                scalars,
-                enums,
-                objects,
-                interfaces,
-                unions,
-                inputs,
-                gql,
-                others,
-            ].filter((section: NavigationSection) => section.items.length > 0)
+            navs: Object.keys(navs)
+                .map(name => navs[name])
+                .filter(section => section.items.length > 0)
         };
     }
 }

@@ -1,148 +1,19 @@
-import { isNullish } from '../utility';
-import { DocumentPlugin, DocumentSection, ResolveURL } from '../interface';
-import { astFromValue } from 'graphql/utilities/astFromValue';
-import { print } from 'graphql/language/printer';
-import { GraphQLSchema } from 'graphql/type/schema';
-import { GraphQLType, GraphQLList, GraphQLNonNull } from 'graphql/type/definition';
-import {
-  GraphQLScalarType,
-  GraphQLObjectType,
-  GraphQLInterfaceType,
-  GraphQLUnionType,
-  GraphQLEnumType,
-  GraphQLInputObjectType,
-  GraphQLArgument
-} from 'graphql/type/definition';
-import { GraphQLString } from 'graphql/type/scalars';
-import { DEFAULT_DEPRECATION_REASON } from 'graphql/type/directives';
+import { html } from '../utility';
+import { DocumentPluginInterface, DocumentSectionInterface, nameToUrl} from '../interface';
 
-function keyword(key: string): string {
-  return '<span class="keyword operator ts">' + key + '</span>';
-}
-
-function lang(key: string): string {
-  return '<span class="variable language">' + key + '</span>';
-}
-
-function comment(text: string): string {
-  return '<span class="comment line"># ' + text + '</span>';
-}
-
-function breakText(text: string, len: number): string[] {
-  let words = text.split(/\s+/);
-  let lines: string[] = [];
-  let line = '';
-
-  while (words.length > 0) {
-    let word = words.shift() as string;
-    line += (line.length > 0 ? ' ' : '') + word;
-
-    if (line.length > len) {
-      lines.push(line);
-      line = '';
-    }
-  }
-
-  if (line.length > 0)
-    lines.push(line);
-
-  return lines;
-}
-
-function identifier(type: GraphQLType): string {
-  return '<span class="identifier">' + type.name + '</span>';
-}
-
-function useIdentifier(type: GraphQLType, url): string {
-
-  let usedAs = '';
-  let t = type;
-
-  while (t instanceof GraphQLList || t instanceof GraphQLNonNull) {
-
-    if (t instanceof GraphQLList) {
-      usedAs = '[]';
-    } else {
-      usedAs = '!';
-    }
-
-    t = t.ofType;
-  }
-
-  if (usedAs)
-    usedAs = '<span class="variable language">' + usedAs + '</span>';
-
-  return '<a class="support type" href="' + url + '" title="' + (t.description || t.name) + '">' + t.name + '</a>' + usedAs;
-}
-
-function parameter(arg: GraphQLArgument): string {
-  return '<span class="variable parameter" title="' + arg.description + '">' + arg.name + '</span>';
-}
-
-function property(key: string): string {
-  return '<span class="meta">' + key + '</span>';
-}
-
-function val(key: string): string {
-  return '<span class="string">' + key + '</span>';
-}
-
-function isSpecDirective(directiveName: string): boolean {
-  return (
-    directiveName === 'skip' ||
-    directiveName === 'include' ||
-    directiveName === 'deprecated'
-  );
-}
-
-function isDefinedType(typename: string): boolean {
-  return !isIntrospectionType(typename) && !isBuiltInScalar(typename);
-}
-
-function isIntrospectionType(typename: string): boolean {
-  return typename.indexOf('__') === 0;
-}
-
-function isBuiltInScalar(typename: string): boolean {
-  return (
-    typename === 'String' ||
-    typename === 'Boolean' ||
-    typename === 'Int' ||
-    typename === 'Float' ||
-    typename === 'ID'
-  );
-}
-
-export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
+export class SchemaDocumentPlugin implements DocumentPluginInterface {
 
   title: string;
 
-  url: ResolveURL;
+  url: nameToUrl;
 
-  constructor(title, url: ResolveURL) {
+  constructor(title, url: nameToUrl) {
     this.title = title;
     this.url = url;
   }
 
-  getTypeSection(type: GraphQLType): DocumentSection {
-    return {
-      title: this.title,
-      description: '<pre class="code">' + this.type(type) + '</pre>'
-    };
-  }
-
-  getIndexSection(schema: GraphQLSchema): DocumentSection {
-    return {
-      title: this.title,
-      description: '<pre class="code">' + this.definedSchema(schema) + '</pre>'
-    };
-  }
-
-  getNativeSection(schema: GraphQLSchema): DocumentSection {
-    return {
-      title: this.title,
-      description: '<pre class="code">' + this.nativeSchema(schema) + '</pre>'
-    };
+  getSections(): DocumentSectionInterface[] {
+    return [];
   }
 
   args(fieldOrDirectives): string {
@@ -194,7 +65,7 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
     }
 
     return ' ' + keyword('@deprecated')
-      + '(' + lang('reason') + ': ' + val(this.value(reason, GraphQLString)) + ')';
+      + '( reason: ' + val(this.value(reason, GraphQLString)) + ' )';
   }
 
   desc(description: string): string {
@@ -246,13 +117,11 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
 
   definedSchema(schema: GraphQLSchema): string {
     const directives = schema
-      .getDirectives()
-      .filter(directive => !isSpecDirective(directive.name));
+      .getDirectives();
     const typeMap = schema
       .getTypeMap();
     const types = Object
       .keys(typeMap)
-      .filter(isDefinedType)
       .sort((name1, name2) => name1.localeCompare(name2))
       .map(typeName => typeMap[typeName]);
 
@@ -356,26 +225,28 @@ export class HTMLDocumentSchemaPlugin implements DocumentPlugin {
 
   type(type: GraphQLType): string | null {
 
-    if (type instanceof GraphQLScalarType) {
-      return this.scalar(type);
+    switch(type.constructor.name) {
+      case 'GraphQLScalarType':
+        return this.scalar(type);
 
-    } else if (type instanceof GraphQLObjectType) {
-      return this.object(type);
+      case 'GraphQLObjectType':
+        return this.object(type);
 
-    } else if (type instanceof GraphQLInterfaceType) {
-      return this.interfaces(type);
+      case 'GraphQLInterfaceType':
+        return this.interfaces(type);
 
-    } else if (type instanceof GraphQLUnionType) {
-      return this.union(type);
+      case 'GraphQLUnionType':
+        return this.union(type);
 
-    } else if (type instanceof GraphQLEnumType) {
-      return this.enum(type);
+      case 'GraphQLEnumType':
+        return this.enum(type);
 
-    } else if (type instanceof GraphQLInputObjectType) {
-      return this.inputObject(type);
+      case 'GraphQLInputObjectType':
+        return this.inputObject(type);
+
+      default:
+        return null;
     }
-
-    return null;
   }
 
   union(type: GraphQLUnionType): string {

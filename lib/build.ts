@@ -1,10 +1,9 @@
-import { GraphQLSchema, GraphQLType, GraphQLList, GraphQLNonNull } from 'graphql';
 import { resolve } from 'path';
 import { render } from 'mustache';
-import { DocumentPlugin } from './interface';
+import { DocumentPlugin, TypeRef } from './interface';
+import { getTypeOf } from './introspection';
 import { readTemplate, writeFile, createBuildFolder } from './fs';
 import { DataTranslator } from './data';
-import { serializeFunction, parseLiteralFunction, parseValueFunction } from './section/code';
 import { DocumentSchemaPlugin } from './section/print';
 import { HTMLDocumentSchemaPlugin } from './section/print.html';
 
@@ -40,15 +39,10 @@ export function build(options: BuildOptions) {
     let templateDir = resolve(options.templateDir);
     let icon = options.icon || defaulIcon(baseUrl);
     let documentSections = options.plugins || [];
-    let resolveUrl = (type) => {
+    let resolveUrl = (t: TypeRef) => {
 
-        let t: GraphQLType = type;
-
-        while (t instanceof GraphQLList || t instanceof GraphQLNonNull) {
-            t = t.ofType;
-        }
-
-        let name = (t.name as string).toLowerCase();
+        let type: TypeRef = getTypeOf(t);
+        let name = (type.name as string).toLowerCase();
 
         if(name[0] === '_' && name[1] === '_')
             return baseUrl + name.slice(2) + '.native.html';
