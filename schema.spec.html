@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">,<link type="text/css" rel="stylesheet" href="./assets/code.css" />
-    <title>Character</title>
+    <title>__Schema</title>
 </head>
 <body>
     <nav>
@@ -60,7 +60,7 @@
         <li >
             <a href="./droid.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Droid</a>
         </li>
-        <li >
+        <li class="slds-is-active">
             <a href="./schema.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Schema</a>
         </li>
         <li >
@@ -96,13 +96,13 @@
 </div>
 </nav>
     <main><section class="title">
-    <h1 class="slds-text-heading--large">Character</h1>
-    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>A character in the Star Wars Trilogy</p>
+    <h1 class="slds-text-heading--large">__Schema</h1>
+    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.</p>
 </div>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">interface</span> <span class="identifier">Character</span> {</li><li></li><li><span class="tab"><span class="comment line"># The id of the character.</span></span></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="./id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The name of the character.</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="./string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The friends of the character, or an empty list if they</span></span></li><li><span class="tab"><span class="comment line"># have none.</span></span></li><li><span class="tab"><span class="meta">friends</span>: [<a class="support type" href="./character.doc.html">Character</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># Which movies they appear in.</span></span></li><li><span class="tab"><span class="meta">appearsIn</span>: [<a class="support type" href="./episode.doc.html">Episode</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># All secrets about their past.</span></span></li><li><span class="tab"><span class="meta">secretBackstory</span>: <a class="support type" href="./string.doc.html">String</a> </span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">__Schema</span> {</li><li></li><li><span class="tab"><span class="comment line"># A list of all types supported by this server.</span></span></li><li><span class="tab"><span class="meta">types</span>: [<a class="support type" href="./type.spec.html">__Type</a>!]! </span></li><li></li><li><span class="tab"><span class="comment line"># The type that query operations will be rooted at.</span></span></li><li><span class="tab"><span class="meta">queryType</span>: <a class="support type" href="./type.spec.html">__Type</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># If this server supports mutation, the type that mutation</span></span></li><li><span class="tab"><span class="comment line"># operations will be rooted at.</span></span></li><li><span class="tab"><span class="meta">mutationType</span>: <a class="support type" href="./type.spec.html">__Type</a> </span></li><li></li><li><span class="tab"><span class="comment line"># If this server support subscription, the type that</span></span></li><li><span class="tab"><span class="comment line"># subscription operations will be rooted at.</span></span></li><li><span class="tab"><span class="meta">subscriptionType</span>: <a class="support type" href="./type.spec.html">__Type</a> </span></li><li></li><li><span class="tab"><span class="comment line"># A list of all directives supported by this server.</span></span></li><li><span class="tab"><span class="meta">directives</span>: [<a class="support type" href="./directive.spec.html">__Directive</a>!]! </span></li><li>}</li></ul></code>
 </section>
 </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">

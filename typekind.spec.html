@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">,<link type="text/css" rel="stylesheet" href="./assets/code.css" />
-    <title>Character</title>
+    <title>__TypeKind</title>
 </head>
 <body>
     <nav>
@@ -43,7 +43,7 @@
         <li >
             <a href="./episode.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Episode</a>
         </li>
-        <li >
+        <li class="slds-is-active">
             <a href="./typekind.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__TypeKind</a>
         </li>
         <li >
@@ -96,13 +96,13 @@
 </div>
 </nav>
     <main><section class="title">
-    <h1 class="slds-text-heading--large">Character</h1>
-    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>A character in the Star Wars Trilogy</p>
+    <h1 class="slds-text-heading--large">__TypeKind</h1>
+    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>An enum describing what kind of type a given <code>__Type</code> is.</p>
 </div>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">interface</span> <span class="identifier">Character</span> {</li><li></li><li><span class="tab"><span class="comment line"># The id of the character.</span></span></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="./id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The name of the character.</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="./string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The friends of the character, or an empty list if they</span></span></li><li><span class="tab"><span class="comment line"># have none.</span></span></li><li><span class="tab"><span class="meta">friends</span>: [<a class="support type" href="./character.doc.html">Character</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># Which movies they appear in.</span></span></li><li><span class="tab"><span class="meta">appearsIn</span>: [<a class="support type" href="./episode.doc.html">Episode</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># All secrets about their past.</span></span></li><li><span class="tab"><span class="meta">secretBackstory</span>: <a class="support type" href="./string.doc.html">String</a> </span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">enum</span> <span class="identifier">__TypeKind</span> {</li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is a scalar.</span></span></li><li><span class="tab"><span class="meta">SCALAR</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is an object. `fields` and `interfaces`</span></span></li><li><span class="tab"><span class="comment line"># are valid fields.</span></span></li><li><span class="tab"><span class="meta">OBJECT</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is an interface. `fields` and `possibleTypes`</span></span></li><li><span class="tab"><span class="comment line"># are valid fields.</span></span></li><li><span class="tab"><span class="meta">INTERFACE</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is a union. `possibleTypes` is</span></span></li><li><span class="tab"><span class="comment line"># a valid field.</span></span></li><li><span class="tab"><span class="meta">UNION</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is an enum. `enumValues` is a valid</span></span></li><li><span class="tab"><span class="comment line"># field.</span></span></li><li><span class="tab"><span class="meta">ENUM</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is an input object. `inputFields`</span></span></li><li><span class="tab"><span class="comment line"># is a valid field.</span></span></li><li><span class="tab"><span class="meta">INPUT_OBJECT</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is a list. `ofType` is a valid</span></span></li><li><span class="tab"><span class="comment line"># field.</span></span></li><li><span class="tab"><span class="meta">LIST</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Indicates this type is a non-null. `ofType` is a valid</span></span></li><li><span class="tab"><span class="comment line"># field.</span></span></li><li><span class="tab"><span class="meta">NON_NULL</span></span></li><li>}</li></ul></code>
 </section>
 </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">

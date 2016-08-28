@@ -5,11 +5,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
-    <link type="text/css" rel="stylesheet" href="./styles/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">,<link type="text/css" rel="stylesheet" href="./assets/code.css" />
     <title>String</title>
 </head>
 <body>
-    <nav><header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large"><a href="./" >Schema types</a></header><div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <nav>
+        <header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large">
+            <a href=".&#x2F;">GraphQL Schema</a>
+    </header><div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
     <h4 class="slds-text-heading--label">Schema</h4>
     <ul class="slds-navigation-list--vertical slds-has-block-links--space">
         <li >
@@ -40,14 +43,17 @@
         <li >
             <a href="./episode.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Episode</a>
         </li>
+        <li >
+            <a href="./typekind.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__TypeKind</a>
+        </li>
+        <li >
+            <a href="./directivelocation.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__DirectiveLocation</a>
+        </li>
     </ul>
 </div>
 <div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
     <h4 class="slds-text-heading--label">Objects</h4>
     <ul class="slds-navigation-list--vertical slds-has-block-links--space">
-        <li >
-            <a href="./query.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Query</a>
-        </li>
         <li >
             <a href="./human.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Human</a>
         </li>
@@ -55,44 +61,36 @@
             <a href="./droid.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Droid</a>
         </li>
         <li >
-            <a href="./mutation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Mutation</a>
+            <a href="./schema.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Schema</a>
+        </li>
+        <li >
+            <a href="./type.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Type</a>
+        </li>
+        <li >
+            <a href="./field.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Field</a>
+        </li>
+        <li >
+            <a href="./inputvalue.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__InputValue</a>
+        </li>
+        <li >
+            <a href="./enumvalue.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__EnumValue</a>
+        </li>
+        <li >
+            <a href="./directive.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Directive</a>
         </li>
     </ul>
 </div>
 <div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
-    <h4 class="slds-text-heading--label">Interfaces</h4>
+    <h4 class="slds-text-heading--label">Directives</h4>
     <ul class="slds-navigation-list--vertical slds-has-block-links--space">
         <li >
-            <a href="./character.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Character</a>
-        </li>
-    </ul>
-</div>
-<div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
-    <h4 class="slds-text-heading--label">GraphQL</h4>
-    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
-        <li >
-            <a href="./schema.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Schema <sup>OBJECT</sup></a>
+            <a href="./include.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">include</a>
         </li>
         <li >
-            <a href="./type.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Type <sup>OBJECT</sup></a>
+            <a href="./skip.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">skip</a>
         </li>
         <li >
-            <a href="./typekind.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__TypeKind <sup>ENUM</sup></a>
-        </li>
-        <li >
-            <a href="./field.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Field <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./inputvalue.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__InputValue <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./enumvalue.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__EnumValue <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./directive.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Directive <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./directivelocation.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__DirectiveLocation <sup>ENUM</sup></a>
+            <a href="./deprecated.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">deprecated</a>
         </li>
     </ul>
 </div>
@@ -104,10 +102,10 @@
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<pre class="code"><span class="keyword operator ts">scalar</span> <span class="identifier">String</span></pre>
+<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">scalar</span> <span class="identifier">String</span></li></ul></code>
 </section>
 </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
-    <p class="slds-text-align--right">created with <a href=https:&#x2F;&#x2F;github.com&#x2F;2fd&#x2F;graphdoc#readme>graphdoc 0.1.0</a></p>
+    <p class="slds-text-align--right">created with <a href=>graphdoc 0.1.0</a></p>
 </div></footer>
 </body>

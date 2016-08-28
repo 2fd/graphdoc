@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">,<link type="text/css" rel="stylesheet" href="./assets/code.css" />
-    <title>Character</title>
+    <title>include</title>
 </head>
 <body>
     <nav>
@@ -83,7 +83,7 @@
 <div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
     <h4 class="slds-text-heading--label">Directives</h4>
     <ul class="slds-navigation-list--vertical slds-has-block-links--space">
-        <li >
+        <li class="slds-is-active">
             <a href="./include.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">include</a>
         </li>
         <li >
@@ -96,13 +96,13 @@
 </div>
 </nav>
     <main><section class="title">
-    <h1 class="slds-text-heading--large">Character</h1>
-    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>A character in the Star Wars Trilogy</p>
+    <h1 class="slds-text-heading--large">include</h1>
+    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>Directs the executor to include this field or fragment only when the <code>if</code> argument is true.</p>
 </div>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">interface</span> <span class="identifier">Character</span> {</li><li></li><li><span class="tab"><span class="comment line"># The id of the character.</span></span></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="./id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The name of the character.</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="./string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The friends of the character, or an empty list if they</span></span></li><li><span class="tab"><span class="comment line"># have none.</span></span></li><li><span class="tab"><span class="meta">friends</span>: [<a class="support type" href="./character.doc.html">Character</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># Which movies they appear in.</span></span></li><li><span class="tab"><span class="meta">appearsIn</span>: [<a class="support type" href="./episode.doc.html">Episode</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># All secrets about their past.</span></span></li><li><span class="tab"><span class="meta">secretBackstory</span>: <a class="support type" href="./string.doc.html">String</a> </span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">directive</span> <span class="keyword operator ts">@include</span>(<span class="variable parameter">if</span>: <a class="support type" href="./boolean.doc.html">Boolean</a>!) on <span class="keyword operator ts">FIELD</span> | <span class="keyword operator ts">FRAGMENT_SPREAD</span> | <span class="keyword operator ts">INLINE_FRAGMENT</span></li></ul></code>
 </section>
 </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">

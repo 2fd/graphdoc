@@ -1,6 +1,6 @@
 .code .gutter {
   background: #f6f6f6;
-  color: #4D4D4C
+  color: #4D4D4C;
 }
 
 .code .print-margin {
@@ -9,8 +9,26 @@
 }
 
 .code {
-  background-color: #FFFFFF;
-  color: #4D4D4C
+  background-color: #f6f6f6;
+  color: #4D4D4C;
+  border: 1px solid #4D4D4C;
+  font-size: 14px;
+  font-family: 'Ubuntu Mono';
+  cursor: text;
+  list-style-type: decimal;
+}
+
+.code li {
+  min-height: 1em;
+  background: #FFF;
+  padding: 1px 8px;
+}
+.code li:hover {
+  background: #EFEFEF;
+}
+
+.code .tab {
+  padding-left: 2em;
 }
 
 .code .cursor {
@@ -39,7 +57,7 @@
 }
 
 .code .gutter-active-line {
-  background-color : #dcdcdc
+  background-color: #dcdcdc
 }
 
 .code .marker-layer .selected-word {
@@ -94,9 +112,6 @@
 .code .variable.parameter,
 .code .variable {
   color: #4271AE
-}
-.code .variable.parameter {
-  cursor: help;
 }
 
 .code .support.class,

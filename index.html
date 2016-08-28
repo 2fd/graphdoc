@@ -5,11 +5,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
-    <link type="text/css" rel="stylesheet" href="./styles/code.css" />
-    <title>Star Wars Schema</title>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">,<link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <title>Graphql schema documentation</title>
 </head>
 <body>
-    <nav><header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large"><a href="./" >Schema types</a></header><div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
+    <nav>
+        <header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large">
+            <a href=".&#x2F;">GraphQL Schema</a>
+    </header><div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
     <h4 class="slds-text-heading--label">Schema</h4>
     <ul class="slds-navigation-list--vertical slds-has-block-links--space">
         <li >
@@ -40,14 +43,17 @@
         <li >
             <a href="./episode.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Episode</a>
         </li>
+        <li >
+            <a href="./typekind.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__TypeKind</a>
+        </li>
+        <li >
+            <a href="./directivelocation.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__DirectiveLocation</a>
+        </li>
     </ul>
 </div>
 <div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
     <h4 class="slds-text-heading--label">Objects</h4>
     <ul class="slds-navigation-list--vertical slds-has-block-links--space">
-        <li >
-            <a href="./query.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Query</a>
-        </li>
         <li >
             <a href="./human.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Human</a>
         </li>
@@ -55,174 +61,50 @@
             <a href="./droid.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Droid</a>
         </li>
         <li >
-            <a href="./mutation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Mutation</a>
+            <a href="./schema.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Schema</a>
+        </li>
+        <li >
+            <a href="./type.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Type</a>
+        </li>
+        <li >
+            <a href="./field.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Field</a>
+        </li>
+        <li >
+            <a href="./inputvalue.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__InputValue</a>
+        </li>
+        <li >
+            <a href="./enumvalue.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__EnumValue</a>
+        </li>
+        <li >
+            <a href="./directive.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Directive</a>
         </li>
     </ul>
 </div>
 <div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
-    <h4 class="slds-text-heading--label">Interfaces</h4>
+    <h4 class="slds-text-heading--label">Directives</h4>
     <ul class="slds-navigation-list--vertical slds-has-block-links--space">
         <li >
-            <a href="./character.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">Character</a>
-        </li>
-    </ul>
-</div>
-<div class="slds-grid slds-grid--vertical slds-p-around--small slds-col--rule-right">
-    <h4 class="slds-text-heading--label">GraphQL</h4>
-    <ul class="slds-navigation-list--vertical slds-has-block-links--space">
-        <li >
-            <a href="./schema.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Schema <sup>OBJECT</sup></a>
+            <a href="./include.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">include</a>
         </li>
         <li >
-            <a href="./type.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Type <sup>OBJECT</sup></a>
+            <a href="./skip.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">skip</a>
         </li>
         <li >
-            <a href="./typekind.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__TypeKind <sup>ENUM</sup></a>
-        </li>
-        <li >
-            <a href="./field.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Field <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./inputvalue.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__InputValue <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./enumvalue.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__EnumValue <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./directive.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__Directive <sup>OBJECT</sup></a>
-        </li>
-        <li >
-            <a href="./directivelocation.native.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">__DirectiveLocation <sup>ENUM</sup></a>
+            <a href="./deprecated.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">deprecated</a>
         </li>
     </ul>
 </div>
 </nav>
     <main><section class="title">
-    <h1 class="slds-text-heading--large">Star Wars Schema</h1>
-    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>View <a href="./native.html">native schema</a></p>
-</div>
+    <h1 class="slds-text-heading--large">Graphql schema documentation</h1>
+    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large">Static page generator for GraphQL.js</div>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<pre class="code"><span class="keyword operator ts">schema</span> {
-
-  <span class="comment line"># Root query</span>
-  <span class="meta">query</span>: <a class="support type" href="./query.doc.html" title="Root query">Query</a>
-
-  <span class="comment line"># Root Mutation</span>
-  <span class="meta">mutation</span>: <a class="support type" href="./mutation.doc.html" title="Root Mutation">Mutation</a>
-}
-
-<span class="keyword operator ts">interface</span> <span class="identifier">Character</span> {
-
-  <span class="comment line"># The id of the character.</span>
-  <span class="meta">id</span>: <a class="support type" href="./id.doc.html" title="The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.">ID</a><span class="variable language">!</span>
-
-  <span class="comment line"># The name of the character.</span>
-  <span class="meta">name</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-
-  <span class="comment line"># The friends of the character, or an empty list if they</span>
-  <span class="comment line"># have none.</span>
-  <span class="meta">friends</span>: <a class="support type" href="./character.doc.html" title="A character in the Star Wars Trilogy">Character</a><span class="variable language">[]</span>
-
-  <span class="comment line"># Which movies they appear in.</span>
-  <span class="meta">appearsIn</span>: <a class="support type" href="./episode.doc.html" title="One of the films in the Star Wars Trilogy">Episode</a><span class="variable language">[]</span>
-
-  <span class="comment line"># All secrets about their past.</span>
-  <span class="meta">secretBackstory</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-}
-
-<span class="keyword operator ts">type</span> <span class="identifier">Droid</span> <span class="keyword operator ts">implements</span> <a class="support type" href="./character.doc.html" title="A character in the Star Wars Trilogy">Character</a> {
-
-  <span class="comment line"># The id of the droid.</span>
-  <span class="meta">id</span>: <a class="support type" href="./id.doc.html" title="The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.">ID</a><span class="variable language">!</span>
-
-  <span class="comment line"># The name of the droid.</span>
-  <span class="meta">name</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-
-  <span class="comment line"># The friends of the droid, or an empty list if they have</span>
-  <span class="comment line"># none.</span>
-  <span class="meta">friends</span>: <a class="support type" href="./character.doc.html" title="A character in the Star Wars Trilogy">Character</a><span class="variable language">[]</span>
-
-  <span class="comment line"># Which movies they appear in.</span>
-  <span class="meta">appearsIn</span>: <a class="support type" href="./episode.doc.html" title="One of the films in the Star Wars Trilogy">Episode</a><span class="variable language">[]</span>
-
-  <span class="comment line"># Construction date and the name of the designer.</span>
-  <span class="meta">secretBackstory</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-
-  <span class="comment line"># The primary function of the droid.</span>
-  <span class="meta">primaryFunction</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-}
-
-<span class="keyword operator ts">enum</span> <span class="identifier">Episode</span> {
-
-  <span class="comment line"># Released in 1977.</span>
-  <span class="meta">NEWHOPE</span>
-
-  <span class="comment line"># Released in 1980.</span>
-  <span class="meta">EMPIRE</span>
-
-  <span class="comment line"># Released in 1983.</span>
-  <span class="meta">JEDI</span>
-}
-
-<span class="keyword operator ts">type</span> <span class="identifier">Human</span> <span class="keyword operator ts">implements</span> <a class="support type" href="./character.doc.html" title="A character in the Star Wars Trilogy">Character</a> {
-
-  <span class="comment line"># The id of the human.</span>
-  <span class="meta">id</span>: <a class="support type" href="./id.doc.html" title="The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.">ID</a><span class="variable language">!</span>
-
-  <span class="comment line"># The name of the human.</span>
-  <span class="meta">name</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-
-  <span class="comment line"># The friends of the human, or an empty list if they have</span>
-  <span class="comment line"># none.</span>
-  <span class="meta">friends</span>: <a class="support type" href="./character.doc.html" title="A character in the Star Wars Trilogy">Character</a><span class="variable language">[]</span>
-
-  <span class="comment line"># Which movies they appear in.</span>
-  <span class="meta">appearsIn</span>: <a class="support type" href="./episode.doc.html" title="One of the films in the Star Wars Trilogy">Episode</a><span class="variable language">[]</span>
-
-  <span class="comment line"># The home planet of the human, or null if unknown.</span>
-  <span class="meta">homePlanet</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-
-  <span class="comment line"># Where are they from and how they came to be who they</span>
-  <span class="comment line"># are.</span>
-  <span class="meta">secretBackstory</span>: <a class="support type" href="./string.doc.html" title="The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.">String</a>
-}
-
-<span class="keyword operator ts">type</span> <span class="identifier">Mutation</span> {
-
-  <span class="comment line"># Save the favorite episode.</span>
-  <span class="comment line"># </span>
-  <span class="comment line"># Arguments</span>
-  <span class="comment line"># episode: Favorite episode.</span>
-  <span class="meta">favorite</span>(<span class="variable parameter" title="Favorite episode.">episode</span>: <a class="support type" href="./episode.doc.html" title="One of the films in the Star Wars Trilogy">Episode</a><span class="variable language">!</span>): <a class="support type" href="./episode.doc.html" title="One of the films in the Star Wars Trilogy">Episode</a>
-}
-
-<span class="keyword operator ts">type</span> <span class="identifier">Query</span> {
-
-  <span class="comment line"># Return the hero by episode.</span>
-  <span class="comment line"># </span>
-  <span class="comment line"># Arguments</span>
-  <span class="comment line"># episode: If omitted, returns the hero of the whole saga.</span>
-  <span class="comment line"># If provided, returns the hero of that particular episode.</span>
-  <span class="meta">hero</span>(<span class="variable parameter" title="If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.">episode</span>: <a class="support type" href="./episode.doc.html" title="One of the films in the Star Wars Trilogy">Episode</a>): <a class="support type" href="./character.doc.html" title="A character in the Star Wars Trilogy">Character</a>
-
-  <span class="comment line"># Return the Human by ID.</span>
-  <span class="comment line"># </span>
-  <span class="comment line"># Arguments</span>
-  <span class="comment line"># id: id of the human</span>
-  <span class="meta">human</span>(<span class="variable parameter" title="id of the human">id</span>: <a class="support type" href="./id.doc.html" title="The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.">ID</a><span class="variable language">!</span>): <a class="support type" href="./human.doc.html" title="A humanoid creature in the Star Wars universe.">Human</a>
-
-  <span class="comment line"># Return the Droid by ID.</span>
-  <span class="comment line"># </span>
-  <span class="comment line"># Arguments</span>
-  <span class="comment line"># id: id of the droid</span>
-  <span class="meta">droid</span>(<span class="variable parameter" title="id of the droid">id</span>: <a class="support type" href="./id.doc.html" title="The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.">ID</a><span class="variable language">!</span>): <a class="support type" href="./droid.doc.html" title="A mechanical creature in the Star Wars universe.">Droid</a>
-}
-</pre>
+<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">schema</span> {</li><li></li><li><span class="tab"><span class="comment line"># Root query</span></span></li><li><span class="tab"><span class="meta">query</span>: <a class="support type" href="./query.doc.html">Query</a></span></li><li></li><li><span class="tab"><span class="comment line"># Root Mutation</span></span></li><li><span class="tab"><span class="meta">mutation</span>: <a class="support type" href="./query.doc.html">Mutation</a></span></li><li>}</li></ul></code>
 </section>
 </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
-    <p class="slds-text-align--right">created with <a href=https:&#x2F;&#x2F;github.com&#x2F;2fd&#x2F;graphdoc#readme>graphdoc 0.1.0</a></p>
+    <p class="slds-text-align--right">created with <a href=>graphdoc 0.1.0</a></p>
 </div></footer>
 </body>
