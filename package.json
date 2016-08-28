@@ -28,6 +28,9 @@
     "@types/mustache": "^0.8.28",
     "@types/node": "^6.0.32",
     "chai": "^3.5.0",
+    "express": "^4.14.0",
+    "express-graphql": "^0.5.4",
+    "graphql": "^0.7.0",
     "node-sass": "^3.8.0",
     "typescript": "2.0.0"
   },
