@@ -1,8 +1,7 @@
-import {StarWarsSchema} from './schema';
 import {build} from '../lib/build';
 
 build({
-    schema: StarWarsSchema,
+    schema: require('./schema.json').data.__schema,
     templateDir: './template/slds',
     buildDir: './build'
 });

@@ -10,9 +10,11 @@
             "es2015.core",
             "scripthost"
         ],
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "sourceMap": true
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "templates"
     ]
 }

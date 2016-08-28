@@ -38,4 +38,5 @@ jspm_packages
 
 .vscode
 *.js
+*.js.map
 build/*

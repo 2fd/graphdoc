@@ -1,26 +1,30 @@
 /**
  *
  */
-export interface NavigationPluginInterface {
-    getSections(buildForType?: string): NavigationSectionInterface[];
+export interface PluginInterface {
+    document: Schema;
+    url: refToUrl;
+    queryType: SchemaType | null;
+    mutationType: SchemaType | null;
+    subscriptionType: SchemaType | null;
+
+    new (schema: Schema, urlReolver: refToUrl): PluginInterface;
+
+    getNavigations(buildForType?: string): NavigationSectionInterface[];
+    getDocuments(buildForType?: string): DocumentSectionInterface[];
+    getHeaders(buildForType?: string): string[];
+    getAssets(): string[];
 }
 
 export interface NavigationSectionInterface {
     title: string;
     items: NavigationItemInterface[];
-};
+}
 
 export interface NavigationItemInterface {
     href: string;
     text: string;
     isActive: boolean;
-}
-
-/**
- *
- */
-export interface DocumentPluginInterface {
-    getSections(): DocumentSectionInterface[];
 }
 
 export interface DocumentSectionInterface {
@@ -31,7 +35,7 @@ export interface DocumentSectionInterface {
 /**
  * Convert TypeRef
  */
-type nameToUrl = (typeName: string) => string;
+type refToUrl = (typeName: TypeRef) => string;
 
 /**
  * Introspection types
@@ -53,7 +57,7 @@ type Schema = {
 type Description = {
     name: string,
     description: string,
-    kind: string,
+    kind?: string,
 }
 
 type Deprecation = {
@@ -78,10 +82,10 @@ type EnumValue = Description & Deprecation;
 
 type InputValue = Description & {
     type: TypeRef,
-    defaultValue: string | number,
+    defaultValue: string | number | null,
 }
 
-type Field = Description & Deprecation &  {
+type Field = Description & Deprecation & {
     args: InputValue[],
     type: TypeRef
 }

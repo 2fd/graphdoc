@@ -1,34 +1,34 @@
-import { Schema, NavigationPluginInterface, NavigationSectionInterface, NavigationItemInterface, nameToUrl } from '../interface';
-import { NavigationPlugin, NavigationSection, NavigationItem } from '../utility';
+import { Schema, PluginInterface, NavigationSectionInterface, NavigationItemInterface, nameToUrl } from '../interface';
+import { Plugin, NavigationSection, NavigationItem } from '../utility';
 
-export default class NavigationSchema extends NavigationPlugin implements NavigationPluginInterface {
+export default class NavigationSchema extends Plugin implements PluginInterface {
 
-    getSections(buildFrom?: string): NavigationSectionInterface[] {
+    getNavigations(buildFrom?: string): NavigationSectionInterface[] {
 
         const section = new NavigationSection('Schema', []);
 
         // Query
-        if (this.schema.queryType)
+        if (this.document.queryType)
             section.items.push(new NavigationItem(
-                this.schema.queryType.name,
-                this.url(this.schema.queryType.name),
-                buildFrom === this.schema.queryType.name
+                this.document.queryType.name,
+                this.url(this.document.queryType),
+                buildFrom === this.document.queryType.name
             ));
 
         // Mutation
-        if (this.schema.mutationType)
+        if (this.document.mutationType)
             section.items.push(new NavigationItem(
-                this.schema.mutationType.name,
-                this.url(this.schema.mutationType.name),
-                buildFrom === this.schema.mutationType.name
+                this.document.mutationType.name,
+                this.url(this.document.mutationType),
+                buildFrom === this.document.mutationType.name
             ));
 
         // Suscription
-        if (this.schema.subscriptionType)
+        if (this.document.subscriptionType)
             section.items.push(new NavigationItem(
-                this.schema.subscriptionType.name,
-                this.url(this.schema.subscriptionType.name),
-                buildFrom === this.schema.subscriptionType.name
+                this.document.subscriptionType.name,
+                this.url(this.document.subscriptionType),
+                buildFrom === this.document.subscriptionType.name
             ));
 
         return [section];

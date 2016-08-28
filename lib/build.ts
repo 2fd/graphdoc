@@ -1,21 +1,24 @@
+import * as marked from 'marked';
 import { resolve } from 'path';
 import { render } from 'mustache';
-import { DocumentPlugin, TypeRef } from './interface';
-import { getTypeOf } from './introspection';
+import { getTypeOf } from './utility';
 import { readTemplate, writeFile, createBuildFolder } from './fs';
-import { DataTranslator } from './data';
-import { DocumentSchemaPlugin } from './section/print';
-import { HTMLDocumentSchemaPlugin } from './section/print.html';
+import {
+    PluginInterface,
+    DocumentSectionInterface,
+    NavigationSectionInterface,
+    Schema,
+    TypeRef,
+} from './interface';
 
 let pack = require('../package.json');
 
 type BuildOptions = {
-    schema: GraphQLSchema;
+    schema: Schema;
     templateDir: string;
     buildDir: string;
     baseUrl?: string;
     icon?: string;
-    plugins?: DocumentSchemaPlugin[];
 };
 
 type Partials = {
@@ -38,26 +41,35 @@ export function build(options: BuildOptions) {
     let buildDir = resolve(options.buildDir);
     let templateDir = resolve(options.templateDir);
     let icon = options.icon || defaulIcon(baseUrl);
-    let documentSections = options.plugins || [];
     let resolveUrl = (t: TypeRef) => {
 
         let type: TypeRef = getTypeOf(t);
         let name = (type.name as string).toLowerCase();
 
-        if(name[0] === '_' && name[1] === '_')
-            return baseUrl + name.slice(2) + '.native.html';
+        if (name[0] === '_' && name[1] === '_')
+            return baseUrl + name.slice(2) + '.spec.html';
 
         return baseUrl + name + '.doc.html';
     };
 
-    let plugins: DocumentPlugin[] = [
-        // new DocumentSchemaPlugin('GraphQL Schema definition'),
-        new HTMLDocumentSchemaPlugin('GraphQL Schema definition', resolveUrl),
-    ];
+    let plugins: PluginInterface[] = [
+        require('./plugins/navigation.schema').default,
+        require('./plugins/navigation.scalar').default,
+        require('./plugins/navigation.enum').default,
+        require('./plugins/navigation.interface').default,
+        require('./plugins/navigation.union').default,
+        require('./plugins/navigation.object').default,
+        require('./plugins/navigation.input').default,
+        require('./plugins/navigation.directive').default,
+        require('./plugins/document.schema').default,
+    ].map(Plugin => new Plugin(schema, resolveUrl));
 
-    let dataTranslator = new DataTranslator(schema, plugins, resolveUrl);
+    let pluginsAssets: string[] = plugins.reduce(
+        (assets: string[], plugin: PluginInterface) => assets.concat(plugin.getAssets()),
+        []
+    );
 
-    return createBuildFolder(buildDir, templateDir)
+    return createBuildFolder(buildDir, templateDir, pluginsAssets)
         .then(() => Promise.all([
             readTemplate(resolve(templateDir, 'index.mustache'), 'utf8'),
             readTemplate(resolve(templateDir, 'main.mustache'), 'utf8'),
@@ -75,12 +87,26 @@ export function build(options: BuildOptions) {
         })
         .then((partials: Partials) => {
 
-            let data = Object.assign(
-                {},
-                pack,
-                dataTranslator.getNavigationData(),
-                dataTranslator.getSchemaData(schema, 'Star Wars Schema', schemaDescription(baseUrl + 'native.html'))
-            );
+            let data = {
+                title: 'Graphql schema documentation',
+                description: pack.description,
+                version: pack.version,
+                headers: plugins.reduce(
+                    (items: string[], plugin: PluginInterface) => items
+                        .concat(plugin.getHeaders()),
+                    []
+                ),
+                navs: plugins.reduce(
+                    (items: NavigationSectionInterface[], plugin: PluginInterface) => items
+                        .concat(plugin.getNavigations()),
+                    []
+                ),
+                sections: plugins.reduce(
+                    (items: DocumentSectionInterface[], plugin: PluginInterface) => items
+                        .concat(plugin.getDocuments()),
+                    []
+                )
+            };
 
             return writeFile(
                 resolve(buildDir, 'index.html'),
@@ -89,34 +115,32 @@ export function build(options: BuildOptions) {
         })
         .then((partials: Partials) => {
 
-            let data = Object.assign(
-                {},
-                pack,
-                dataTranslator.getNavigationData(),
-                dataTranslator.getNativeSchemaData(schema, 'Native Schema', nativeSchemaDescription(baseUrl))
-            );
+            let writing = []
+                .concat(schema.types)
+                .concat(schema.directives)
+                .map(type => {
 
-            return writeFile(
-                resolve(buildDir, 'native.html'),
-                render(partials.index, data, partials)
-            ).then(() => partials);
-        })
-        .then((partials: Partials) => {
-
-            let types = schema.getTypeMap();
-
-            let writing = Object
-                .keys(types)
-                .map(name => {
-
-                    let type = types[name];
                     let path = resolve(buildDir, resolveUrl(type));
-                    let data = Object.assign(
-                        {},
-                        pack,
-                        dataTranslator.getNavigationData(type),
-                        dataTranslator.getTypeData(type)
-                    );
+                    let data = {
+                        title: type.name,
+                        description: marked(type.description || ''),
+                        version: pack.version,
+                        headers: plugins.reduce(
+                            (items: string[], plugin: PluginInterface) => items
+                                .concat(plugin.getHeaders(type.name)),
+                            []
+                        ),
+                        navs: plugins.reduce(
+                            (items: NavigationSectionInterface[], plugin: PluginInterface) => items
+                                .concat(plugin.getNavigations(type.name)),
+                            []
+                        ),
+                        sections: plugins.reduce(
+                            (items: DocumentSectionInterface[], plugin: PluginInterface) => items
+                                .concat(plugin.getDocuments(type.name)),
+                            []
+                        )
+                    };
 
                     return writeFile(
                         path,

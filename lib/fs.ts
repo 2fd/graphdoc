@@ -1,5 +1,5 @@
-import { extname, resolve } from 'path';
-import { readFile as read, writeFile as write, readdir } from 'fs';
+import * as path from 'path';
+import { readFile as read, writeFile as write, readdir, mkdir } from 'fs';
 import { copyRecursive } from 'fs.extra';
 
 function readDir(path: string): Promise<string[]> {
@@ -20,24 +20,45 @@ function copy(origin, destiny): Promise<void> {
     ));
 }
 
-export function createBuildFolder(buildDir: string, templateDir: string): Promise<void> {
+export function createBuildFolder(buildDir: string, templateDir: string, assets: string[]): Promise<void> {
 
     // read directory
     return readDir(templateDir)
 
         // ignore *.mustache templates
-        .then(files => files.filter(file => extname(file) !== '.mustache'))
+        .then(files => files.filter(file => path.extname(file) !== '.mustache'))
 
         // copy recursive
         .then(files => {
 
             let copyAll = files.map((file: string) => copy(
-                resolve(templateDir, file),
-                resolve(buildDir, file)
+                path.resolve(templateDir, file),
+                path.resolve(buildDir, file)
             ));
 
-            return Promise.all(copyAll)
-                .then(() => files);
+            return Promise.all(copyAll);
+        })
+
+        // create assets directory
+        .then(files => {
+
+            return new Promise((resolve, reject) => mkdir(
+                path.resolve(buildDir, 'assets'),
+                (err) => {
+                    err ? reject(err) : resolve();
+                }
+            ));
+        })
+
+        // copy assets
+        .then(() => {
+
+            let copyAll = assets.map((asset: string) => copy(
+                asset,
+                path.resolve(buildDir, 'assets')
+            ));
+
+            return Promise.all(copyAll);
         });
 }
 

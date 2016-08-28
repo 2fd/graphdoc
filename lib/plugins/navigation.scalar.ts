@@ -1,14 +1,21 @@
-import { SCALAR } from '../introspection';
-import { NavigationPlugin, NavigationSection, NavigationItem } from '../utility';
-import { NavigationPluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../interface';
+import { SCALAR, Plugin, NavigationSection, NavigationItem } from '../utility';
+import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../interface';
 
-export default class NavigationScalars extends NavigationPlugin implements NavigationPluginInterface {
+export default class NavigationScalars extends Plugin implements PluginInterface {
 
-    getSections(buildForType: string) {
-
-        const types: NavigationItemInterface[] = this.schema.types
+    getTypes(buildForType: string): NavigationItemInterface[] {
+        return this.document.types
             .filter(type => type.kind === SCALAR)
-            .map(type => new NavigationItem(type.name, this.url(type.name), type.name === buildForType));
+            .map(type => new NavigationItem(
+                type.name,
+                this.url(type),
+                type.name === buildForType
+            ));
+    }
+
+    getNavigations(buildForType: string) {
+
+        const types: NavigationItemInterface[] = this.getTypes(buildForType);
 
         if (types.length === 0)
             return [];

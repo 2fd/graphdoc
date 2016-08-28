@@ -1,4 +1,4 @@
-import {SchemaType, TypeRef, Directive} from './interface';
+import { SchemaType, TypeRef, Directive } from './interface';
 
 export const query = `query IntrospectionQuery {
     __schema {
@@ -100,23 +100,6 @@ export const query = `query IntrospectionQuery {
     }
   }
 `;
-
-export const LIST = 'LIST';
-export const NON_NULL = 'NON_NULL';
-export const SCALAR = 'SCALAR';
-export const OBJECT = 'OBJECT';
-export const INTERFACE = 'INTERFACE';
-export const UNION = 'UNION';
-export const ENUM = 'ENUM';
-export const INPUT_OBJECT = 'INPUT_OBJECT';
-
-export function getTypeOf(type: TypeRef): TypeRef {
-
-  while(type.kind === LIST || type.kind === NON_NULL)
-    type = type.ofType as TypeRef;
-
-  return type;
-}
 
 function isSpecDirective(directive: Directive): boolean {
   return (
