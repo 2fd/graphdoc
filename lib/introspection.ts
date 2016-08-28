@@ -100,29 +100,3 @@ export const query = `query IntrospectionQuery {
     }
   }
 `;
-
-function isSpecDirective(directive: Directive): boolean {
-  return (
-    directive.name === 'skip' ||
-    directive.name === 'include' ||
-    directive.name === 'deprecated'
-  );
-}
-
-function isSpecType(type: SchemaType): boolean {
-  return type.name.indexOf('__') === 0;
-}
-
-function isSpecScalar(type: SchemaType): boolean {
-  return (
-    type.name === 'String' ||
-    type.name === 'Boolean' ||
-    type.name === 'Int' ||
-    type.name === 'Float' ||
-    type.name === 'ID'
-  );
-}
-
-function isDefinedType(type: SchemaType): boolean {
-  return !isSpecType(type) && !isSpecScalar(type);
-}

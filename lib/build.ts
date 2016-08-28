@@ -25,14 +25,8 @@ type Partials = {
     index: string,
     main: string,
     nav: string,
+    footer: string,
 }
-
-let defaulIcon = (baseUrl: string) => '<header class="slds-theme--alt-inverse slds-text-heading--medium slds-p-around--large">'
-    + '<a href="' + baseUrl + '" >Schema types</a>'
-    + '</header>';
-
-let schemaDescription = (nativeSchemaUrl: string) => 'View [native schema](' + nativeSchemaUrl + ')';
-let nativeSchemaDescription = (baseUrl: string) => 'View [implemented schema](' + baseUrl + ')';
 
 export function build(options: BuildOptions) {
 
@@ -40,7 +34,6 @@ export function build(options: BuildOptions) {
     let baseUrl = options.baseUrl || './';
     let buildDir = resolve(options.buildDir);
     let templateDir = resolve(options.templateDir);
-    let icon = options.icon || defaulIcon(baseUrl);
     let resolveUrl = (t: TypeRef) => {
 
         let type: TypeRef = getTypeOf(t);
@@ -81,8 +74,7 @@ export function build(options: BuildOptions) {
                 index: templates[0],
                 main: templates[1],
                 nav: templates[2],
-                footer: templates[3],
-                icon
+                footer: templates[3]
             };
         })
         .then((partials: Partials) => {
@@ -91,6 +83,8 @@ export function build(options: BuildOptions) {
                 title: 'Graphql schema documentation',
                 description: pack.description,
                 version: pack.version,
+                homepage: pack.homepage,
+                baseUrl: baseUrl,
                 headers: plugins.reduce(
                     (items: string[], plugin: PluginInterface) => items
                         .concat(plugin.getHeaders()),
@@ -125,6 +119,8 @@ export function build(options: BuildOptions) {
                         title: type.name,
                         description: marked(type.description || ''),
                         version: pack.version,
+                        homepage: pack.homepage,
+                        baseUrl: baseUrl,
                         headers: plugins.reduce(
                             (items: string[], plugin: PluginInterface) => items
                                 .concat(plugin.getHeaders(type.name)),
