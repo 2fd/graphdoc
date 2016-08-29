@@ -102,9 +102,9 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
     argumentDescription(arg: InputValue): string[] {
 
         const desc = arg.description === null ?
-            '<strong><em>' + arg.description + '</em></strong>' : arg.description;
+            '[' + html.highlight('NULL') + ']' : arg.description;
 
-        return this.description(arg.name + ': ' + desc);
+        return this.description(html.highlight(arg.name) + ': ' + desc);
     }
 
     argumentsDescription(fieldOrDirectives: Field | Directive): string[] {

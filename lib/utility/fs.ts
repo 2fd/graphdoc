@@ -1,6 +1,16 @@
 import * as path from 'path';
 import { readFile as read, writeFile as write, readdir, mkdir } from 'fs';
-import { copyRecursive } from 'fs.extra';
+import { copyRecursive, rmRecursiveSync } from 'fs.extra';
+
+const MODULE_BASE = 'graphdoc/';
+
+export function resolvePath(p: string): string {
+
+    if (p.indexOf(MODULE_BASE) !== 0)
+        return path.resolve(p);
+
+    return path.resolve(__dirname, '../../', p.slice(MODULE_BASE.length));
+};
 
 function readDir(path: string): Promise<string[]> {
     return new Promise((resolve, reject) => readdir(
