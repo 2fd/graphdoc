@@ -1,6 +1,6 @@
 {
   "name": "@2fd/graphdoc",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Static page generator for GraphQL.js",
   "main": "bin/graphdoc",
   "bin": {
