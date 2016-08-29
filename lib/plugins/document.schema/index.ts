@@ -113,7 +113,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
             return [];
         }
 
-        const reduceArguments = (descriptions: string[], arg: InputValue) => descriptions.concat(this.argumentDescription(arg);
+        const reduceArguments = (descriptions: string[], arg: InputValue) => descriptions.concat(this.argumentDescription(arg));
 
         return fieldOrDirectives.args
             .reduce(reduceArguments, [html.comment('Arguments')]);

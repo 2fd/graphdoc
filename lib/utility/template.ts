@@ -22,7 +22,7 @@ export function createData(projectPackage: any, graphdocPackage: any, plugins: P
         {
             title: (type && type.name) || projectPackage.graphdoc.title || 'Graphql schema documentation',
             description: type ? marked(type.description || '') : projectPackage.description,
-            graphdoc: Object.assign({}, graphdocPackage, projectPackage.graphdoc)
+            graphdoc: Object.assign({}, graphdocPackage, projectPackage.graphdoc),
             headers: plugins.reduce(reduceHeaders, []),
             navs: plugins.reduce(reduceNavigations, []),
             sections: plugins.reduce(reduceDocuments, []),

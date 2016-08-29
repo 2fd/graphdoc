@@ -72,7 +72,7 @@ export function createBuildFolder(buildDir: string, templateDir: string, assets:
         });
 }
 
-export function readTemplate(filename: string, encoding: string): Promise<Buffer | string> {
+export function readTemplate(filename: string, encoding: string): Promise<string> {
 
     return new Promise((resolve, reject) => read(
         filename,

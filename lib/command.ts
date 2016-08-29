@@ -31,10 +31,10 @@ const pack = require(path.resolve(__dirname, '../package.json'));
 const GREY = 'color:grey';
 const GREEN = 'color:green';
 
-type Params = {};
+export type Params = {};
 
-type Flags = {
-    configFile: strin,
+export type Flags = {
+    configFile: string,
     endpoint: string,
     heades: string[],
     queries: string[],
@@ -48,7 +48,7 @@ type Flags = {
     version: boolean,
 };
 
-type Partials = {
+export type Partials = {
     index: string,
     main: string,
     nav: string,
