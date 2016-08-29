@@ -1,0 +1,20 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "lib": [
+            "es5",
+            "es2015",
+            "es2015.core",
+            "scripthost"
+        ],
+        "strictNullChecks": true,
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "templates"
+    ]
+}
