@@ -8,8 +8,7 @@
   },
   "scripts": {
     "compile": "tsc -p .",
-    "declaration": "tsc -d -p tsconfig.json",
-    "preversion": "npm run compile"
+    "declaration": "tsc -d -p tsconfig.json"
   },
   "repository": {
     "type": "git",

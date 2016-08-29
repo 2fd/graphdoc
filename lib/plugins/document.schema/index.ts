@@ -283,7 +283,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
             [UNION]: '4',
             [OBJECT]: '5',
             [INPUT_OBJECT]: '6',
-        }
+        };
 
         return [definition]
            /* .concat(
