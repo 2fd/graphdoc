@@ -7,7 +7,8 @@ import {
     resolveUrlFor,
     NavigationItem,
     NavigationSection,
-    Plugin
+    Plugin,
+    sortTypes
 } from './plugin';
 
 import {
@@ -28,6 +29,7 @@ export {
     split,
 
     resolveUrlFor,
+    sortTypes,
     NavigationItem,
     NavigationSection,
     Plugin,

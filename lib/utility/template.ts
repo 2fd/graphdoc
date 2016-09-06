@@ -1,7 +1,7 @@
 import * as marked from 'marked';
-import { PluginInterface, SchemaType } from '../interface';
+import { PluginInterface, SchemaType, Directive } from '../interface';
 
-export function createData(projectPackage: any, graphdocPackage: any, plugins: PluginInterface[], type?: SchemaType): any {
+export function createData(projectPackage: any, graphdocPackage: any, plugins: PluginInterface[], type?: SchemaType | Directive): any {
 
 
     function reduceHeaders(items: any[], plugin: PluginInterface) {

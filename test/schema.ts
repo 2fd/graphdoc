@@ -16,7 +16,7 @@ import {
   GraphQLSchema,
   GraphQLString,
   GraphQLID,
-} from 'graphql/type';
+} from 'graphql';
 
 /**
  * This is designed to be an end-to-end test, demonstrating

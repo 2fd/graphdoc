@@ -4,11 +4,11 @@
 export interface PluginInterface {
     document: Schema;
     url: refToUrl;
-    queryType: SchemaType | null;
-    mutationType: SchemaType | null;
-    subscriptionType: SchemaType | null;
+    queryType?: SchemaType;
+    mutationType?: SchemaType;
+    subscriptionType?: SchemaType;
 
-    new (schema: Schema, urlReolver: refToUrl): PluginInterface;
+    //new (schema: Schema, urlReolver: refToUrl): PluginInterface;
 
     getNavigations(buildForType?: string): NavigationSectionInterface[];
     getDocuments(buildForType?: string): DocumentSectionInterface[];
@@ -30,7 +30,7 @@ export interface NavigationItemInterface {
 export interface DocumentSectionInterface {
     title: string;
     description: string;
-};
+}
 
 /**
  * Convert TypeRef

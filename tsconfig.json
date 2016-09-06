@@ -10,6 +10,12 @@
             "es2015.core",
             "scripthost"
         ],
+        "types": [
+            "marked",
+            "mustache",
+            "fs-extra",
+            "node"
+        ],
         "strictNullChecks": true,
         "sourceMap": true
     },

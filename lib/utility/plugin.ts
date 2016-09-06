@@ -9,7 +9,7 @@ import {
     TypeRef,
 } from '../interface';
 
-import {getTypeOf, LIST, NON_NULL} from './introspection';
+import { getTypeOf, LIST, NON_NULL } from './introspection';
 
 /**
  * Plugin Base implementation
@@ -24,11 +24,11 @@ export class Plugin implements PluginInterface {
 
     projectPackage: any;
 
-    queryType: SchemaType | null = null;
+    queryType?: SchemaType;
 
-    mutationType: SchemaType | null = null;
+    mutationType?: SchemaType;
 
-    subscriptionType: SchemaType | null = null;
+    subscriptionType?: SchemaType;
 
     constructor(document: Schema, urlResolver: refToUrl, graphdocPackage: any, projectPackage: any) {
         this.document = document;
@@ -50,6 +50,9 @@ export class Plugin implements PluginInterface {
             this.subscriptionType = this.document.types
                 .find((type) => type.name === document.subscriptionType.name);
         }
+
+        this.document.types = this.document.types.sort(sortTypes);
+        this.document.directives = this.document.directives.sort((a, b) => a.name.localeCompare(b.name));
 
     }
 
@@ -106,3 +109,29 @@ export function resolveUrlFor(baseUrl: string) {
         return baseUrl + name + '.doc.html';
     };
 };
+
+function priorityType(type: SchemaType): number {
+
+    return (
+        0 /* initial priority */ |
+        (type.name[0] === '_' ? 1 : 0) /* protected type priority */ |
+        (type.name[0] === '_' && type.name[1] === '_' ? 2 : 0) /* spec type priority */
+    );
+}
+
+export function sortTypes(a: SchemaType, b: SchemaType): number {
+
+    const priorityA = priorityType(a);
+    const priorityB = priorityType(b);
+
+    console.log(priorityA);
+    console.log(priorityB);
+
+    if (priorityA === priorityB) {
+        return a.name.localeCompare(b.name);
+    } else {
+        return priorityA - priorityB;
+    }
+
+
+}

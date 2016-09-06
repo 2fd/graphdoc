@@ -4,6 +4,7 @@ import {
     refToUrl,
     PluginInterface,
     DocumentSectionInterface,
+    NavigationSectionInterface,
     Schema,
     SchemaType,
     Field,
@@ -17,7 +18,7 @@ const MAX_COMMENT_LEN = 80;
 
 export default class SchemaPlugin  extends Plugin implements PluginInterface {
 
-    getHeaders() {
+    getHeaders(): string[] {
         return [
             '<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">',
             '<link type="text/css" rel="stylesheet" href="./assets/code.css" />',
@@ -82,7 +83,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
             }
         }
 
-        return null;
+        throw new TypeError('Unexpected type: ' + buildForType);
     }
 
     arguments(fieldOrDirectives: Field | Directive): string {
@@ -174,7 +175,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
         if (fieldDescription.length > 0 && argumentsDescription.length)
             fieldDescription.push(html.comment(''));
 
-        return []
+        return ([] as string[])
             .concat(fieldDescription)
             .concat(argumentsDescription)
             .concat([

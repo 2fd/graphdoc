@@ -14,6 +14,9 @@ import {
     DocumentSectionInterface,
     NavigationSectionInterface,
     Schema,
+    SchemaType,
+    Directive,
+    Retrospection,
     TypeRef,
 } from './interface';
 import {
@@ -88,7 +91,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         const projectPackage = this.getProjectPackage(input, output);
         const config: any & Flags = projectPackage.graphdoc;
         const resolveUrl = resolveUrlFor(projectPackage.graphdoc.baseUrl);
-        let schema: Schema = {};
+        let schema: Schema = {} as any;
         let plugins: PluginInterface[] = [];
 
         function error(err: Error, output: OutputInterface) {
@@ -105,7 +108,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         if (!config.output)
             return error(new Error('Output (--output, -o) is require'), output);
 
-        return this.getSchema(config, output)
+        this.getSchema(config, output)
             .then((result) => result.data.__schema)
             // Create plugins
             .then((result: Schema) => {
@@ -145,7 +148,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                         fse.rmrfSync(config.output);
                     }
 
-                } catch (err: Error) {
+                } catch (err) {
 
                     if (err.code !== 'ENOENT')
                         return Promise.reject(err);
@@ -200,7 +203,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             })
             .then((partials: Partials) => {
 
-                let writing = []
+                let writing = ([] as Array<SchemaType | Directive>)
                     .concat(schema.types)
                     .concat(schema.directives)
                     .map(type => {
@@ -258,7 +261,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         return projectPackage;
     }
 
-    getSchema(config: Flags, output: OutputInterface): Promise<Schema> {
+    getSchema(config: Flags, output: OutputInterface): Promise<Retrospection> {
 
         if (config.schemaFile) {
 
@@ -271,14 +274,14 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     const schemapath = path.resolve(config.schemaFile);
                     const schema: Schema = require(schemapath);
                     resolve(schema);
-                } catch (err: Error) {
+                } catch (err) {
                     reject(err);
                 }
             });
 
         } else if (config.endpoint) {
 
-            let options = url.parse(config.endpoint);
+            let options = url.parse(config.endpoint) as any;
 
             options.headers = config.heades.reduce((result: any, header: string) => {
                 const [name, value] = header.split('=', 2);
@@ -316,15 +319,13 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                             schema += chunk;
                         });
 
-                        res.on('end', () => {
-                            resolve(schema)
-                        });
+                        res.on('end', () => resolve(schema));
                     });
 
                 req.on('error', reject);
                 req.end();
             })
-                .then(result => JSON.parse(result));
+                .then((result: string) => JSON.parse(result));
 
         } else {
             return Promise.reject(
