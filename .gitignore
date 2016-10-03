@@ -40,4 +40,5 @@ jspm_packages
 *.js
 *.js.map
 *.d.ts
+gh-pages
 build/*

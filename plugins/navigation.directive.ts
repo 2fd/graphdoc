@@ -1,5 +1,5 @@
-import { ENUM, Plugin, NavigationSection, NavigationItem, html } from '../utility';
-import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../interface';
+import { ENUM, Plugin, NavigationSection, NavigationItem, html } from '../lib/utility';
+import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../lib/interface';
 
 export default class NavigationDirectives extends Plugin implements PluginInterface {
 

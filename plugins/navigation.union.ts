@@ -1,5 +1,5 @@
-import { UNION, Plugin, NavigationSection, NavigationItem } from '../utility';
-import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../interface';
+import { UNION, Plugin, NavigationSection, NavigationItem } from '../lib/utility';
+import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../lib/interface';
 
 export default class NavigationScalars extends Plugin implements PluginInterface {
 

@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, split, Plugin} from '../../utility';
+import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, split, Plugin} from '../../lib/utility';
 import {
     refToUrl,
     PluginInterface,
@@ -11,7 +11,7 @@ import {
     InputValue,
     EnumValue,
     Directive
-} from '../../interface';
+} from '../../lib/interface';
 
 const MAX_CODE_LEN = 50;
 const MAX_COMMENT_LEN = 80;

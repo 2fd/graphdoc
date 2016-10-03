@@ -1,39 +1,67 @@
 import * as path from 'path';
-import { readFile as read, writeFile as write, readdir, mkdir } from 'fs';
-import { copyRecursive, rmRecursiveSync } from 'fs.extra';
+import * as fs from 'fs';
+import * as fse from 'fs-extra';
 
-const MODULE_BASE = 'graphdoc/';
 
-export function resolvePath(p: string): string {
+/**
+ * resolve
+ * 
+ * transform a path relative to absolute, if relative
+ * path start with `graphdoc/` return absolute path to
+ * plugins directory
+ */
+const MODULE_BASEPATH = 'graphdoc/';
 
-    if (p.indexOf(MODULE_BASE) !== 0)
-        return path.resolve(p);
+export function resolve(relative: string): string {
 
-    return path.resolve(__dirname, '../../', p.slice(MODULE_BASE.length));
+    if (p.slice(0, MODULE_BASEPATH.length) === MODULE_BASEPATH)
+        return path.resolve(__dirname, '../../', p.slice(MODULE_BASEPATH.length));
+
+    return path.resolve(p);
 };
 
-function readDir(path: string): Promise<string[]> {
-    return new Promise((resolve, reject) => readdir(
-        path,
-        (err: Error, files: string[]) => err ?
-            reject(err) : resolve(files)
-    ));
+/**
+ * toPromise execution a Node function as Promise
+ */
+function toPromise(func: Function, args: any[]): Promise<any> {
+
+    function execution(resolve, reject): void {
+
+        (execution as any).args
+            .push((err: Error, result: any) => err ? reject(err) : resolve(result));
+
+        (execution as any).func(...args);
+    }
+
+    (execution as any).args = args;
+    (execution as any).func = func;
+
+    return new Promise(execution);
 }
 
-function copy(origin, destiny): Promise<void> {
+/**
+ * Execute fs.read as Promise
+ */
+export function readFile(filename: string, encoding: string = 'utf8'): Promise<string> {
 
-    return new Promise((resolve, reject) => copyRecursive(
-        origin,
-        destiny,
-        (err: Error) => err ?
-            reject(err) : resolve()
-    ));
+    return toPromise(fs.read, [filename, encoding]);
 }
 
-export function createBuildFolder(buildDir: string, templateDir: string, assets: string[]): Promise<void> {
+/**
+ * Execute fs.write as Promise
+ */
+export function writeFile(filename: string, data: string): Promise<void> {
+
+    return toPromise(fs.write, [filename, data]);
+}
+
+/**
+ * Create build directory from a templete directory
+ */
+export function createBuildDirectory(buildDirectory: string, templateDirectory: string, assets: string[]): Promise<void> {
 
     // read directory
-    return readDir(templateDir)
+    return toPromise(fs.readdir, [templateDirectory])
 
         // ignore *.mustache templates
         .then(files => files.filter(file => path.extname(file) !== '.mustache'))
@@ -41,9 +69,9 @@ export function createBuildFolder(buildDir: string, templateDir: string, assets:
         // copy recursive
         .then(files => {
 
-            let copyAll = files.map((file: string) => copy(
-                path.resolve(templateDir, file),
-                path.resolve(buildDir, file)
+            let copyAll = files.map((file: string) => toPromise(
+                fse.copy,
+                [path.resolve(templateDirectory, file), path.resolve(buildDirectory, file)]
             ));
 
             return Promise.all(copyAll);
@@ -51,43 +79,16 @@ export function createBuildFolder(buildDir: string, templateDir: string, assets:
 
         // create assets directory
         .then(files => {
-
-            return new Promise((resolve, reject) => mkdir(
-                path.resolve(buildDir, 'assets'),
-                (err) => {
-                    err ? reject(err) : resolve();
-                }
-            ));
+            return toPromise(fs.mkdir, [path.resolve(buildDirectory, 'assets')]);
         })
 
         // copy assets
         .then(() => {
-
-            let copyAll = assets.map((asset: string) => copy(
-                asset,
-                path.resolve(buildDir, 'assets')
+            let copyAll = assets.map((asset: string) => toPromise(
+                fse.copy,
+                [path.resolve(buildDirectory, 'assets')]
             ));
 
             return Promise.all(copyAll);
         });
-}
-
-export function readTemplate(filename: string, encoding: string): Promise<string> {
-
-    return new Promise((resolve, reject) => read(
-        filename,
-        encoding,
-        (err: Error, template: string) => err ?
-            reject(err) : resolve(template)
-    ));
-}
-
-export function writeFile(filename: string, data: string): Promise<void> {
-
-    return new Promise((resolve, reject) => write(
-        filename,
-        data,
-        (err: Error) => err ?
-            reject(err) : resolve()
-    ));
 }

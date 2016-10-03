@@ -11,16 +11,15 @@
             "scripthost"
         ],
         "types": [
-            "marked",
-            "mustache",
-            "fs-extra",
-            "node"
+            "node",
+            "mocha"
         ],
         "strictNullChecks": true,
         "sourceMap": true
     },
     "exclude": [
         "node_modules",
+        "gh-pages",
         "templates"
     ]
 }

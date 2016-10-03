@@ -1,11 +1,11 @@
-import { INPUT_OBJECT, Plugin, NavigationSection, NavigationItem } from '../utility';
-import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../interface';
+import { ENUM, Plugin, NavigationSection, NavigationItem, html } from '../lib/utility';
+import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../lib/interface';
 
-export default class NavigationInputs extends Plugin implements PluginInterface {
+export default class NavigationEnums extends Plugin implements PluginInterface {
 
     getTypes(buildForType: string): NavigationItemInterface[] {
         return this.document.types
-            .filter(type => type.kind === INPUT_OBJECT)
+            .filter(type => type.kind === ENUM)
             .map(type => new NavigationItem(
                 type.name,
                 this.url(type),
@@ -21,7 +21,7 @@ export default class NavigationInputs extends Plugin implements PluginInterface 
             return [];
 
         return [
-            new NavigationSection('Input Objects', types)
+            new NavigationSection('Enums', types)
         ];
     }
 }

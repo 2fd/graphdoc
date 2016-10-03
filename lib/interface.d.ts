@@ -1,14 +1,13 @@
 /**
- *
+ * 
  */
 export interface PluginInterface {
+
     document: Schema;
     url: refToUrl;
     queryType?: SchemaType;
     mutationType?: SchemaType;
     subscriptionType?: SchemaType;
-
-    //new (schema: Schema, urlReolver: refToUrl): PluginInterface;
 
     getNavigations(buildForType?: string): NavigationSectionInterface[];
     getDocuments(buildForType?: string): DocumentSectionInterface[];

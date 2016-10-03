@@ -2,13 +2,13 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
 import * as querystring from 'querystring';
-import * as fse from 'fs.extra';
+import * as fse from 'fs-extra';
 import * as http from 'http';
 import * as https from 'https';
 import { render } from 'mustache';
 import { resolveUrlFor, query } from './utility';
 import { createData } from './utility/template';
-import { readTemplate, writeFile, createBuildFolder, resolvePath } from './utility/fs';
+import { readFile, writeFile, createBuildDirectory, resolve } from './utility/fs';
 import {
     PluginInterface,
     DocumentSectionInterface,
@@ -119,7 +119,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                         if (config.verbose)
                             output.log('%c - plugin: %c%s', GREEN, GREY, path);
 
-                        return resolvePath(path);
+                        return resolve(path);
                     })
                     .map(path => require(path).default)
                     .map(Plugin => new Plugin(
@@ -130,7 +130,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     ));
             })
 
-            // Create build folder
+            // Clear build folter
             .then(() => {
 
                 try {
@@ -145,7 +145,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                             output.log('%c - deleting: %c%s', GREEN, GREY, config.output);
                         }
 
-                        fse.rmrfSync(config.output);
+                        fse.removeSync(config.output);
                     }
 
                 } catch (err) {
@@ -154,16 +154,21 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                         return Promise.reject(err);
                 }
 
-                function reduceAssets(assets: string[], plugin: PluginInterface): string[] {
-                    return assets.concat(plugin.getAssets());
-                }
-
-                const assets = plugins.reduce(reduceAssets, []);
-
-                return createBuildFolder(config.output, config.template, assets);
+                return config.output;
             })
 
-            // readTemplate
+            // Create build folder
+            .then(() => {
+
+                const assets: string[] = Array.prototype.concat.apply(
+                    [],
+                    plugins.map(plugin => plugin.getAssets()) as string[][]
+                );
+
+                return createBuildDirectory(config.output, config.template, assets);
+            })
+
+            // readFile
             .then(() => {
                 const files = [
                     'index.mustache',
@@ -176,7 +181,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                         if (config.verbose)
                             output.log('%c - reading: %c%s', GREEN, GREY, filepath);
 
-                        return readTemplate(filepath, 'utf8');
+                        return readFile(filepath, 'utf8');
                     });
 
                 return Promise.all(files);
@@ -242,19 +247,19 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         if (!projectPackage.graphdoc.noDefaultPlugins)
             projectPackage.graphdoc.plugins = [
-                'graphdoc/lib/plugins/navigation.schema',
-                'graphdoc/lib/plugins/navigation.scalar',
-                'graphdoc/lib/plugins/navigation.enum',
-                'graphdoc/lib/plugins/navigation.interface',
-                'graphdoc/lib/plugins/navigation.union',
-                'graphdoc/lib/plugins/navigation.object',
-                'graphdoc/lib/plugins/navigation.input',
-                'graphdoc/lib/plugins/navigation.directive',
-                'graphdoc/lib/plugins/document.schema',
+                'graphdoc/navigation.schema',
+                'graphdoc/navigation.scalar',
+                'graphdoc/navigation.enum',
+                'graphdoc/navigation.interface',
+                'graphdoc/navigation.union',
+                'graphdoc/navigation.object',
+                'graphdoc/navigation.input',
+                'graphdoc/navigation.directive',
+                'graphdoc/document.schema',
             ]
                 .concat(projectPackage.graphdoc.plugins);
 
-        projectPackage.graphdoc.template = resolvePath(projectPackage.graphdoc.template);
+        projectPackage.graphdoc.template = resolve(projectPackage.graphdoc.template);
         projectPackage.graphdoc.output = path.resolve(projectPackage.graphdoc.output);
         projectPackage.graphdoc.version = pack.version;
 
