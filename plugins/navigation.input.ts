@@ -1,5 +1,5 @@
 import { INPUT_OBJECT, Plugin, NavigationSection, NavigationItem } from '../lib/utility';
-import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../lib/interface';
+import { PluginInterface, NavigationItemInterface } from '../lib/interface';
 
 export default class NavigationInputs extends Plugin implements PluginInterface {
 

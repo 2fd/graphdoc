@@ -262,7 +262,7 @@ const queryType = new GraphQLObjectType({
           type: episodeEnum
         }
       },
-      resolve: (root, { episode }) => null,
+      resolve: () => null,
     },
     human: {
       type: humanType,
@@ -273,7 +273,7 @@ const queryType = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLID),
         }
       },
-      resolve: (root, { id }) => null,
+      resolve: () => null,
     },
     droid: {
       type: droidType,
@@ -284,7 +284,7 @@ const queryType = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLID),
         }
       },
-      resolve: (root, { id }) => null,
+      resolve: () => null,
     },
   })
 });

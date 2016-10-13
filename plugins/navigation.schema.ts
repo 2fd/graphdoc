@@ -1,4 +1,4 @@
-import { Schema, PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../lib/interface';
+import { PluginInterface, NavigationSectionInterface } from '../lib/interface';
 import { Plugin, NavigationSection, NavigationItem } from '../lib/utility';
 
 export default class NavigationSchema extends Plugin implements PluginInterface {

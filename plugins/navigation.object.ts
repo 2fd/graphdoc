@@ -1,5 +1,5 @@
 import { OBJECT, Plugin, NavigationSection, NavigationItem } from '../lib/utility';
-import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../lib/interface';
+import { PluginInterface, NavigationItemInterface } from '../lib/interface';
 
 export default class NavigationObjects extends Plugin implements PluginInterface {
 
@@ -10,7 +10,7 @@ export default class NavigationObjects extends Plugin implements PluginInterface
                 return type.kind === OBJECT &&
                 (!this.queryType || this.queryType.name !== type.name) &&
                 (!this.mutationType || this.mutationType.name !== type.name) &&
-                (!this.subscriptionType || this.subscriptionType.name !== type.name)
+                (!this.subscriptionType || this.subscriptionType.name !== type.name);
             });
 
         return objects

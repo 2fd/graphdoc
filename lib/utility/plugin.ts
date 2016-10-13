@@ -9,7 +9,7 @@ import {
     TypeRef,
 } from '../interface';
 
-import { getTypeOf, LIST, NON_NULL } from './introspection';
+import { getTypeOf } from './introspection';
 
 /**
  * Plugin Base implementation

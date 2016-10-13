@@ -11,13 +11,10 @@ import { createData } from './utility/template';
 import { readFile, writeFile, createBuildDirectory, resolve } from './utility/fs';
 import {
     PluginInterface,
-    DocumentSectionInterface,
-    NavigationSectionInterface,
     Schema,
     SchemaType,
     Directive,
     Retrospection,
-    TypeRef,
 } from './interface';
 import {
     Command,
@@ -25,7 +22,6 @@ import {
     ValueFlag,
     ListValueFlag,
     BooleanFlag,
-    RequireFlag,
     InputInterface,
     OutputInterface
 } from '@2fd/command';
@@ -133,7 +129,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
                 try {
                     // throw Error if path not exits
-                    const stat = fs.statSync(config.output);
+                    fs.statSync(config.output);
 
                     if (!config.force) {
                         return Promise.reject(new Error(config.output + ' already exists (delete it or use the --force flag)'));

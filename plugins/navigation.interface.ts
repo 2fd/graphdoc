@@ -1,5 +1,5 @@
 import { INTERFACE, Plugin, NavigationSection, NavigationItem } from '../lib/utility';
-import { PluginInterface, NavigationSectionInterface, NavigationItemInterface } from '../lib/interface';
+import { PluginInterface, NavigationItemInterface } from '../lib/interface';
 
 export default class NavigationInterfacess extends Plugin implements PluginInterface {
 

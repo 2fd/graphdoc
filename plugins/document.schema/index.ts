@@ -1,10 +1,8 @@
 import { resolve } from 'path';
 import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, split, Plugin} from '../../lib/utility';
 import {
-    refToUrl,
     PluginInterface,
     DocumentSectionInterface,
-    NavigationSectionInterface,
     Schema,
     SchemaType,
     Field,
@@ -14,7 +12,7 @@ import {
 } from '../../lib/interface';
 
 const MAX_CODE_LEN = 50;
-const MAX_COMMENT_LEN = 80;
+// const MAX_COMMENT_LEN = 80;
 
 export default class SchemaPlugin  extends Plugin implements PluginInterface {
 
@@ -276,15 +274,6 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
                 ));
 
         definition += html.line('}');
-
-        const order = {
-            [SCALAR]: '1',
-            [ENUM]: '2',
-            [INTERFACE]: '3',
-            [UNION]: '4',
-            [OBJECT]: '5',
-            [INPUT_OBJECT]: '6',
-        };
 
         return [definition]
            /* .concat(
