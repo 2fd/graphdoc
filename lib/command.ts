@@ -43,7 +43,6 @@ export type Flags = {
     queries: string[],
     schemaFile: string,
     plugins: string[],
-    noDefaultPlugins: boolean,
     template: string,
     output: string,
     force: boolean,
@@ -72,7 +71,6 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new ListValueFlag('queries', ['--query', '-q'], 'HTTP querystring for request (use with --enpoint) ["token=cb8795e7"].'),
         new ValueFlag('schemaFile', ['--schemma', '-s'], 'Graphql Schema file ["./schema.json"].'),
         new ListValueFlag('plugins', ['--plugin', '-p'], 'Use plugins.'),
-        new BooleanFlag('noDefaultPlugins', ['--no-default-plugins'], 'Dont use default plugins.'),
         new ValueFlag('template', ['--template', '-t'], 'Use template.', String, 'graphdoc/template/slds'),
         new ValueFlag('output', ['--output', '-o'], 'Output directory.'),
         new ValueFlag('baseUrl', ['--base-url', '-b'], 'Base url for templates.', String, './'),
@@ -245,19 +243,18 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         projectPackage.graphdoc = Object.assign({}, projectPackage.graphdoc, input.flags);
 
-        if (!projectPackage.graphdoc.noDefaultPlugins)
-            projectPackage.graphdoc.plugins = [
-                'graphdoc/navigation.schema',
-                'graphdoc/navigation.scalar',
-                'graphdoc/navigation.enum',
-                'graphdoc/navigation.interface',
-                'graphdoc/navigation.union',
-                'graphdoc/navigation.object',
-                'graphdoc/navigation.input',
-                'graphdoc/navigation.directive',
-                'graphdoc/document.schema',
-            ]
-                .concat(projectPackage.graphdoc.plugins);
+        projectPackage.graphdoc.plugins = [
+            'graphdoc/navigation.schema',
+            'graphdoc/navigation.scalar',
+            'graphdoc/navigation.enum',
+            'graphdoc/navigation.interface',
+            'graphdoc/navigation.union',
+            'graphdoc/navigation.object',
+            'graphdoc/navigation.input',
+            'graphdoc/navigation.directive',
+            'graphdoc/document.schema',
+        ]
+            .concat(projectPackage.graphdoc.plugins);
 
         projectPackage.graphdoc.template = resolve(projectPackage.graphdoc.template);
         projectPackage.graphdoc.output = path.resolve(projectPackage.graphdoc.output);
