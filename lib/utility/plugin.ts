@@ -124,9 +124,6 @@ export function sortTypes(a: SchemaType, b: SchemaType): number {
     const priorityA = priorityType(a);
     const priorityB = priorityType(b);
 
-    console.log(priorityA);
-    console.log(priorityB);
-
     if (priorityA === priorityB) {
         return a.name.localeCompare(b.name);
     } else {
