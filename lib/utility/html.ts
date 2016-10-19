@@ -28,7 +28,7 @@ function padding(html: string): string {
     return (orderOfMagnitude * EM_SIZE + EM_SIZE).toString() + 'px';
 };
 
-class HTML {
+export class HTML {
 
     code(code: string): string {
         return `<code class="highlight"><ul class="code" style="padding-left:${padding(code)}">${code}</ul></code>`;
