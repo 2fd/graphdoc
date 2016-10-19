@@ -44,7 +44,7 @@ function toPromise(func: Function, args: any[]): Promise<any> {
  */
 export function readFile(filename: string, encoding: string = 'utf8'): Promise<string> {
 
-    return toPromise(fs.read, [filename, encoding]);
+    return toPromise(fs.readFile, [filename, encoding]);
 }
 
 /**
@@ -52,7 +52,14 @@ export function readFile(filename: string, encoding: string = 'utf8'): Promise<s
  */
 export function writeFile(filename: string, data: string): Promise<void> {
 
-    return toPromise(fs.write, [filename, data]);
+    return toPromise(fs.writeFile, [filename, data]);
+}
+
+/**
+ * remove build directory
+ */
+export function removeBuildDirectory(buildDirectory: string): Promise<void> {
+    return toPromise(fse.remove, [buildDirectory]);
 }
 
 /**
@@ -86,7 +93,7 @@ export function createBuildDirectory(buildDirectory: string, templateDirectory: 
         .then(() => {
             let copyAll = assets.map((asset: string) => toPromise(
                 fse.copy,
-                [path.resolve(buildDirectory, 'assets')]
+                [asset, path.resolve(buildDirectory, 'assets', path.basename(asset))]
             ));
 
             return Promise.all(copyAll);

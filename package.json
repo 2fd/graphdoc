@@ -49,7 +49,7 @@
   },
   "graphdoc": {
     "endpoint": "http://localhost:4000/graphql",
-    "output": "./build",
+    "output": "./gh-pages/star-wars",
     "force": true,
     "verbose": true
   }

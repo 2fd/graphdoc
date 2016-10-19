@@ -2,13 +2,12 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
 import * as querystring from 'querystring';
-import * as fse from 'fs-extra';
 import * as http from 'http';
 import * as https from 'https';
 import { render } from 'mustache';
 import { resolveUrlFor, query } from './utility';
 import { createData } from './utility/template';
-import { readFile, writeFile, createBuildDirectory, resolve } from './utility/fs';
+import { readFile, writeFile, createBuildDirectory, resolve, removeBuildDirectory } from './utility/fs';
 import {
     PluginInterface,
     Schema,
@@ -65,9 +64,9 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new ValueFlag('endpoint', ['--endpoint', '-e'], 'Graphql http enpoint ["https://domain.com/graphql"].'),
         new ListValueFlag('heades', ['--header', '-x'], 'HTTP header for request (use with --enpoint). ["Authorization=Token cb8795e7"].'),
         new ListValueFlag('queries', ['--query', '-q'], 'HTTP querystring for request (use with --enpoint) ["token=cb8795e7"].'),
-        new ValueFlag('schemaFile', ['--schemma', '-s'], 'Graphql Schema file ["./schema.json"].'),
-        new ListValueFlag('plugins', ['--plugin', '-p'], 'Use plugins.'),
-        new ValueFlag('template', ['--template', '-t'], 'Use template.', String, 'graphdoc/template/slds'),
+        new ValueFlag('schemaFile', ['--schema', '-s'], 'Graphql Schema file ["./schema.json"].'),
+        new ListValueFlag('plugins', ['--plugin', '-p'], 'Use plugins [default=graphdoc/plugins/default].'),
+        new ValueFlag('template', ['--template', '-t'], 'Use template [default=graphdoc/template/slds].', String, 'graphdoc/template/slds'),
         new ValueFlag('output', ['--output', '-o'], 'Output directory.'),
         new ValueFlag('baseUrl', ['--base-url', '-b'], 'Base url for templates.', String, './'),
         new BooleanFlag('force', ['--force', '-f'], 'Delete outputDirectory if exists.'),
@@ -89,14 +88,13 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         let plugins: PluginInterface[] = [];
 
         function error(err: Error, output: OutputInterface) {
-            output.error('');
-            output.error('%c%s', 'color:red', err.message);
-            output.error('');
 
-            if (config.verbose) {
-                output.error('%c%s', 'color:grey', err.stack);
-                output.error('');
-            }
+            output.error('');
+            output.error('%c%s', 'color:red', err.message || err);
+            if (config.verbose)
+                output.error('%c%s', 'color:grey', err.stack || '    NO STACK');
+
+            output.error('');
         }
 
         if (!config.output)
@@ -139,7 +137,8 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                             output.log('%c - deleting: %c%s', GREEN, GREY, config.output);
                         }
 
-                        fse.removeSync(config.output);
+                        return removeBuildDirectory(config.output)
+                            .then(() => config.output);
                     }
 
                 } catch (err) {
@@ -158,6 +157,10 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     [],
                     plugins.map(plugin => plugin.getAssets()) as string[][]
                 );
+
+                if (config.verbose) {
+                    output.log('%c - creating: %c%s', GREEN, GREY, config.output);
+                }
 
                 return createBuildDirectory(config.output, config.template, assets);
             })
@@ -239,17 +242,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         projectPackage.graphdoc = Object.assign({}, projectPackage.graphdoc, input.flags);
 
-        projectPackage.graphdoc.plugins = [
-            'graphdoc/navigation.schema',
-            'graphdoc/navigation.scalar',
-            'graphdoc/navigation.enum',
-            'graphdoc/navigation.interface',
-            'graphdoc/navigation.union',
-            'graphdoc/navigation.object',
-            'graphdoc/navigation.input',
-            'graphdoc/navigation.directive',
-            'graphdoc/document.schema',
-        ]
+        projectPackage.graphdoc.plugins = ['graphdoc/plugins/default']
             .concat(projectPackage.graphdoc.plugins);
 
         projectPackage.graphdoc.template = resolve(projectPackage.graphdoc.template);
