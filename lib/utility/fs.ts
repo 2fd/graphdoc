@@ -14,10 +14,10 @@ const MODULE_BASEPATH = 'graphdoc/';
 
 export function resolve(relative: string): string {
 
-    if (p.slice(0, MODULE_BASEPATH.length) === MODULE_BASEPATH)
-        return path.resolve(__dirname, '../../', p.slice(MODULE_BASEPATH.length));
+    if (relative.slice(0, MODULE_BASEPATH.length) === MODULE_BASEPATH)
+        return path.resolve(__dirname, '../../', relative.slice(MODULE_BASEPATH.length));
 
-    return path.resolve(p);
+    return path.resolve(relative);
 };
 
 /**

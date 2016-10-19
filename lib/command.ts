@@ -302,7 +302,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             }
 
             return new Promise((resolve, reject) => {
-                const req = (options.protocol === 'https:' ? https : http)
+                const req = ((options.protocol === 'https:' ? https : http) as typeof https)
                     .request(options, (res) => {
 
                         if (res.statusCode >= 400)

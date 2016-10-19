@@ -7,4 +7,8 @@ node_js:
 install:
   - npm install
   - npm install typescript
+  - npm install tslint
+  - ./node_modules/.bin/tsc -v
+  - ./node_modules/.bin/tslint -v
+  - tslint -e "node_modules/**/*" -e "**/*.d.ts" "**/*.ts"
   - ./node_modules/.bin/tsc -p .
