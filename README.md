@@ -30,4 +30,7 @@
 
 ```
 
-## [Demo](https://2fd.github.io/graphdoc/star-wars)
+## Demos
+
+* Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
+* [Github GraphQL](https://2fd.github.io/graphdoc/github)
