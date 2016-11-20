@@ -116,7 +116,6 @@
 
   // Navigation
   '../../../node_modules/@salesforce-ux/design-system/scss/components/navigation/flavors/vertical/index',
-  '../../../node_modules/@salesforce-ux/design-system/scss/components/navigation/flavors/context-bar/index',
 
   // Notifications -- Toasts & Alerts
   //'../../../node_modules/@salesforce-ux/design-system/scss/components/notifications/index',
@@ -138,4 +137,5 @@
   //'../../../node_modules/@salesforce-ux/design-system/scss/components/trees/flavors/base/index',
   //'../../../node_modules/@salesforce-ux/design-system/scss/components/trees/flavors/grid/index'
   
+  './override',
   './custom';
