@@ -5,6 +5,7 @@ import {
     NavigationSectionInterface,
     NavigationItemInterface,
     refToUrl,
+    Directive,
     SchemaType,
     TypeRef,
 } from '../interface';
@@ -16,44 +17,56 @@ import { getTypeOf } from './introspection';
  */
 export class Plugin implements PluginInterface {
 
-    document: Schema;
-
-    url: refToUrl;
-
     graphdocPackage: any;
 
     projectPackage: any;
 
-    queryType?: SchemaType;
+    queryType: SchemaType | null = null;
 
-    mutationType?: SchemaType;
+    mutationType: SchemaType | null = null;
 
-    subscriptionType?: SchemaType;
+    subscriptionType?: SchemaType | null = null;
 
-    constructor(document: Schema, urlResolver: refToUrl, graphdocPackage: any, projectPackage: any) {
-        this.document = document;
-        this.url = urlResolver;
-        this.graphdocPackage = graphdocPackage;
-        this.projectPackage = projectPackage;
+    typeMap: {
+        [name: string]: SchemaType
+    } = {};
+
+    directiveMap: {
+        [name: string]: Directive
+    } = {};
+
+    constructor(
+        public document: Schema,
+        public url: refToUrl,
+        graphdocPackage: any,
+        projectPackage: any
+    ) {
+
+        this.document.types = this.document.types ?
+            this.document.types.sort(sortTypes) : [];
+
+        this.document.directives = this.document.directives ?
+            this.document.directives.sort((a, b) => a.name.localeCompare(b.name)) : [];
+
+        this.document.types.forEach((type) => {
+            this.typeMap[type.name] = type;
+        });
+
+        this.document.directives.forEach((directive) => {
+            this.directiveMap[directive.name] = directive;
+        });
 
         if (document.queryType) {
-            this.queryType = this.document.types
-                .find((type) => type.name === document.queryType.name);
+            this.queryType = this.typeMap[document.queryType.name];
         }
 
         if (document.mutationType) {
-            this.mutationType = this.document.types
-                .find((type) => type.name === document.mutationType.name);
+            this.mutationType = this.typeMap[document.mutationType.name];
         }
 
         if (document.subscriptionType) {
-            this.subscriptionType = this.document.types
-                .find((type) => type.name === document.subscriptionType.name);
+            this.subscriptionType = this.typeMap[document.subscriptionType.name];
         }
-
-        this.document.types = this.document.types.sort(sortTypes);
-        this.document.directives = this.document.directives.sort((a, b) => a.name.localeCompare(b.name));
-
     }
 
     getNavigations(buildForType?: string): NavigationSectionInterface[] {
