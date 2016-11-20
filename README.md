@@ -1,4 +1,12 @@
-# Static page generator for GraphQL.js
+# Static page generator for documenting GraphQL Schema
+
+![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
+![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
+
+## Demos
+
+* Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
+* [Github GraphQL](https://2fd.github.io/graphdoc/github)
 
 ## Install
 
@@ -8,29 +16,43 @@
 
 ## Use
 
+### Generate documentation from live endpoint
+
 ```bash
-    Static page generator for GraphQL.js v1.1.0
-
-    Usage: node /home/fede/etc/node/node-v6.2.0-linux-x64/bin/graphdoc [OPTIONS] 
-
-    [OPTIONS]:
-    --config, -c      Configuration file [./package.json].
-    --endpoint, -e    Graphql http enpoint ["https://domain.com/graphql"].
-    --header, -x      HTTP header for request (use with --enpoint). ["Authorization=Token cb8795e7"].
-    --query, -q       HTTP querystring for request (use with --enpoint) ["token=cb8795e7"].
-    --schema, -s     Graphql Schema file ["./schema.json"].
-    --plugin, -p      Use plugins [default=graphdoc/plugins/default].
-    --template, -t    Use template [default=graphdoc/template/slds].
-    --output, -o      Output directory.
-    --base-url, -b    Base url for templates.
-    --force, -f       Delete outputDirectory if exists.
-    --verbose, -v     Output more information.
-    --version, -V     Show graphdoc version.
-    --help, -h        Print this help
-
+    > graphdoc -e http://localhost:8080/graphql -o ./doc/schema
 ```
 
-## Demos
+### Generate documentation from json file
 
-* Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
-* [Github GraphQL](https://2fd.github.io/graphdoc/github)
+```bash
+    > graphdoc -s ./schema.json -o ./doc/schema
+```
+
+> `./schema.json` contains the result of [GraphQL instrospection query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+
+### Help
+
+```bash
+
+    > graphdoc -h
+
+    Static page generator for documenting GraphQL Schema v1.2.0
+
+    Usage: graphdoc [OPTIONS]
+
+    [OPTIONS]:
+    -c, --config      Configuration file [./package.json].
+    -e, --endpoint    Graphql http endpoint ["https://domain.com/graphql"].
+    -x, --header      HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].
+    -q, --query       HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].
+    -s, --schema      Graphql Schema file ["./schema.json"].
+    -p, --plugin      Use plugins [default=graphdoc/plugins/default].
+    -t, --template    Use template [default=graphdoc/template/slds].
+    -o, --output      Output directory.
+    -b, --base-url    Base url for templates.
+    -f, --force       Delete outputDirectory if exists.
+    -v, --verbose     Output more information.
+    -V, --version     Show graphdoc version.
+    -h, --help        Print this help
+
+```
