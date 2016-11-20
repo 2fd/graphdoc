@@ -1,0 +1,10 @@
+.slds-scrollable--x::-webkit-scrollbar-track,
+.slds-scrollable--y::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.slds-scrollable--x::-webkit-scrollbar-thumb,
+.slds-scrollable--y::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+}
