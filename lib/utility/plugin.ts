@@ -1,5 +1,6 @@
 import {
     Schema,
+    PluginImplementedInterface,
     PluginInterface,
     DocumentSectionInterface,
     NavigationSectionInterface,
@@ -15,17 +16,13 @@ import { getTypeOf } from './introspection';
 /**
  * Plugin Base implementation
  */
-export class Plugin implements PluginInterface {
-
-    graphdocPackage: any;
-
-    projectPackage: any;
+export class Plugin implements PluginInterface, PluginImplementedInterface {
 
     queryType: SchemaType | null = null;
 
     mutationType: SchemaType | null = null;
 
-    subscriptionType?: SchemaType | null = null;
+    subscriptionType: SchemaType | null = null;
 
     typeMap: {
         [name: string]: SchemaType
@@ -38,8 +35,8 @@ export class Plugin implements PluginInterface {
     constructor(
         public document: Schema,
         public url: refToUrl,
-        graphdocPackage: any,
-        projectPackage: any
+        public graphdocPackage: any,
+        public projectPackage: any
     ) {
 
         this.document.types = this.document.types ?

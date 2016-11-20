@@ -2,17 +2,18 @@
  * 
  */
 export interface PluginInterface {
-
-    document: Schema;
-    url: refToUrl;
-    queryType?: SchemaType;
-    mutationType?: SchemaType;
-    subscriptionType?: SchemaType;
-
     getNavigations(buildForType?: string): NavigationSectionInterface[];
     getDocuments(buildForType?: string): DocumentSectionInterface[];
     getHeaders(buildForType?: string): string[];
     getAssets(): string[];
+}
+
+export interface PluginImplementedInterface {
+    document: Schema;
+    url: refToUrl;
+    queryType: SchemaType | null;
+    mutationType: SchemaType | null;
+    subscriptionType: SchemaType | null;
 }
 
 export interface NavigationSectionInterface {
