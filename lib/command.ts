@@ -134,7 +134,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
                     } else {
                         if (config.verbose) {
-                            output.log('%c - deleting: %c%s', GREEN, GREY, config.output);
+                            output.log('%c - deleting: %c%s', GREEN, GREY, path.relative(process.cwd(), config.output));
                         }
 
                         return removeBuildDirectory(config.output)
@@ -159,7 +159,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                 );
 
                 if (config.verbose) {
-                    output.log('%c - creating: %c%s', GREEN, GREY, config.output);
+                    output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), config.output));
                 }
 
                 return createBuildDirectory(config.output, config.template, assets);
@@ -176,7 +176,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     .map(file => path.resolve(config.template, file))
                     .map(filepath => {
                         if (config.verbose)
-                            output.log('%c - reading: %c%s', GREEN, GREY, filepath);
+                            output.log('%c - reading: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
 
                         return readFile(filepath, 'utf8');
                     });
@@ -197,7 +197,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                 const data = createData(projectPackage, graphdocPackage, plugins);
 
                 if (config.verbose)
-                    output.log('%c - creating: %c%s', GREEN, GREY, filepath);
+                    output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
 
                 return writeFile(filepath, render(partials.index, data, partials))
                     .then(() => partials);
@@ -214,7 +214,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                         const data = createData(projectPackage, graphdocPackage, plugins, type);
 
                         if (config.verbose)
-                            output.log('%c - creating: %c%s', GREEN, GREY, filepath);
+                            output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
 
                         return writeFile(filepath, render(partials.index, data, partials))
                             .then(() => filepath);
