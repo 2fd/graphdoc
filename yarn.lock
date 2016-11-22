@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@2fd/command@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@2fd/command/-/command-1.1.0.tgz#e7887d3126a0832b4bd31b795e4ed96992e3a2e7"
+"@2fd/command@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@2fd/command/-/command-1.1.2.tgz#b831d511bdd3b4e2d88139aaddb06d3d6aa0b08a"
 
 "@salesforce-ux/design-system@^2.1.4":
   version "2.1.4"

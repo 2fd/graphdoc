@@ -1,7 +1,7 @@
 {
   "name": "@2fd/graphdoc",
   "version": "1.2.0",
-  "description": "Static page generator for GraphQL.js",
+  "description": "Static page generator for documenting GraphQL Schema",
   "main": "bin/graphdoc",
   "bin": {
     "graphdoc": "./bin/graphdoc.js"
@@ -41,7 +41,7 @@
     "typescript": "2.0.0"
   },
   "dependencies": {
-    "@2fd/command": "^1.1.0",
+    "@2fd/command": "^1.1.2",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",
     "marked": "^0.3.6",

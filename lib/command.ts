@@ -60,18 +60,18 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
     params = new NoParams();
 
     flags = [
-        new ValueFlag('configFile', ['--config', '-c'], 'Configuration file [./package.json].', String, './package.json'),
-        new ValueFlag('endpoint', ['--endpoint', '-e'], 'Graphql http enpoint ["https://domain.com/graphql"].'),
-        new ListValueFlag('heades', ['--header', '-x'], 'HTTP header for request (use with --enpoint). ["Authorization=Token cb8795e7"].'),
-        new ListValueFlag('queries', ['--query', '-q'], 'HTTP querystring for request (use with --enpoint) ["token=cb8795e7"].'),
-        new ValueFlag('schemaFile', ['--schema', '-s'], 'Graphql Schema file ["./schema.json"].'),
-        new ListValueFlag('plugins', ['--plugin', '-p'], 'Use plugins [default=graphdoc/plugins/default].'),
-        new ValueFlag('template', ['--template', '-t'], 'Use template [default=graphdoc/template/slds].', String, 'graphdoc/template/slds'),
-        new ValueFlag('output', ['--output', '-o'], 'Output directory.'),
-        new ValueFlag('baseUrl', ['--base-url', '-b'], 'Base url for templates.', String, './'),
-        new BooleanFlag('force', ['--force', '-f'], 'Delete outputDirectory if exists.'),
-        new BooleanFlag('verbose', ['--verbose', '-v'], 'Output more information.'),
-        new BooleanFlag('version', ['--version', '-V'], 'Show graphdoc version.'),
+        new ValueFlag('configFile', ['-c', '--config'], 'Configuration file [./package.json].', String, './package.json'),
+        new ValueFlag('endpoint', ['-e', '--endpoint'], 'Graphql http endpoint ["https://domain.com/graphql"].'),
+        new ListValueFlag('heades', ['-x', '--header'], 'HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].'),
+        new ListValueFlag('queries', ['-q', '--query'], 'HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].'),
+        new ValueFlag('schemaFile', ['-s', '--schema'], 'Graphql Schema file ["./schema.json"].'),
+        new ListValueFlag('plugins', ['-p', '--plugin'], 'Use plugins [default=graphdoc/plugins/default].'),
+        new ValueFlag('template', ['-t', '--template'], 'Use template [default=graphdoc/template/slds].', String, 'graphdoc/template/slds'),
+        new ValueFlag('output', ['-o', '--output'], 'Output directory.'),
+        new ValueFlag('baseUrl', ['-b', '--base-url'], 'Base url for templates.', String, './'),
+        new BooleanFlag('force', ['-f', '--force'], 'Delete outputDirectory if exists.'),
+        new BooleanFlag('verbose', ['-v', '--verbose'], 'Output more information.'),
+        new BooleanFlag('version', ['-V', '--version'], 'Show graphdoc version.'),
     ];
 
     action(input: InputInterface<Flags, Params>, output: OutputInterface) {
@@ -320,7 +320,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         } else {
             return Promise.reject(
-                new Error('Enpoint (--endpoint, -e) or Schema File (--schemma,-s) are require.')
+                new Error('Endpoint (--endpoint, -e) or Schema File (--schemma,-s) are require.')
             );
         }
 
