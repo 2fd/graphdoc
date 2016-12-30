@@ -122,7 +122,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     ));
             })
 
-            // Clear build folter
+            // Clear build folder
             .then(() => {
 
                 try {
@@ -262,8 +262,8 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
             return new Promise((resolve, reject) => {
                 try {
-                    const schemapath = path.resolve(config.schemaFile);
-                    const schema: Schema = require(schemapath);
+                    const schemaPath = path.resolve(config.schemaFile);
+                    const schema: Schema = require(schemaPath);
                     resolve(schema);
                 } catch (err) {
                     reject(err);
@@ -320,7 +320,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         } else {
             return Promise.reject(
-                new Error('Endpoint (--endpoint, -e) or Schema File (--schemma,-s) are require.')
+                new Error('Endpoint (--endpoint, -e) or Schema File (--schema,-s) are require.')
             );
         }
 
