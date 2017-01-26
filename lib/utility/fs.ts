@@ -1,11 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
+import {toPromise} from './promise';
 
 
 /**
  * resolve
- * 
+ *
  * transform a path relative to absolute, if relative
  * path start with `graphdoc/` return absolute path to
  * plugins directory
@@ -19,25 +20,6 @@ export function resolve(relative: string): string {
 
     return path.resolve(relative);
 };
-
-/**
- * toPromise execution a Node function as Promise
- */
-function toPromise(func: Function, args: any[]): Promise<any> {
-
-    function execution(resolve, reject): void {
-
-        (execution as any).args
-            .push((err: Error, result: any) => err ? reject(err) : resolve(result));
-
-        (execution as any).func(...args);
-    }
-
-    (execution as any).args = args;
-    (execution as any).func = func;
-
-    return new Promise(execution);
-}
 
 /**
  * Execute fs.read as Promise
