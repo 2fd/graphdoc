@@ -17,7 +17,7 @@ export function getTypeOf(type: TypeRef): TypeRef {
   return type;
 }
 
-export const query = `query IntrospectionQuery {
+export const introspectionQuery = `query IntrospectionQuery {
     __schema {
       queryType { name description kind}
       mutationType { name description kind }

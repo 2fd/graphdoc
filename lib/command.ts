@@ -1,12 +1,10 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as url from 'url';
-import * as querystring from 'querystring';
-import * as http from 'http';
-import * as https from 'https';
+import * as request from 'request';
 import { render } from 'mustache';
-import { resolveUrlFor, query } from './utility';
+import { resolveUrlFor } from './utility';
 import { createData } from './utility/template';
+import { introspectionQuery } from './utility/introspection';
 import { readFile, writeFile, createBuildDirectory, resolve, removeBuildDirectory } from './utility/fs';
 import {
     PluginInterface,
@@ -34,6 +32,7 @@ export type Params = {};
 export type Flags = {
     configFile: string,
     endpoint: string,
+    isPost: boolean,
     headers: string[],
     queries: string[],
     schemaFile: string,
@@ -62,7 +61,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
     flags = [
         new ValueFlag('configFile', ['-c', '--config'], 'Configuration file [./package.json].', String, './package.json'),
         new ValueFlag('endpoint', ['-e', '--endpoint'], 'Graphql http endpoint ["https://domain.com/graphql"].'),
-        new ListValueFlag('headers', ['-x', '--header'], 'HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].'),
+        new ListValueFlag('headers', ['-x', '--header'], 'HTTP header for request (use with --endpoint). ["Authorization: Token cb8795e7"].'),
         new ListValueFlag('queries', ['-q', '--query'], 'HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].'),
         new ValueFlag('schemaFile', ['-s', '--schema'], 'Graphql Schema file ["./schema.json"].'),
         new ListValueFlag('plugins', ['-p', '--plugin'], 'Use plugins [default=graphdoc/plugins/default].'),
@@ -122,7 +121,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     ));
             })
 
-            // Clear build folter
+            // Clear build folder
             .then(() => {
 
                 try {
@@ -174,11 +173,11 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     'footer.mustache',
                 ]
                     .map(file => path.resolve(config.template, file))
-                    .map(filepath => {
+                    .map(filePath => {
                         if (config.verbose)
-                            output.log('%c - reading: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
+                            output.log('%c - reading: %c%s', GREEN, GREY, path.relative(process.cwd(), filePath));
 
-                        return readFile(filepath, 'utf8');
+                        return readFile(filePath, 'utf8');
                     });
 
                 return Promise.all(files);
@@ -193,13 +192,13 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             })
             .then((partials: Partials) => {
 
-                const filepath = path.resolve(config.output, 'index.html');
+                const filePath = path.resolve(config.output, 'index.html');
                 const data = createData(projectPackage, graphdocPackage, plugins);
 
                 if (config.verbose)
-                    output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
+                    output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filePath));
 
-                return writeFile(filepath, render(partials.index, data, partials))
+                return writeFile(filePath, render(partials.index, data, partials))
                     .then(() => partials);
 
             })
@@ -210,14 +209,14 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                     .concat(schema.directives)
                     .map(type => {
 
-                        const filepath = path.resolve(config.output, resolveUrl(type));
+                        const filePath = path.resolve(config.output, resolveUrl(type));
                         const data = createData(projectPackage, graphdocPackage, plugins, type);
 
                         if (config.verbose)
-                            output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
+                            output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filePath));
 
-                        return writeFile(filepath, render(partials.index, data, partials))
-                            .then(() => filepath);
+                        return writeFile(filePath, render(partials.index, data, partials))
+                            .then(() => filePath);
                     });
 
                 return Promise.all(writing);
@@ -262,8 +261,8 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
             return new Promise((resolve, reject) => {
                 try {
-                    const schemapath = path.resolve(config.schemaFile);
-                    const schema: Schema = require(schemapath);
+                    const schemaPath = path.resolve(config.schemaFile);
+                    const schema: Schema = require(schemaPath);
                     resolve(schema);
                 } catch (err) {
                     reject(err);
@@ -272,55 +271,35 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         } else if (config.endpoint) {
 
-            let options = url.parse(config.endpoint) as any;
+            let options = {
+                url: config.endpoint,
+                method: 'POST',
+                json: true,
+                body: { query: introspectionQuery }
+            } as any;
 
             options.headers = config.headers.reduce((result: any, header: string) => {
-                const [name, value] = header.split('=', 2);
+                const [name, value] = header.split(': ', 2);
                 result[name] = value;
                 return result;
             }, {});
 
-            options.path = options.path + '?' + querystring.stringify(
-                config.queries.reduce((result: any, query: string) => {
-                    const [name, value] = query.split('=', 2);
-                    result[name] = value;
-                    return result;
-                }, { query })
-            );
-
-            const endpoint = url.format(options);
+            options.qs = config.queries.reduce((result: any, query: string) => {
+                const [name, value] = query.split('=', 2);
+                result[name] = value;
+                return result;
+            });
 
             if (config.verbose) {
-                output.log('%c - loading schema: %c%s', 'color:green', 'color:grey', endpoint);
+                output.log('%c - loading schema: %c%s', 'color:green', 'color:grey', config.endpoint);
             }
 
             return new Promise((resolve, reject) => {
-                const req = ((options.protocol === 'https:' ? https : http) as typeof https)
-                    .request(options, (res) => {
-
-                        if (res.statusCode >= 400)
-                            return reject(new Error(
-                                '[' + res.statusCode + '] ' + res.statusMessage + ' on ' + endpoint
-                            ));
-
-                        let schema = '';
-                        res.setEncoding('utf8');
-
-                        res.on('data', (chunk) => {
-                            schema += chunk;
-                        });
-
-                        res.on('end', () => resolve(schema));
-                    });
-
-                req.on('error', reject);
-                req.end();
-            })
-                .then((result: string) => JSON.parse(result));
-
+                request(options, (err, res, body) => err ? reject(err) : resolve(body));
+            });
         } else {
             return Promise.reject(
-                new Error('Endpoint (--endpoint, -e) or Schema File (--schemma,-s) are require.')
+                new Error('Endpoint (--endpoint, -e) or Schema File (--schema, -s) are require.')
             );
         }
 
