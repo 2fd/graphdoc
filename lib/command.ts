@@ -34,7 +34,7 @@ export type Params = {};
 export type Flags = {
     configFile: string,
     endpoint: string,
-    heades: string[],
+    headers: string[],
     queries: string[],
     schemaFile: string,
     plugins: string[],
@@ -50,7 +50,7 @@ export type Partials = {
     main: string,
     nav: string,
     footer: string,
-}
+};
 
 
 export class GraphQLDocumentor extends Command<Flags, Params> {
@@ -62,7 +62,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
     flags = [
         new ValueFlag('configFile', ['-c', '--config'], 'Configuration file [./package.json].', String, './package.json'),
         new ValueFlag('endpoint', ['-e', '--endpoint'], 'Graphql http endpoint ["https://domain.com/graphql"].'),
-        new ListValueFlag('heades', ['-x', '--header'], 'HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].'),
+        new ListValueFlag('headers', ['-x', '--header'], 'HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].'),
         new ListValueFlag('queries', ['-q', '--query'], 'HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].'),
         new ValueFlag('schemaFile', ['-s', '--schema'], 'Graphql Schema file ["./schema.json"].'),
         new ListValueFlag('plugins', ['-p', '--plugin'], 'Use plugins [default=graphdoc/plugins/default].'),
@@ -274,7 +274,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
             let options = url.parse(config.endpoint) as any;
 
-            options.headers = config.heades.reduce((result: any, header: string) => {
+            options.headers = config.headers.reduce((result: any, header: string) => {
                 const [name, value] = header.split('=', 2);
                 result[name] = value;
                 return result;
