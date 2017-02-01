@@ -1,7 +1,7 @@
 import { INTERFACE, Plugin, NavigationSection, NavigationItem } from '../lib/utility';
 import { PluginInterface, NavigationItemInterface } from '../lib/interface';
 
-export default class NavigationInterfacess extends Plugin implements PluginInterface {
+export default class NavigationInterfaces extends Plugin implements PluginInterface {
 
     getTypes(buildForType: string): NavigationItemInterface[] {
         return this.document.types

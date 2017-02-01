@@ -3,7 +3,7 @@ import { Schema, refToUrl, PluginInterface, NavigationSectionInterface, Document
 import NavigationSchema from './navigation.schema';
 import NavigationScalar from './navigation.scalar';
 import NavigationEnum from './navigation.enum';
-import NavigationInterface from './navigation.interface';
+import NavigationInterfaces from './navigation.interface';
 import NavigationUnion from './navigation.union';
 import NavigationObject from './navigation.object';
 import NavigationIput from './navigation.input';
@@ -20,7 +20,7 @@ export default class NavigationDirectives extends Plugin implements PluginInterf
             new NavigationSchema(document, urlResolver, graphdocPackage, projectPackage),
             new NavigationScalar(document, urlResolver, graphdocPackage, projectPackage),
             new NavigationEnum(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationInterface(document, urlResolver, graphdocPackage, projectPackage),
+            new NavigationInterfaces(document, urlResolver, graphdocPackage, projectPackage),
             new NavigationUnion(document, urlResolver, graphdocPackage, projectPackage),
             new NavigationObject(document, urlResolver, graphdocPackage, projectPackage),
             new NavigationIput(document, urlResolver, graphdocPackage, projectPackage),
