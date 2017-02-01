@@ -12,7 +12,7 @@
         ],
         "types": [
             "node",
-            "mocha"
+            "jest"
         ],
         "strictNullChecks": true,
         "sourceMap": true
