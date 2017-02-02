@@ -8,31 +8,28 @@
       },
       "mutationType": null,
       "subscriptionType": null,
-      "types": [
-        {
+      "types": [{
           "name": "Query",
           "kind": "OBJECT",
           "description": "Root query",
-          "fields": [
-            {
-              "name": "version",
+          "fields": [{
+            "name": "version",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
               "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }],
           "inputFields": null,
           "interfaces": [],
           "enumValues": null,
@@ -52,8 +49,7 @@
           "name": "__Schema",
           "kind": "OBJECT",
           "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
-          "fields": [
-            {
+          "fields": [{
               "name": "types",
               "description": "A list of all types supported by this server.",
               "args": [],
@@ -163,8 +159,7 @@
           "name": "__Type",
           "kind": "OBJECT",
           "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
-          "fields": [
-            {
+          "fields": [{
               "name": "kind",
               "description": null,
               "args": [],
@@ -211,19 +206,17 @@
             {
               "name": "fields",
               "description": null,
-              "args": [
-                {
-                  "name": "includeDeprecated",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "description": "The `Boolean` scalar type represents `true` or `false`.",
-                    "ofType": null
-                  },
-                  "defaultValue": "false"
-                }
-              ],
+              "args": [{
+                "name": "includeDeprecated",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "description": "The `Boolean` scalar type represents `true` or `false`.",
+                  "ofType": null
+                },
+                "defaultValue": "false"
+              }],
               "type": {
                 "kind": "LIST",
                 "name": null,
@@ -292,19 +285,17 @@
             {
               "name": "enumValues",
               "description": null,
-              "args": [
-                {
-                  "name": "includeDeprecated",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "description": "The `Boolean` scalar type represents `true` or `false`.",
-                    "ofType": null
-                  },
-                  "defaultValue": "false"
-                }
-              ],
+              "args": [{
+                "name": "includeDeprecated",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "description": "The `Boolean` scalar type represents `true` or `false`.",
+                  "ofType": null
+                },
+                "defaultValue": "false"
+              }],
               "type": {
                 "kind": "LIST",
                 "name": null,
@@ -367,14 +358,66 @@
           "possibleTypes": null
         },
         {
+          "name": "AddCommentInput",
+          "kind": "INPUT_OBJECT",
+          "description": "Autogenerated input type of AddComment",
+          "fields": null,
+          "inputFields": [{
+              "name": "clientMutationId",
+              "description": "A unique identifier for the client performing the mutation.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "subjectId",
+              "description": "The Node ID of the subject to modify.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": "Non-Null",
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "description": "Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"VXNlci0xMA==\"`) or integer (such as `4`) input value will be accepted as an ID.",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "body",
+              "description": "The contents of the comment.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": "Non-Null",
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "name": "__TypeKind",
           "kind": "ENUM",
           "description": "An enum describing what kind of type a given `__Type` is.",
           "fields": null,
           "inputFields": null,
           "interfaces": null,
-          "enumValues": [
-            {
+          "enumValues": [{
               "name": "SCALAR",
               "description": "Indicates this type is a scalar.",
               "isDeprecated": false,
@@ -439,8 +482,7 @@
           "name": "__Field",
           "kind": "OBJECT",
           "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
-          "fields": [
-            {
+          "fields": [{
               "name": "name",
               "description": null,
               "args": [],
@@ -558,8 +600,7 @@
           "name": "__InputValue",
           "kind": "OBJECT",
           "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
-          "fields": [
-            {
+          "fields": [{
               "name": "name",
               "description": null,
               "args": [],
@@ -631,8 +672,7 @@
           "name": "__EnumValue",
           "kind": "OBJECT",
           "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
-          "fields": [
-            {
+          "fields": [{
               "name": "name",
               "description": null,
               "args": [],
@@ -704,8 +744,7 @@
           "name": "__Directive",
           "kind": "OBJECT",
           "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
-          "fields": [
-            {
+          "fields": [{
               "name": "name",
               "description": null,
               "args": [],
@@ -859,8 +898,7 @@
           "fields": null,
           "inputFields": null,
           "interfaces": null,
-          "enumValues": [
-            {
+          "enumValues": [{
               "name": "QUERY",
               "description": "Location adjacent to a query operation.",
               "isDeprecated": false,
@@ -972,8 +1010,7 @@
           "possibleTypes": null
         }
       ],
-      "directives": [
-        {
+      "directives": [{
           "name": "include",
           "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
           "locations": [
@@ -981,24 +1018,22 @@
             "FRAGMENT_SPREAD",
             "INLINE_FRAGMENT"
           ],
-          "args": [
-            {
-              "name": "if",
-              "description": "Included when true.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "description": "The `Boolean` scalar type represents `true` or `false`.",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ]
+          "args": [{
+            "name": "if",
+            "description": "Included when true.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "description": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "description": "The `Boolean` scalar type represents `true` or `false`.",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }]
         },
         {
           "name": "skip",
@@ -1008,24 +1043,22 @@
             "FRAGMENT_SPREAD",
             "INLINE_FRAGMENT"
           ],
-          "args": [
-            {
-              "name": "if",
-              "description": "Skipped when true.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "description": "The `Boolean` scalar type represents `true` or `false`.",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ]
+          "args": [{
+            "name": "if",
+            "description": "Skipped when true.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "description": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "description": "The `Boolean` scalar type represents `true` or `false`.",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }]
         },
         {
           "name": "deprecated",
@@ -1034,19 +1067,17 @@
             "FIELD_DEFINITION",
             "ENUM_VALUE"
           ],
-          "args": [
-            {
-              "name": "reason",
-              "description": "Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted in [Markdown](https://daringfireball.net/projects/markdown/).",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
-                "ofType": null
-              },
-              "defaultValue": "\"No longer supported\""
-            }
-          ]
+          "args": [{
+            "name": "reason",
+            "description": "Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted in [Markdown](https://daringfireball.net/projects/markdown/).",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+              "ofType": null
+            },
+            "defaultValue": "\"No longer supported\""
+          }]
         }
       ]
     }
