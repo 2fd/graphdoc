@@ -15,7 +15,7 @@
             "jest"
         ],
         "strictNullChecks": true,
-        "sourceMap": true
+        "sourceMap": false
     },
     "exclude": [
         "node_modules",
