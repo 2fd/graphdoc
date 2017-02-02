@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
-    {{{headers}}}
+    <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" /> {{{headers}}}
     <title>{{title}}</title>
 </head>
+
 <body>
     <nav class="slds-scrollable--y slds-col--rule-right">
         <header class="slds-text-heading--medium slds-p-around--large">
             <a href="{{{graphdoc.baseUrl}}}">GraphQL Schema</a>
-    </header>{{> nav}}</nav>
+        </header>{{> nav}}</nav>
     <main>{{> main}}</main>
     <footer>{{> footer}}</footer>
+    <script>
+        var actives = document.querySelectorAll('.slds-is-active a');
+        var len = actives.length;
+        var i = 0;
+        while (i < len) {
+            actives[i].focus();
+            i++;
+        }
+    </script>
 </body>
