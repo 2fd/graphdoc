@@ -119,7 +119,7 @@ const characterInterface = new GraphQLInterfaceType({
     friends: {
       type: new GraphQLList(characterInterface),
       description: 'The friends of the character, or an empty list if they ' +
-                   'have none.',
+      'have none.',
     },
     appearsIn: {
       type: new GraphQLList(episodeEnum),
@@ -130,9 +130,7 @@ const characterInterface = new GraphQLInterfaceType({
       description: 'All secrets about their past.',
     },
   }),
-  resolveType: character => {
-    return null;
-  }
+  resolveType: character => humanType,
 });
 
 /**
@@ -162,7 +160,7 @@ const humanType = new GraphQLObjectType({
     friends: {
       type: new GraphQLList(characterInterface),
       description: 'The friends of the human, or an empty list if they ' +
-                   'have none.',
+      'have none.',
       resolve: human => human,
     },
     appearsIn: {
@@ -181,7 +179,7 @@ const humanType = new GraphQLObjectType({
       },
     },
   }),
-  interfaces: [ characterInterface ]
+  interfaces: [characterInterface]
 });
 
 /**
@@ -212,7 +210,7 @@ const droidType = new GraphQLObjectType({
     friends: {
       type: new GraphQLList(characterInterface),
       description: 'The friends of the droid, or an empty list if they ' +
-                   'have none.',
+      'have none.',
       resolve: droid => droid,
     },
     appearsIn: {
@@ -231,7 +229,7 @@ const droidType = new GraphQLObjectType({
       description: 'The primary function of the droid.',
     },
   }),
-  interfaces: [ characterInterface ]
+  interfaces: [characterInterface]
 });
 
 /**
@@ -258,7 +256,7 @@ const queryType = new GraphQLObjectType({
       args: {
         episode: {
           description: 'If omitted, returns the hero of the whole saga. If ' +
-                       'provided, returns the hero of that particular episode.',
+          'provided, returns the hero of that particular episode.',
           type: episodeEnum
         }
       },
