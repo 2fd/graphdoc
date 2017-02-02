@@ -1,5 +1,6 @@
 # Static page generator for documenting GraphQL Schema
 
+[![Build Status](https://travis-ci.org/2fd/graphdoc.svg?branch=master)](https://travis-ci.org/2fd/graphdoc)
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
 
