@@ -7,6 +7,7 @@
     "graphdoc": "./bin/graphdoc.js"
   },
   "scripts": {
+    "sass": "node-sass --output-style compressed template/slds/styles/graphdoc.scss > template/slds/styles/graphdoc.css",
     "compile": "tsc -p .",
     "declaration": "tsc -d -p tsconfig.json",
     "test": "jest"
@@ -26,7 +27,7 @@
   },
   "homepage": "https://github.com/2fd/graphdoc#readme",
   "devDependencies": {
-    "@salesforce-ux/design-system": "^2.1.4",
+    "@salesforce-ux/design-system": "^2.2.1",
     "@types/chai": "^3.4.34",
     "@types/fs-extra": "0.0.32",
     "@types/glob": "^5.0.30",
@@ -46,10 +47,12 @@
   "dependencies": {
     "@2fd/command": "^1.1.2",
     "@types/jest": "^18.1.0",
+    "@types/request": "^0.0.40",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",
     "marked": "^0.3.6",
-    "mustache": "^2.2.1"
+    "mustache": "^2.2.1",
+    "request": "^2.79.0"
   },
   "graphdoc": {
     "endpoint": "http://localhost:4000/graphql",
