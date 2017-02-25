@@ -5,24 +5,25 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" /> {{{headers}}}
+    <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>{{title}}</title>
+    {{{headers}}}
 </head>
 
 <body>
-    <nav class="slds-scrollable--y slds-col--rule-right">
-        <header class="slds-text-heading--medium slds-p-around--large">
-            <a href="{{{graphdoc.baseUrl}}}">GraphQL Schema</a>
-        </header>{{> nav}}</nav>
+    <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
+        <header class="slds-p-around--medium slds-col slds-shrik slds-grow-none">
+            <h3 class="slds-text-heading--medium"><a href="{{{projectPackage.graphdoc.baseUrl}}}">GraphQL Schema</a></h3>
+            <div class="slds-p-top--small">
+                <input id="type-search" type="text" placeholder="Search a type" autofocus="" class="slds-input" />
+            </div>
+        </header>
+        <div class="slds-scrollable--y slds-col slds-grow">
+            {{> nav}}
+        </div>
+    </nav>
     <main>{{> main}}</main>
     <footer>{{> footer}}</footer>
-    <script>
-        var actives = document.querySelectorAll('.slds-is-active a');
-        var len = actives.length;
-        var i = 0;
-        while (i < len) {
-            actives[i].focus();
-            i++;
-        }
-    </script>
+    <script src="./scripts/focus-active.js"></script>
+    <script src="./scripts/filter-types.js"></script>
 </body>
