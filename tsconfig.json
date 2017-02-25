@@ -3,6 +3,8 @@
     "compilerOptions": {
         "target": "es5",
         "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "module": "commonjs",
         "lib": [
             "es5",
