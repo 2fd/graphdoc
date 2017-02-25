@@ -1,0 +1,11 @@
+{
+  "name": "project-example",
+  "version": "x.x.x",
+  "description": "Example project",
+  "author": "Fede Ramirez <i@2fd.me>",
+  "graphdoc": {
+    "baseUrl": "/",
+    "force": true,
+    "verbose": true
+  }
+}
