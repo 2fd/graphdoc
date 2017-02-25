@@ -1,19 +1,19 @@
-import {
+export {
     html,
     split
 } from './html';
 
-import {
-    resolveUrlFor,
+export {
     NavigationItem,
     NavigationSection,
     Plugin,
     sortTypes
 } from './plugin';
 
-import {
+export {
     query,
     getTypeOf,
+    getFilenameOf,
     ENUM,
     INPUT_OBJECT,
     INTERFACE,
@@ -25,23 +25,10 @@ import {
 } from './introspection';
 
 export {
-    html,
-    split,
+    Output
+} from './output';
 
-    resolveUrlFor,
-    sortTypes,
-    NavigationItem,
-    NavigationSection,
-    Plugin,
 
-    query,
-    getTypeOf,
-    ENUM,
-    INPUT_OBJECT,
-    INTERFACE,
-    LIST,
-    NON_NULL,
-    OBJECT,
-    SCALAR,
-    UNION,
-};
+export {
+    createData
+} from './template';

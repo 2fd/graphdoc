@@ -1,19 +1,16 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as url from 'url';
-import * as querystring from 'querystring';
-import * as http from 'http';
-import * as https from 'https';
+import * as request from 'request';
+import * as glob from 'glob';
 import { render } from 'mustache';
-import { resolveUrlFor, query } from './utility';
-import { createData } from './utility/template';
+import { query as introspectionQuery, Output, Plugin, getFilenameOf, createData } from './utility';
 import { readFile, writeFile, createBuildDirectory, resolve, removeBuildDirectory } from './utility/fs';
 import {
     PluginInterface,
+    PluginConstructor,
     Schema,
-    SchemaType,
-    Directive,
-    Retrospection,
+    TypeRef,
+    Introspection,
 } from './interface';
 import {
     Command,
@@ -26,8 +23,6 @@ import {
 } from '@2fd/command';
 
 const pack = require(path.resolve(__dirname, '../package.json'));
-const GREY = 'color:grey';
-const GREEN = 'color:green';
 
 export type Params = {};
 
@@ -46,12 +41,15 @@ export type Flags = {
 };
 
 export type Partials = {
-    index: string,
-    main: string,
-    nav: string,
-    footer: string,
+    [name: string]: string;
+    index: string;
 };
 
+export type ProjectPackage = {
+    graphdoc: Flags
+}
+
+type Input = InputInterface<Flags, Params>;
 
 export class GraphQLDocumentor extends Command<Flags, Params> {
 
@@ -74,255 +72,248 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new BooleanFlag('version', ['-V', '--version'], 'Show graphdoc version.'),
     ];
 
-    action(input: InputInterface<Flags, Params>, output: OutputInterface) {
+    action(input: Input, out: OutputInterface) {
 
+        const output = new Output(out, input.flags);
         const graphdocPackage = pack;
+        let projectPackage: ProjectPackage;
+        let schema: Schema;
+        let plugins: PluginInterface[];
+        let partials: Partials;
+        let assets: string[];
 
         if (input.flags.version)
-            return output.log('graphdoc v%s', graphdocPackage.version);
+            return output.out.log('graphdoc v%s', graphdocPackage.version);
 
-        const projectPackage = this.getProjectPackage(input, output);
-        const config: any & Flags = projectPackage.graphdoc;
-        const resolveUrl = resolveUrlFor(projectPackage.graphdoc.baseUrl);
-        let schema: Schema = {} as any;
-        let plugins: PluginInterface[] = [];
+        function renderFile(type?: TypeRef) {
+            return createData(projectPackage, graphdocPackage, plugins, type)
+                .then(data => {
 
-        function error(err: Error, output: OutputInterface) {
+                    const file = type ? getFilenameOf(type) : 'index.html';
+                    const filepath = path.resolve(projectPackage.graphdoc.output, file);
+                    const relativeFilepath = path.relative(process.cwd(), filepath);
 
-            output.error('');
-            output.error('%c%s', 'color:red', err.message || err);
-            if (config.verbose)
-                output.error('%c%s', 'color:grey', err.stack || '    NO STACK');
-
-            output.error('');
+                    output.info('render', relativeFilepath);
+                    return writeFile(filepath, render(partials.index, data, partials));
+                });
         }
 
-        if (!config.output)
-            return error(new Error('Output (--output, -o) is require'), output);
-
-        this.getSchema(config, output)
-            .then((result) => result.data.__schema)
-            // Create plugins
-            .then((result: Schema) => {
-
-                schema = result;
-                plugins = projectPackage.graphdoc.plugins
-                    .map(path => {
-                        if (config.verbose)
-                            output.log('%c - plugin: %c%s', GREEN, GREY, path);
-
-                        return resolve(path);
-                    })
-                    .map(path => require(path).default)
-                    .map(Plugin => new Plugin(
-                        result,
-                        resolveUrl,
-                        graphdocPackage,
-                        projectPackage
-                    ));
+        // Load project info
+        return this.getProjectPackage(input)
+            .then(config => {
+                projectPackage = config;
             })
 
-            // Clear build folter
+            // Load Schema
+            .then(() =>  this.getSchema(projectPackage))
+            .then((introspection: Schema) => {
+                schema = introspection;
+            })
+
+            // Load plugins
             .then(() => {
+                projectPackage.graphdoc.plugins
+                    .forEach(plugin => output.info('use plugin', plugin));
 
-                try {
-                    // throw Error if path not exits
-                    fs.statSync(config.output);
-
-                    if (!config.force) {
-                        return Promise.reject(new Error(config.output + ' already exists (delete it or use the --force flag)'));
-
-                    } else {
-                        if (config.verbose) {
-                            output.log('%c - deleting: %c%s', GREEN, GREY, path.relative(process.cwd(), config.output));
-                        }
-
-                        return removeBuildDirectory(config.output)
-                            .then(() => config.output);
-                    }
-
-                } catch (err) {
-
-                    if (err.code !== 'ENOENT')
-                        return Promise.reject(err);
-                }
-
-                return config.output;
+                return this.getPlugins(projectPackage.graphdoc.plugins);
+            })
+            .then((pluginContructors: PluginConstructor[]) => {
+                plugins = pluginContructors
+                    .map((Plugin) => new Plugin(schema, projectPackage, graphdocPackage));
             })
 
-            // Create build folder
-            .then(() => {
-
-                const assets: string[] = Array.prototype.concat.apply(
-                    [],
-                    plugins.map(plugin => plugin.getAssets()) as string[][]
-                );
-
-                if (config.verbose) {
-                    output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), config.output));
-                }
-
-                return createBuildDirectory(config.output, config.template, assets);
+            // Collect assets
+            .then(() => Plugin.collectAssets(plugins))
+            .then((pluginAssets) => {
+                assets = pluginAssets;
+                assets
+                    .forEach(asset => output.info('use asset', asset));
             })
 
-            // readFile
-            .then(() => {
-                const files = [
-                    'index.mustache',
-                    'main.mustache',
-                    'nav.mustache',
-                    'footer.mustache',
-                ]
-                    .map(file => path.resolve(config.template, file))
-                    .map(filepath => {
-                        if (config.verbose)
-                            output.log('%c - reading: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
+            // Ensure Ourput directory
+            .then(() => output.info('output directory', projectPackage.graphdoc.output))
+            .then(() => this.ensureOutputDirectory(
+                projectPackage.graphdoc.output,
+                projectPackage.graphdoc.force,
+            ))
 
-                        return readFile(filepath, 'utf8');
-                    });
+            // Create Ourput directory
+            .then(() => createBuildDirectory(
+                projectPackage.graphdoc.output,
+                projectPackage.graphdoc.template,
+                assets
+            ))
 
-                return Promise.all(files);
+            // Collect partials
+            .then(() => this.getTemplatePartials(
+                projectPackage.graphdoc.template
+            ))
+            .then(p => {
+                partials = p;
             })
-            .then((templates: string[]) => {
-                return {
-                    index: templates[0],
-                    main: templates[1],
-                    nav: templates[2],
-                    footer: templates[3]
-                };
+
+            // Render index.html
+            .then(() => renderFile())
+
+            // Render [types | directives].html
+            .then(() => ([] as TypeRef[])
+                .concat(schema.types || [])
+                .concat(schema.directives || [])
+            )
+            .then(types => Promise
+                .all(types.map(t => renderFile(t)))
+            )
+
+            // Output resolve resolves
+            .then(files => {
+                output.ok('complete', String(files.length + 1) + ' files generated.');
             })
-            .then((partials: Partials) => {
 
-                const filepath = path.resolve(config.output, 'index.html');
-                const data = createData(projectPackage, graphdocPackage, plugins);
-
-                if (config.verbose)
-                    output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
-
-                return writeFile(filepath, render(partials.index, data, partials))
-                    .then(() => partials);
-
-            })
-            .then((partials: Partials) => {
-
-                let writing = ([] as Array<SchemaType | Directive>)
-                    .concat(schema.types)
-                    .concat(schema.directives)
-                    .map(type => {
-
-                        const filepath = path.resolve(config.output, resolveUrl(type));
-                        const data = createData(projectPackage, graphdocPackage, plugins, type);
-
-                        if (config.verbose)
-                            output.log('%c - creating: %c%s', GREEN, GREY, path.relative(process.cwd(), filepath));
-
-                        return writeFile(filepath, render(partials.index, data, partials))
-                            .then(() => filepath);
-                    });
-
-                return Promise.all(writing);
-            })
-            .then(result => {
-                output.log('%c[OK] created %d files', GREEN, result.length);
-            })
-            .catch((err: Error) => error(err, output));
+            .catch((err) => output.error(err));
     }
 
-    getProjectPackage(input: InputInterface<Flags, Params>, output: OutputInterface) {
-
-        let projectPackage: any & {
-            graphdoc: Flags,
-        };
+    ensureOutputDirectory(dir: string, force: boolean): Promise<void> {
 
         try {
-            projectPackage = require(path.resolve(input.flags.configFile));
+            const stats = fs.statSync(dir);
+
+            if (!stats.isDirectory())
+                return Promise.reject(
+                    new Error('Unexpected output: ' + dir + ' is not a directory.')
+                );
+
+
+            if (!force)
+                return Promise.reject(
+                    new Error(dir + ' already exists (delete it or use the --force flag)')
+                );
+
+            return removeBuildDirectory(dir);
+
         } catch (err) {
-            projectPackage = {};
+            return err.code === 'ENOENT' ?
+                Promise.resolve() :
+                Promise.reject(err);
         }
-
-        projectPackage.graphdoc = Object.assign({}, projectPackage.graphdoc, input.flags);
-
-        projectPackage.graphdoc.plugins = ['graphdoc/plugins/default']
-            .concat(projectPackage.graphdoc.plugins);
-
-        projectPackage.graphdoc.template = resolve(projectPackage.graphdoc.template);
-        projectPackage.graphdoc.output = path.resolve(projectPackage.graphdoc.output);
-        projectPackage.graphdoc.version = pack.version;
-
-        return projectPackage;
     }
 
-    getSchema(config: Flags, output: OutputInterface): Promise<Retrospection> {
+    getTemplatePartials(templateDir: string): Promise<Partials> {
 
-        if (config.schemaFile) {
+        return new Promise((resolve, reject) => {
+            glob('**/*.mustache', { cwd: templateDir }, (err, files) => {
+                return err ? reject(err) : resolve(files);
+            });
+        })
+            .then((files: string[]) => {
 
-            if (config.verbose) {
-                output.log('%c - loading schema: %c%s', 'color:green', 'color:grey', config.schemaFile);
+                return Promise.all(
+                    files.map(file => readFile(
+                        path.resolve(templateDir, file), 'utf8'
+                    ))
+                )
+                    .then((content: string[]) => {
+
+                        let partials = {};
+
+                        files
+                            .forEach((file, i) => {
+                                const name = path.basename(file, '.mustache');
+                                partials[name] = content[i];
+                            });
+
+                        return partials as Partials;
+                    });
+            })
+            .then((partials: Partials) => {
+
+                if (partials.index)
+                    return partials;
+
+                return Promise.reject(
+                    new Error(
+                        'The index partial is missing (file ' +
+                        path.resolve(templateDir, 'index.mustache') + ' not found).'
+                    )
+                );
+            });
+    }
+
+    getProjectPackage(input: Input) {
+
+        let packageJSON: any & { graphdoc: any };
+
+        try {
+            packageJSON = require(path.resolve(input.flags.configFile));
+        } catch (err) {
+            packageJSON = {};
+        }
+
+        packageJSON.graphdoc = Object.assign(packageJSON.graphdoc || {}, input.flags);
+
+        if (!packageJSON.graphdoc.plugins)
+            packageJSON.graphdoc.plugins = ['graphdoc/plugins/default'];
+
+        packageJSON.graphdoc.baseUrl = path.resolve('/', packageJSON.graphdoc.baseUrl || '/');
+        packageJSON.graphdoc.template = resolve(packageJSON.graphdoc.template);
+        packageJSON.graphdoc.output = path.resolve(packageJSON.graphdoc.output);
+        packageJSON.graphdoc.version = pack.version;
+
+        if (!packageJSON.graphdoc.output)
+            return Promise.reject(
+                new Error('Flag output (-o, --output) is required')
+            );
+
+        return Promise.resolve(packageJSON);
+    }
+
+    getPlugins(paths: string[]): PluginConstructor[] {
+        return paths
+            .map(path => resolve(path))
+            .map(path => require(path).default);
+    }
+
+    getSchema(projectPackage: ProjectPackage): Promise<Schema> {
+
+        if (projectPackage.graphdoc.schemaFile) {
+            try {
+                const schemaPath = path.resolve(projectPackage.graphdoc.schemaFile);
+                const introspection: Introspection = require(schemaPath);
+                return Promise.resolve(introspection.data.__schema);
+
+            } catch (err) {
+                return Promise.reject(err);
             }
 
-            return new Promise((resolve, reject) => {
-                try {
-                    const schemapath = path.resolve(config.schemaFile);
-                    const schema: Schema = require(schemapath);
-                    resolve(schema);
-                } catch (err) {
-                    reject(err);
-                }
-            });
+        } else if (projectPackage.graphdoc.endpoint) {
 
-        } else if (config.endpoint) {
+            let options = {
+                url: projectPackage.graphdoc.endpoint,
+                method: 'POST',
+                json: true,
+                body: { query: introspectionQuery }
+            } as any;
 
-            let options = url.parse(config.endpoint) as any;
-
-            options.headers = config.headers.reduce((result: any, header: string) => {
-                const [name, value] = header.split('=', 2);
+            options.headers = projectPackage.graphdoc.headers.reduce((result: any, header: string) => {
+                const [name, value] = header.split(': ', 2);
                 result[name] = value;
                 return result;
             }, {});
 
-            options.path = options.path + '?' + querystring.stringify(
-                config.queries.reduce((result: any, query: string) => {
-                    const [name, value] = query.split('=', 2);
-                    result[name] = value;
-                    return result;
-                }, { query })
-            );
-
-            const endpoint = url.format(options);
-
-            if (config.verbose) {
-                output.log('%c - loading schema: %c%s', 'color:green', 'color:grey', endpoint);
-            }
+            options.qs = projectPackage.graphdoc.queries.reduce((result: any, query: string) => {
+                const [name, value] = query.split('=', 2);
+                result[name] = value;
+                return result;
+            }, {});
 
             return new Promise((resolve, reject) => {
-                const req = ((options.protocol === 'https:' ? https : http) as typeof https)
-                    .request(options, (res) => {
-
-                        if (res.statusCode >= 400)
-                            return reject(new Error(
-                                '[' + res.statusCode + '] ' + res.statusMessage + ' on ' + endpoint
-                            ));
-
-                        let schema = '';
-                        res.setEncoding('utf8');
-
-                        res.on('data', (chunk) => {
-                            schema += chunk;
-                        });
-
-                        res.on('end', () => resolve(schema));
-                    });
-
-                req.on('error', reject);
-                req.end();
-            })
-                .then((result: string) => JSON.parse(result));
+                request(options, (err, _, introspection: Introspection) => err ?
+                    reject(err) : resolve(introspection.data.__schema));
+            });
 
         } else {
             return Promise.reject(
-                new Error('Endpoint (--endpoint, -e) or Schema File (--schemma,-s) are require.')
+                new Error('Endpoint (--endpoint, -e) or Schema File (--schema, -s) are require.')
             );
         }
-
     }
 }

@@ -14,47 +14,35 @@ export default class NavigationDirectives extends Plugin implements PluginInterf
 
     plugins: PluginInterface[];
 
-    constructor(document: Schema, urlResolver: refToUrl, graphdocPackage: any, projectPackage: any) {
-        super(document, urlResolver, graphdocPackage, projectPackage);
+    constructor(document: Schema, graphdocPackage: any, projectPackage: any) {
+        super(document, graphdocPackage, projectPackage);
         this.plugins = [
-            new NavigationSchema(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationScalar(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationEnum(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationInterfaces(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationUnion(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationObject(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationIput(document, urlResolver, graphdocPackage, projectPackage),
-            new NavigationDirective(document, urlResolver, graphdocPackage, projectPackage),
-            new DocumentSchema(document, urlResolver, graphdocPackage, projectPackage),
+            new NavigationSchema(document, graphdocPackage, projectPackage),
+            new NavigationScalar(document, graphdocPackage, projectPackage),
+            new NavigationEnum(document, graphdocPackage, projectPackage),
+            new NavigationInterfaces(document, graphdocPackage, projectPackage),
+            new NavigationUnion(document, graphdocPackage, projectPackage),
+            new NavigationObject(document, graphdocPackage, projectPackage),
+            new NavigationIput(document, graphdocPackage, projectPackage),
+            new NavigationDirective(document, graphdocPackage, projectPackage),
+            new DocumentSchema(document, graphdocPackage, projectPackage),
         ];
     }
 
 
-    getNavigations(buildForType?: string): NavigationSectionInterface[] {
-        return Array.prototype.concat.apply(
-            [],
-            this.plugins.map(plugin => plugin.getNavigations(buildForType))
-        );
+    getNavigations(buildForType?: string) {
+        return Plugin.collectNavigations(this.plugins, buildForType);
     };
 
-    getDocuments(buildForType?: string): DocumentSectionInterface[] {
-        return Array.prototype.concat.apply(
-            [],
-            this.plugins.map(plugin => plugin.getDocuments(buildForType))
-        );
+    getDocuments(buildForType?: string) {
+        return Plugin.collectDocuments(this.plugins, buildForType);
     };
 
-    getHeaders(buildForType?: string): string[] {
-        return Array.prototype.concat.apply(
-            [],
-            this.plugins.map(plugin => plugin.getHeaders(buildForType))
-        );
+    getHeaders(buildForType?: string) {
+        return Plugin.collectHeaders(this.plugins, buildForType);
     }
 
-    getAssets(): string[] {
-        return Array.prototype.concat.apply(
-            [],
-            this.plugins.map(plugin => plugin.getAssets())
-        );
+    getAssets() {
+        return Plugin.collectAssets(this.plugins);
     }
 }

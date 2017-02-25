@@ -17,6 +17,15 @@ export function getTypeOf(type: TypeRef): TypeRef {
   return type;
 }
 
+export function getFilenameOf(type: TypeRef): string {
+  const name = (getTypeOf(type).name as string).toLowerCase();
+
+  if (name[0] === '_' && name[1] === '_')
+    return name.slice(2) + '.spec.html';
+
+  return name + '.doc.html';
+}
+
 export const query = `query IntrospectionQuery {
     __schema {
       queryType { name description kind}

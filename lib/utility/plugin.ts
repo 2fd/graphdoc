@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {
     Schema,
     PluginImplementedInterface,
@@ -5,18 +6,70 @@ import {
     DocumentSectionInterface,
     NavigationSectionInterface,
     NavigationItemInterface,
-    refToUrl,
     Directive,
     SchemaType,
     TypeRef,
 } from '../interface';
 
-import { getTypeOf } from './introspection';
+import { getFilenameOf } from './introspection';
 
 /**
  * Plugin Base implementation
  */
 export class Plugin implements PluginInterface, PluginImplementedInterface {
+
+    static collect<T>(collection: T[][]): T[] {
+
+        let result: T[] = [];
+
+        collection
+            .forEach(item => {
+                if (Array.isArray(item))
+                    result = result.concat(item);
+            });
+
+        return result;
+    }
+
+    static collectNavigations(plugins: PluginInterface[], buildForType?: string): Promise<NavigationSectionInterface[]> {
+        return Promise
+            .all(plugins.map(plugin => {
+                return plugin.getNavigations ?
+                    plugin.getNavigations(buildForType) :
+                    null as any;
+            }))
+            .then((navigationCollection) => Plugin.collect(navigationCollection));
+    }
+
+    static collectDocuments(plugins: PluginInterface[], buildForType?: string): Promise<DocumentSectionInterface[]> {
+        return Promise
+            .all(plugins.map(plugin => {
+                return plugin.getDocuments ?
+                    plugin.getDocuments(buildForType) :
+                    null as any;
+            }))
+            .then((navigationCollection) => Plugin.collect(navigationCollection));
+    }
+
+    static collectHeaders(plugins: PluginInterface[], buildForType?: string): Promise<string[]> {
+        return Promise
+            .all(plugins.map(plugin => {
+                return plugin.getHeaders ?
+                    plugin.getHeaders(buildForType) :
+                    null as any;
+            }))
+            .then((assetCollection) => Plugin.collect(assetCollection));
+    }
+
+    static collectAssets(plugins: PluginInterface[]): Promise<string[]> {
+        return Promise
+            .all(plugins.map(plugin => {
+                return plugin.getAssets ?
+                    plugin.getAssets() :
+                    null as any;
+            }))
+            .then((assetCollection) => Plugin.collect(assetCollection));
+    }
 
     queryType: SchemaType | null = null;
 
@@ -34,9 +87,8 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
 
     constructor(
         public document: Schema,
-        public url: refToUrl,
+        public projectPackage: any,
         public graphdocPackage: any,
-        public projectPackage: any
     ) {
 
         this.document.types = this.document.types ?
@@ -66,19 +118,8 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
         }
     }
 
-    getNavigations(buildForType?: string): NavigationSectionInterface[] {
-        return [];
-    }
-
-    getDocuments(buildForType?: string): DocumentSectionInterface[] {
-        return [];
-    }
-    getHeaders(buildForType?: string): string[] {
-        return [];
-    }
-
-    getAssets(): string[] {
-        return [];
+    url(type: TypeRef): string {
+        return path.resolve(this.projectPackage.graphdoc.baseUrl, getFilenameOf(type));
     }
 }
 
@@ -103,22 +144,6 @@ export class NavigationItem implements NavigationItemInterface {
         this.isActive = isActive;
     }
 }
-
-/**
- * 
- */
-export function resolveUrlFor(baseUrl: string) {
-
-    return function resolveUrl(type: TypeRef): string {
-
-        const name = (getTypeOf(type).name as string).toLowerCase();
-
-        if (name[0] === '_' && name[1] === '_')
-            return baseUrl + name.slice(2) + '.spec.html';
-
-        return baseUrl + name + '.doc.html';
-    };
-};
 
 function priorityType(type: SchemaType): number {
 

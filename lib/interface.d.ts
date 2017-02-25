@@ -1,11 +1,16 @@
-/**
- * 
- */
+export interface PluginConstructor {
+    new (
+        document: Schema,
+        graphdocPackage: any,
+        projectPackage: any
+    ): PluginInterface;
+}
+
 export interface PluginInterface {
-    getNavigations(buildForType?: string): NavigationSectionInterface[];
-    getDocuments(buildForType?: string): DocumentSectionInterface[];
-    getHeaders(buildForType?: string): string[];
-    getAssets(): string[];
+    getNavigations?: (buildForType?: string) => NavigationSectionInterface[] | PromiseLike<NavigationSectionInterface[]>;
+    getDocuments?: (buildForType?: string) => DocumentSectionInterface[] | PromiseLike<DocumentSectionInterface[]>;
+    getHeaders?: (buildForType?: string) => string[] | PromiseLike<string[]>;
+    getAssets?: () => string[] | Promise<string[]>;
 }
 
 export interface PluginImplementedInterface {
@@ -40,7 +45,7 @@ type refToUrl = (typeName: TypeRef) => string;
 /**
  * Introspection types
  */
-type Retrospection = {
+type Introspection = {
     data: {
         __schema: Schema
     }
