@@ -17,8 +17,9 @@ export default class NavigationInterfaces extends Plugin implements PluginInterf
 
         const types: NavigationItemInterface[] = this.getTypes(buildForType);
 
-        if (types.length)
+        if (types.length === 0)
             return [];
+
 
         return [
             new NavigationSection('Interfaces', types)

@@ -1,5 +1,5 @@
 import { Plugin } from '../lib/utility';
-import { Schema, refToUrl, PluginInterface, NavigationSectionInterface, DocumentSectionInterface } from '../lib/interface';
+import { Schema, PluginInterface } from '../lib/interface';
 import NavigationSchema from './navigation.schema';
 import NavigationScalar from './navigation.scalar';
 import NavigationEnum from './navigation.enum';
