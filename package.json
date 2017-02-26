@@ -56,9 +56,9 @@
   },
   "graphdoc": {
     "ga": "UA-54154153-2",
-    "endpoint": "http://localhost:4000/graphql",
-    "output": "./gh-pages/star-wars",
-    "force": true,
-    "verbose": true
+    "logo": "<a href=\"https://developer.github.com/early-access/graphql\" target=\"_blank\" style=\"display:block;padding:1rem 3rem\"><img src=\"https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png\" /></a>",
+    "schema": "./test/github.json",
+    "output": "./gh-pages/github",
+    "baseUrl": "/github"
   }
 }

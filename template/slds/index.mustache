@@ -17,7 +17,12 @@
             <button class="slds-button slds-button--icon slds-float--right js-toggle-navigation less-than-medium">
                 <i class="material-icons">close</i>
             </button>
-            <h3 class="slds-text-heading--medium"><a href="{{{projectPackage.graphdoc.baseUrl}}}">GraphQL Schema</a></h3>
+            {{#projectPackage.graphdoc.logo}}
+                {{{projectPackage.graphdoc.logo}}}
+            {{/projectPackage.graphdoc.logo}}
+            {{^projectPackage.graphdoc.logo}}
+                <h3 class="slds-text-heading--medium"><a href="{{{projectPackage.graphdoc.baseUrl}}}">GraphQL Schema</a></h3>
+            {{/projectPackage.graphdoc.logo}}
             <div class="slds-p-top--small">
                 <input id="type-search" type="text" placeholder="Search a type" autofocus="" class="slds-input" />
             </div>

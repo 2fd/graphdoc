@@ -64,9 +64,9 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new ListValueFlag('queries', ['-q', '--query'], 'HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].'),
         new ValueFlag('schemaFile', ['-s', '--schema'], 'Graphql Schema file ["./schema.json"].'),
         new ListValueFlag('plugins', ['-p', '--plugin'], 'Use plugins [default=graphdoc/plugins/default].'),
-        new ValueFlag('template', ['-t', '--template'], 'Use template [default=graphdoc/template/slds].', String, 'graphdoc/template/slds'),
+        new ValueFlag('template', ['-t', '--template'], 'Use template [default=graphdoc/template/slds].'),
         new ValueFlag('output', ['-o', '--output'], 'Output directory.'),
-        new ValueFlag('baseUrl', ['-b', '--base-url'], 'Base url for templates.', String, './'),
+        new ValueFlag('baseUrl', ['-b', '--base-url'], 'Base url for templates.'),
         new BooleanFlag('force', ['-f', '--force'], 'Delete outputDirectory if exists.'),
         new BooleanFlag('verbose', ['-v', '--verbose'], 'Output more information.'),
         new BooleanFlag('version', ['-V', '--version'], 'Show graphdoc version.'),
@@ -105,7 +105,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             })
 
             // Load Schema
-            .then(() =>  this.getSchema(projectPackage))
+            .then(() => this.getSchema(projectPackage))
             .then((introspection: Schema) => {
                 schema = introspection;
             })
@@ -250,11 +250,11 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         packageJSON.graphdoc = Object.assign(packageJSON.graphdoc || {}, input.flags);
 
-        if (!packageJSON.graphdoc.plugins)
+        if (packageJSON.graphdoc.plugins.length === 0)
             packageJSON.graphdoc.plugins = ['graphdoc/plugins/default'];
 
         packageJSON.graphdoc.baseUrl = path.resolve('/', packageJSON.graphdoc.baseUrl || '/');
-        packageJSON.graphdoc.template = resolve(packageJSON.graphdoc.template);
+        packageJSON.graphdoc.template = resolve(packageJSON.graphdoc.template || 'graphdoc/template/slds');
         packageJSON.graphdoc.output = path.resolve(packageJSON.graphdoc.output);
         packageJSON.graphdoc.version = pack.version;
 

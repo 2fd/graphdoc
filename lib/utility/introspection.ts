@@ -26,28 +26,7 @@ export function getFilenameOf(type: TypeRef): string {
   return name + '.doc.html';
 }
 
-export const query = `query IntrospectionQuery {
-    __schema {
-      queryType { name description kind}
-      mutationType { name description kind }
-      subscriptionType { name description kind }
-      types {
-        name
-        kind
-        description
-        ...FullType
-      }
-      directives {
-        name
-        description
-        locations
-        args {
-          ...InputValue
-        }
-      }
-    }
-  }
-
+const fullTypeFragment = `
   fragment FullType on __Type {
     fields(includeDeprecated: true) {
       name
@@ -76,15 +55,17 @@ export const query = `query IntrospectionQuery {
     possibleTypes {
       ...TypeRef
     }
-  }
+  }`;
 
+const inputValueFragment = `
   fragment InputValue on __InputValue {
     name
     description
     type { ...TypeRef }
     defaultValue
-  }
+  }`;
 
+const typeRefFragment = `
   fragment TypeRef on __Type {
     kind
     name
@@ -124,5 +105,73 @@ export const query = `query IntrospectionQuery {
         }
       }
     }
+  }`;
+
+export const query = `query IntrospectionQuery {
+    __schema {
+      queryType { name description kind}
+      mutationType { name description kind }
+      subscriptionType { name description kind }
+      types {
+        name
+        kind
+        description
+        ...FullType
+      }
+      directives {
+        name
+        description
+        locations
+        args {
+          ...InputValue
+        }
+      }
+    }
   }
+
+  ${fullTypeFragment}
+  ${inputValueFragment}
+  ${typeRefFragment}
+`;
+
+export const queryRoot = `query IntrospectionQuery {
+    __schema {
+      queryType { name description kind}
+      mutationType { name description kind }
+      subscriptionType { name description kind }
+    }
+  }
+`;
+
+export const queryTypes = `query IntrospectionQuery {
+    __schema {
+      types {
+        name
+        kind
+        description
+        ...FullType
+      }
+    }
+  }
+
+  ${fullTypeFragment}
+  ${inputValueFragment}
+  ${typeRefFragment}
+`;
+
+export const queryDirectives = `query IntrospectionQuery {
+    __schema {
+      directives {
+        name
+        description
+        locations
+        args {
+          ...InputValue
+        }
+      }
+    }
+  }
+
+  ${inputValueFragment}
+  ${typeRefFragment}
 `;
