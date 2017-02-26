@@ -55,6 +55,7 @@
     "request": "^2.79.0"
   },
   "graphdoc": {
+    "ga": "UA-54154153-2",
     "endpoint": "http://localhost:4000/graphql",
     "output": "./gh-pages/star-wars",
     "force": true,
