@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>{{title}}</title>
     {{{headers}}}
@@ -13,6 +14,9 @@
 <body>
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
         <header class="slds-p-around--medium slds-col slds-shrik slds-grow-none">
+            <button class="slds-button slds-button--icon slds-float--right js-toggle-navigation less-than-medium">
+                <i class="material-icons">close</i>
+            </button>
             <h3 class="slds-text-heading--medium"><a href="{{{projectPackage.graphdoc.baseUrl}}}">GraphQL Schema</a></h3>
             <div class="slds-p-top--small">
                 <input id="type-search" type="text" placeholder="Search a type" autofocus="" class="slds-input" />
@@ -22,8 +26,17 @@
             {{> nav}}
         </div>
     </nav>
-    <main>{{> main}}</main>
+    <main>
+        <div class="less-than-medium">
+            <button class="slds-button js-toggle-navigation less-than-medium">
+                <i class="material-icons slds-button__icon slds-button__icon--left">menu</i>
+                <span class="slds-text-title--caps">Types<span>
+            </button>
+        </div>
+        {{> main}}
+    </main>
     <footer>{{> footer}}</footer>
     <script src="./scripts/focus-active.js"></script>
     <script src="./scripts/filter-types.js"></script>
+    <script src="./scripts/toggle-navigation.js"></script>
 </body>

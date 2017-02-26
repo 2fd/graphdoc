@@ -14,11 +14,25 @@ nav {
     top: $spacing-none;
     width: $size-medium;
     padding: $spacing-none;
+    background: white;
+    z-index: $z-index-sticky;
     position: fixed;
     height: 100%;
     overflow: auto;
     box-sizing: border-box;
+    box-shadow: $shadow-drop-down;
+    transform: translateX(0);
+    transition: #{$duration-promptly} transform ease;
+
+    @media (max-width: #{$mq-medium}) {
+        transform: translateX(-100%);
+
+        &.is-active {
+            transform: translateX(0);
+        }
+    }
 }
+
 nav sup{
     font-style: italic;
     opacity: .7;
@@ -30,13 +44,23 @@ header a {
 
 main, footer {
     max-width: $size-xx-large;
+    min-width: $size-medium;
     margin-left: $size-medium;
     padding: $spacing-x-large;
+    padding-top: $spacing-medium;
     box-sizing: border-box;
     position: relative;
+
+    @media (max-width: #{$mq-medium}) {
+        margin-left: 0;
+    }
 }
 
-.title p {
+main .title {
+    margin-top: $spacing-medium
+}
+
+main .title p {
     font-size: $spacing-medium;
     font-weight: $font-weight-light;
     max-width: $size-x-large;
@@ -82,4 +106,16 @@ main code.highlight::before {
 main code.highlight::after {
     background: lighten($color: #4D4D4C, $amount: 10%);
     left:  $spacing-x-small + $square-icon-utility-small + $spacing-xx-small;
+}
+
+.less-than-medium {
+    @media (min-width: #{$mq-medium}) {
+        display: none;
+    }
+}
+
+.less-than-small {
+    @media (min-width: #{$mq-small}) {
+        display: none;
+    }
 }

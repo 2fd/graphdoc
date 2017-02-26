@@ -29,7 +29,7 @@ export function createData(
             return {
                 title,
                 description,
-                headers,
+                headers: headers.join(''),
                 navigations,
                 documents,
                 projectPackage,
