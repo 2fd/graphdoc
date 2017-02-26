@@ -50,7 +50,7 @@ export type ProjectPackage = {
     graphdoc: Flags
 }
 
-type Input = InputInterface<Flags, Params>;
+export type Input = InputInterface<Flags, Params>;
 
 export class GraphQLDocumentor extends Command<Flags, Params> {
 

@@ -130,7 +130,7 @@ const characterInterface = new GraphQLInterfaceType({
       description: 'All secrets about their past.',
     },
   }),
-  resolveType: character => humanType,
+  resolveType: _ => humanType,
 });
 
 /**
@@ -306,7 +306,7 @@ const mutationType = new GraphQLObjectType({
           description: 'Favorite episode.'
         }
       },
-      resolve: (root, { episode }) => episode,
+      resolve: (_, { episode }) => episode,
     },
   })
 });

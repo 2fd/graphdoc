@@ -1,5 +1,10 @@
 import { Plugin } from '../lib/utility';
-import { Schema, PluginInterface } from '../lib/interface';
+import {
+    Schema,
+    PluginInterface,
+    DocumentSectionInterface,
+    NavigationSectionInterface,
+} from '../lib/interface';
 import NavigationSchema from './navigation.schema';
 import NavigationScalar from './navigation.scalar';
 import NavigationEnum from './navigation.enum';
@@ -30,19 +35,19 @@ export default class NavigationDirectives extends Plugin implements PluginInterf
     }
 
 
-    getNavigations(buildForType?: string) {
+    getNavigations(buildForType?: string): Promise<NavigationSectionInterface[]> {
         return Plugin.collectNavigations(this.plugins, buildForType);
     };
 
-    getDocuments(buildForType?: string) {
+    getDocuments(buildForType?: string): Promise<DocumentSectionInterface[]> {
         return Plugin.collectDocuments(this.plugins, buildForType);
     };
 
-    getHeaders(buildForType?: string) {
+    getHeaders(buildForType?: string): Promise<string[]> {
         return Plugin.collectHeaders(this.plugins, buildForType);
     }
 
-    getAssets() {
+    getAssets(): Promise<string[]> {
         return Plugin.collectAssets(this.plugins);
     }
 }

@@ -1,6 +1,6 @@
 import { OutputInterface } from '@2fd/command';
 
-type OutputOptions = {
+export type OutputOptions = {
     verbose: boolean;
 }
 
