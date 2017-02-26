@@ -11,8 +11,6 @@ describe('pĺugins/navigation.interface#NavigationInterfaces', () => {
     test('plugin return navigation', () => {
         const navigations = plugin.getNavigations('Query');
         expect(navigations).toBeInstanceOf(Array);
-        expect(navigations).toEqual([
-            {title: 'Interfaces', items: []}
-        ]);
+        expect(navigations).toEqual([]);
     });
 });
