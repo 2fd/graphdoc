@@ -8,6 +8,7 @@
 
 * Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
 * [Github GraphQL](https://2fd.github.io/graphdoc/github)
+* [Pokemon GraphQL](https://2fd.github.io/graphdoc/pokemon)
 
 ## Install
 
