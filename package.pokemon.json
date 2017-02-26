@@ -1,0 +1,22 @@
+{
+  "name": "graphql-pokemon",
+  "description": "Get information of a Pokémon with GraphQL!",
+  "version": "1.0.0",
+  "author": {
+    "name": "Lucas Bento da Silva",
+    "email": "lucas.bsilva@outlook.com",
+    "url": "https://github.com/lucasbento"
+  },
+  "bugs": "https://github.com/lucasbento/graphql-pokemon/issues",
+  "homepage": "https://github.com/lucasbento/graphql-pokemon#readme",
+  "license": "MIT",
+  "repository": "https://github.com/lucasbento/graphql-pokemon",
+  "graphdoc": {
+    "ga": "UA-54154153-2",
+    "graphiql": "https://graphql-pokemon.now.sh/",
+    "logo": "<a href=\"https://github.com/lucasbento/graphql-pokemon\" target=\"_blank\" style=\"display:block;padding:1rem 35%\"><img src=\"https://raw.githubusercontent.com/lucasbento/graphql-pokemon/master/content/logo.png\" /></a>",
+    "endpoint": "https://graphql-pokemon.now.sh/",
+    "output": "./gh-pages/pokemon",
+    "baseUrl": "/pokemon"
+  }
+}

@@ -10,6 +10,9 @@
     "sass": "node-sass --output-style compressed template/slds/styles/graphdoc.scss > template/slds/styles/graphdoc.css",
     "compile": "tsc -p .",
     "declaration": "tsc -d -p tsconfig.json",
+    "doc.github": "node bin/graphdoc.js -c package.github.json -f -v",
+    "doc.pokemon": "node bin/graphdoc.js -c package.pokemon.json -f -v",
+    "doc.starwars": "node bin/graphdoc.js -c package.starWars.json -f -v",
     "test": "jest"
   },
   "repository": {

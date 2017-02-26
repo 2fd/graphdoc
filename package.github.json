@@ -1,0 +1,24 @@
+{
+  "name": "github",
+  "version": "x.x.x",
+  "description": "GitHub GraphQL API",
+  "homepage": "https://developer.github.com/early-access/graphql/",
+  "dependencies": {
+    "@2fd/command": "^1.1.2",
+    "@types/jest": "^18.1.0",
+    "@types/request": "^0.0.40",
+    "fs-extra": "^0.30.0",
+    "glob": "^7.1.0",
+    "marked": "^0.3.6",
+    "mustache": "^2.2.1",
+    "request": "^2.79.0"
+  },
+  "graphdoc": {
+    "ga": "UA-54154153-2",
+    "graphiql": "https://developer.github.com/early-access/graphql/explorer/",
+    "logo": "<a href=\"https://developer.github.com/early-access/graphql\" target=\"_blank\" style=\"display:block;padding:1rem 3rem\"><img src=\"https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png\" /></a>",
+    "schemaFile": "./test/github.json",
+    "output": "./gh-pages/github",
+    "baseUrl": "/github"
+  }
+}

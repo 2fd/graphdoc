@@ -34,6 +34,7 @@ export type Flags = {
     schemaFile: string,
     plugins: string[],
     template: string,
+    data: any,
     output: string,
     force: boolean,
     verbose: boolean,
@@ -66,6 +67,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new ListValueFlag('plugins', ['-p', '--plugin'], 'Use plugins [default=graphdoc/plugins/default].'),
         new ValueFlag('template', ['-t', '--template'], 'Use template [default=graphdoc/template/slds].'),
         new ValueFlag('output', ['-o', '--output'], 'Output directory.'),
+        new ValueFlag('data', ['-d', '--data'], 'Inject custom data.', JSON.parse, {}),
         new ValueFlag('baseUrl', ['-b', '--base-url'], 'Base url for templates.'),
         new BooleanFlag('force', ['-f', '--force'], 'Delete outputDirectory if exists.'),
         new BooleanFlag('verbose', ['-v', '--verbose'], 'Output more information.'),
@@ -249,6 +251,11 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         }
 
         packageJSON.graphdoc = Object.assign(packageJSON.graphdoc || {}, input.flags);
+
+        if (packageJSON.graphdoc.data) {
+            const data = packageJSON.graphdoc.data;
+             packageJSON.graphdoc = Object.assign(data, packageJSON.graphdoc);
+        }
 
         if (packageJSON.graphdoc.plugins.length === 0)
             packageJSON.graphdoc.plugins = ['graphdoc/plugins/default'];
