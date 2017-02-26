@@ -1,0 +1,31 @@
+.section,
+.section .section__content {
+    min-height: 75vh;
+}
+
+.section.section--wash {
+    background: #171E26 url("./graph-wash.png") center center;
+    color: #EEE;
+}
+
+.sign {
+    background: #EEE;
+    text-align: right
+}
+
+.section__content {
+    margin: 0 auto;
+}
+
+.section .section__examples .slds-image--card .slds-image__title{
+    cursor: pointer
+}
+.section .section__examples .slds-image--card .slds-image--overlay,
+.section .section__examples .slds-image--card .slds-image__title{
+    visibility: hidden
+}
+
+.section .section__examples .slds-image--card:hover .slds-image--overlay,
+.section .section__examples .slds-image--card:hover .slds-image__title{
+    visibility: visible
+}

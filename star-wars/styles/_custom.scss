@@ -12,14 +12,28 @@ body {
 nav {
     left: $spacing-none;
     top: $spacing-none;
-    width: $size-medium;
+    width: 30%;
+    max-width: $size-medium;
     padding: $spacing-none;
+    background: white;
+    z-index: $z-index-sticky;
     position: fixed;
     height: 100%;
     overflow: auto;
     box-sizing: border-box;
+    box-shadow: $shadow-drop-down;
+    transform: translateX(0);
+    transition: #{$duration-promptly} transform ease;
+    @media (max-width: #{$mq-medium}) {
+        transform: translateX(-100%);
+        width: $size-medium;
+        &.is-active {
+            transform: translateX(0);
+        }
+    }
 }
-nav sup{
+
+nav sup {
     font-style: italic;
     opacity: .7;
 }
@@ -28,15 +42,28 @@ header a {
     text-decoration: none !important;
 }
 
-main, footer {
+main,
+footer {
     max-width: $size-xx-large;
-    margin-left: $size-medium;
+    min-width: $size-medium;
+    margin-left: 30%;
     padding: $spacing-x-large;
+    padding-top: $spacing-medium;
     box-sizing: border-box;
     position: relative;
+    @media (max-width: #{$mq-medium}) {
+        margin-left: 0;
+    }
+    @media (min-width: 70rem) {
+        margin-left: 21rem;
+    }
 }
 
-.title p {
+main .title {
+    margin-top: $spacing-medium
+}
+
+main .title p {
     font-size: $spacing-medium;
     font-weight: $font-weight-light;
     max-width: $size-x-large;
@@ -76,10 +103,22 @@ main code.highlight::before {
 
 main code.highlight::before {
     background: $color-background-destructive;
-    left:  $spacing-x-small;
+    left: $spacing-x-small;
 }
 
 main code.highlight::after {
     background: lighten($color: #4D4D4C, $amount: 10%);
-    left:  $spacing-x-small + $square-icon-utility-small + $spacing-xx-small;
+    left: $spacing-x-small + $square-icon-utility-small + $spacing-xx-small;
+}
+
+.less-than-medium {
+    @media (min-width: #{$mq-medium}) {
+        display: none;
+    }
+}
+
+.less-than-small {
+    @media (min-width: #{$mq-small}) {
+        display: none;
+    }
 }
