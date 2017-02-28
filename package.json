@@ -51,11 +51,13 @@
     "@2fd/command": "^1.1.2",
     "@types/jest": "^18.1.0",
     "@types/request": "^0.0.40",
+    "@types/striptags": "^0.0.5",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "striptags": "^3.0.1"
   },
   "graphdoc": {
     "ga": "UA-54154153-2",
