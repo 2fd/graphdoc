@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>AddProjectCardPayload</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -1418,10 +1418,14 @@
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
 <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">AddProjectCardPayload</span> {</li><li></li><li><span class="tab"><span class="comment line"># The edge from the ProjectColumn's card connection.</span></span></li><li><span class="tab"><span class="meta">cardEdge</span>: <a class="support type" href="projectcardedge.doc.html">ProjectCardEdge</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># A unique identifier for the client performing the mutation.</span></span></li><li><span class="tab"><span class="meta">clientMutationId</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The ProjectColumn</span></span></li><li><span class="tab"><span class="meta">projectColumn</span>: <a class="support type" href="project.doc.html">Project</a>! </span></li><li>}</li></ul></code>
 </section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<ul class="require-by"><li><a href="mutation.doc.html" title="Mutation - The root query for implementing GraphQL mutations.">Mutation<em>The root query for implementing GraphQL mutations.</em></a><li></ul>
+</section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>

@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>GitActor</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -1418,10 +1418,14 @@
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
 <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">GitActor</span> {</li><li></li><li><span class="tab"><span class="comment line"># A URL pointing to the author's public avatar.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line"># <strong>size</strong>: The size of the resulting square</span></span></li><li><span class="tab"><span class="comment line"># image.</span></span></li><li><span class="tab"><span class="meta">avatarURL</span>(<span class="variable parameter">size</span>: <a class="support type" href="int.doc.html">Int</a>): <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The timestamp of the Git action (authoring or committing).</span></span></li><li><span class="tab"><span class="meta">date</span>: <a class="support type" href="gittimestamp.doc.html">GitTimestamp</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The email in the Git commit.</span></span></li><li><span class="tab"><span class="meta">email</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The name in the Git commit.</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The GitHub user corresponding to the email field. Null</span></span></li><li><span class="tab"><span class="comment line"># if no such user exists.</span></span></li><li><span class="tab"><span class="meta">user</span>: <a class="support type" href="user.doc.html">User</a> </span></li><li>}</li></ul></code>
 </section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<ul class="require-by"><li><a href="commit.doc.html" title="Commit - Represents a Git commit.">Commit<em>Represents a Git commit.</em></a><li><li><a href="tag.doc.html" title="Tag - Represents a Git tag.">Tag<em>Represents a Git tag.</em></a><li></ul>
+</section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>

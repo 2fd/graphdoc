@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>ReactionOrder</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -1416,12 +1416,16 @@
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">input</span> <span class="identifier">ReactionOrder</span> {</li><li><span class="variable parameter">field</span>: <a class="support type" href="reactionorderfield.doc.html">ReactionOrderField</a>!</li><li></li><li><span class="variable parameter">direction</span>: <a class="support type" href="orderdirection.doc.html">OrderDirection</a>!</li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">input</span> <span class="identifier">ReactionOrder</span> {</li><li><span class="tab"><span class="variable parameter">field</span>: <a class="support type" href="reactionorderfield.doc.html">ReactionOrderField</a>!</span></li><li></li><li><span class="tab"><span class="variable parameter">direction</span>: <a class="support type" href="orderdirection.doc.html">OrderDirection</a>!</span></li><li>}</li></ul></code>
+</section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<ul class="require-by"><li><a href="commitcomment.doc.html" title="CommitComment - Represents a comment on a given Commit.">CommitComment<em>Represents a comment on a given Commit.</em></a><li><li><a href="issue.doc.html" title="Issue - An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.">Issue<em>An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.</em></a><li><li><a href="issuecomment.doc.html" title="IssueComment - Represents a comment on an Issue.">IssueComment<em>Represents a comment on an Issue.</em></a><li><li><a href="pullrequest.doc.html" title="PullRequest - A repository pull request.">PullRequest<em>A repository pull request.</em></a><li><li><a href="pullrequestreviewcomment.doc.html" title="PullRequestReviewComment - A review comment associated with a given repository pull request.">PullRequestReviewComment<em>A review comment associated with a given repository pull request.</em></a><li><li><a href="reactable.doc.html" title="Reactable - Represents a subject that can be reacted on.">Reactable<em>Represents a subject that can be reacted on.</em></a><li></ul>
 </section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>

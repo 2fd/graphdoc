@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>RepositoryConnection</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -1418,10 +1418,14 @@
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
 <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">RepositoryConnection</span> {</li><li></li><li><span class="tab"><span class="comment line"># A list of edges.</span></span></li><li><span class="tab"><span class="meta">edges</span>: [<a class="support type" href="repositoryedge.doc.html">RepositoryEdge</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># A list of nodes.</span></span></li><li><span class="tab"><span class="meta">nodes</span>: [<a class="support type" href="repository.doc.html">Repository</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># Information to aid in pagination.</span></span></li><li><span class="tab"><span class="meta">pageInfo</span>: <a class="support type" href="pageinfo.doc.html">PageInfo</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Identifies the total count of items in the connection.</span></span></li><li><span class="tab"><span class="meta">totalCount</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The total size in kilobytes of all repositories in</span></span></li><li><span class="tab"><span class="comment line"># the connection.</span></span></li><li><span class="tab"><span class="meta">totalDiskUsage</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li>}</li></ul></code>
 </section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<ul class="require-by"><li><a href="organization.doc.html" title="Organization - An account on GitHub, with one or more owners, that has repositories, members and teams.">Organization<em>An account on GitHub, with one or more owners, that has repositories, members and teams.</em></a><li><li><a href="repository.doc.html" title="Repository - A repository contains the content for a project.">Repository<em>A repository contains the content for a project.</em></a><li><li><a href="repositoryowner.doc.html" title="RepositoryOwner - Represents an owner of a Repository.">RepositoryOwner<em>Represents an owner of a Repository.</em></a><li><li><a href="user.doc.html" title="User - A user is an individual's account on GitHub that owns repositories and can make new content.">User<em>A user is an individual's account on GitHub that owns repositories and can make new content.</em></a><li></ul>
+</section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>

@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>Author</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -1418,10 +1418,14 @@
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
 <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">interface</span> <span class="identifier">Author</span> {</li><li></li><li><span class="tab"><span class="comment line"># A URL pointing to the author's public avatar.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line"># <strong>size</strong>: The size of the resulting square</span></span></li><li><span class="tab"><span class="comment line"># image.</span></span></li><li><span class="tab"><span class="meta">avatarURL</span>(<span class="variable parameter">size</span>: <a class="support type" href="int.doc.html">Int</a>): <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The username of the author.</span></span></li><li><span class="tab"><span class="meta">login</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The path to this author.</span></span></li><li><span class="tab"><span class="meta">path</span>: <a class="support type" href="uri.doc.html">URI</a>! </span></li><li>}</li></ul></code>
 </section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<ul class="require-by"><li><a href="bot.doc.html" title="Bot - A special type of user which takes actions on behalf of integrations.">Bot<em>A special type of user which takes actions on behalf of integrations.</em></a><li><li><a href="comment.doc.html" title="Comment - Represents a comment.">Comment<em>Represents a comment.</em></a><li><li><a href="commitcomment.doc.html" title="CommitComment - Represents a comment on a given Commit.">CommitComment<em>Represents a comment on a given Commit.</em></a><li><li><a href="gistcomment.doc.html" title="GistComment - Represents a comment on an Gist.">GistComment<em>Represents a comment on an Gist.</em></a><li><li><a href="issue.doc.html" title="Issue - An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.">Issue<em>An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.</em></a><li><li><a href="issuecomment.doc.html" title="IssueComment - Represents a comment on an Issue.">IssueComment<em>Represents a comment on an Issue.</em></a><li><li><a href="issueish.doc.html" title="Issueish - Shared features of Issues and Pull Requests.">Issueish<em>Shared features of Issues and Pull Requests.</em></a><li><li><a href="pullrequest.doc.html" title="PullRequest - A repository pull request.">PullRequest<em>A repository pull request.</em></a><li><li><a href="pullrequestreview.doc.html" title="PullRequestReview - A review object for a given pull request.">PullRequestReview<em>A review object for a given pull request.</em></a><li><li><a href="pullrequestreviewcomment.doc.html" title="PullRequestReviewComment - A review comment associated with a given repository pull request.">PullRequestReviewComment<em>A review comment associated with a given repository pull request.</em></a><li><li><a href="statuscontext.doc.html" title="StatusContext - Represents an individual commit status context">StatusContext<em>Represents an individual commit status context</em></a><li><li><a href="user.doc.html" title="User - A user is an individual's account on GitHub that owns repositories and can make new content.">User<em>A user is an individual's account on GitHub that owns repositories and can make new content.</em></a><li></ul>
+</section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>

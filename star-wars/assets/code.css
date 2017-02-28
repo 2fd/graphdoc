@@ -1,13 +1,3 @@
-.code .gutter {
-  background: #f6f6f6;
-  color: #4D4D4C;
-}
-
-.code .print-margin {
-  width: 1px;
-  background: #f6f6f6
-}
-
 .code {
   background-color: #f6f6f6;
   color: #4D4D4C;
@@ -16,6 +6,17 @@
   font-family: 'Ubuntu Mono';
   cursor: text;
   list-style-type: decimal;
+  border-radius: 0.25rem; 
+}
+
+.code .gutter {
+  background: #f6f6f6;
+  color: #4D4D4C;
+}
+
+.code .print-margin {
+  width: 1px;
+  background: #f6f6f6
 }
 
 .code li {

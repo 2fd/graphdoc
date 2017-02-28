@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>BlameRange</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -1418,10 +1418,14 @@
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
 <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">BlameRange</span> {</li><li></li><li><span class="tab"><span class="comment line"># Identifies the recency of the change, from 1 (new)</span></span></li><li><span class="tab"><span class="comment line"># to 10 (old). This is calculated as a 2-quantile and</span></span></li><li><span class="tab"><span class="comment line"># determines the length of distance between the median</span></span></li><li><span class="tab"><span class="comment line"># age of all the changes in the file and the recency</span></span></li><li><span class="tab"><span class="comment line"># of the current range's change.</span></span></li><li><span class="tab"><span class="meta">age</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Identifies the line author</span></span></li><li><span class="tab"><span class="meta">commit</span>: <a class="support type" href="commit.doc.html">Commit</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The ending line for the range</span></span></li><li><span class="tab"><span class="meta">endingLine</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The starting line for the range</span></span></li><li><span class="tab"><span class="meta">startingLine</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li>}</li></ul></code>
 </section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<ul class="require-by"><li><a href="blame.doc.html" title="Blame - Represents a Git blame.">Blame<em>Represents a Git blame.</em></a><li></ul>
+</section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>

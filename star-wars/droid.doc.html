@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>Droid</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -173,10 +173,14 @@
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
 <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Droid</span> <span class="keyword operator ts">implements</span> <a class="support type" href="character.doc.html">Character</a> {</li><li></li><li><span class="tab"><span class="comment line"># The id of the droid.</span></span></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The name of the droid.</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The friends of the droid, or an empty list if they</span></span></li><li><span class="tab"><span class="comment line"># have none.</span></span></li><li><span class="tab"><span class="meta">friends</span>: [<a class="support type" href="character.doc.html">Character</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># Which movies they appear in.</span></span></li><li><span class="tab"><span class="meta">appearsIn</span>: [<a class="support type" href="episode.doc.html">Episode</a>] </span></li><li></li><li><span class="tab"><span class="comment line"># Construction date and the name of the designer.</span></span></li><li><span class="tab"><span class="meta">secretBackstory</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The primary function of the droid.</span></span></li><li><span class="tab"><span class="meta">primaryFunction</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li>}</li></ul></code>
 </section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<ul class="require-by"><li><a href="query.doc.html" title="Query - Root query">Query<em>Root query</em></a><li></ul>
+</section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>

@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
     <title>GpgSignature</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
     <nav class="slds-grid slds-grid--vertical slds-col--rule-right">
@@ -1418,10 +1418,14 @@
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
 <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">GpgSignature</span> <span class="keyword operator ts">implements</span> <a class="support type" href="gitsignature.doc.html">GitSignature</a> {</li><li></li><li><span class="tab"><span class="comment line"># Email used to sign this object.</span></span></li><li><span class="tab"><span class="meta">email</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># True if the signature is valid and verified by GitHub.</span></span></li><li><span class="tab"><span class="meta">isValid</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Hex-encoded ID of the key that signed this object.</span></span></li><li><span class="tab"><span class="meta">keyId</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line"># Payload for GPG signing object. Raw ODB object without</span></span></li><li><span class="tab"><span class="comment line"># the signature header.</span></span></li><li><span class="tab"><span class="meta">payload</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># ASCII-armored signature header from object.</span></span></li><li><span class="tab"><span class="meta">signature</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># GitHub user corresponding to the email signing this</span></span></li><li><span class="tab"><span class="comment line"># commit.</span></span></li><li><span class="tab"><span class="meta">signer</span>: <a class="support type" href="user.doc.html">User</a> </span></li><li></li><li><span class="tab"><span class="comment line"># The state of this signature. `VALID` if signature is</span></span></li><li><span class="tab"><span class="comment line"># valid and verified by GitHub, otherwise represents</span></span></li><li><span class="tab"><span class="comment line"># reason why signature is considered invalid.</span></span></li><li><span class="tab"><span class="meta">state</span>: <a class="support type" href="gitsignaturestate.doc.html">GitSignatureState</a>! </span></li><li>}</li></ul></code>
 </section>
+<section>
+<h2 class="slds-section__title slds-m-top--small">Require by</h3>
+<div class="require-by anyone">This element is not required by anyone</div>
+</section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.0.0</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.0</a>
     </p>
 </div>
 </footer>
