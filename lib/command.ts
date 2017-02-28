@@ -63,7 +63,9 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new ValueFlag('endpoint', ['-e', '--endpoint'], 'Graphql http endpoint ["https://domain.com/graphql"].'),
         new ListValueFlag('headers', ['-x', '--header'], 'HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].'),
         new ListValueFlag('queries', ['-q', '--query'], 'HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].'),
-        new ValueFlag('schemaFile', ['-s', '--schema'], 'Graphql Schema file ["./schema.json"].'),
+        new ValueFlag('schemaFile', ['-s', '--schema', '--schema-file'],
+            'Graphql Schema file ["./schema.json"].'
+        ),
         new ListValueFlag('plugins', ['-p', '--plugin'], 'Use plugins [default=graphdoc/plugins/default].'),
         new ValueFlag('template', ['-t', '--template'], 'Use template [default=graphdoc/template/slds].'),
         new ValueFlag('output', ['-o', '--output'], 'Output directory.'),
