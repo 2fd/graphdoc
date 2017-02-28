@@ -14,6 +14,7 @@ import NavigationObject from './navigation.object';
 import NavigationIput from './navigation.input';
 import NavigationDirective from './navigation.directive';
 import DocumentSchema from './document.schema';
+import RequireByPlugin from './document.require-by';
 
 export default class NavigationDirectives extends Plugin implements PluginInterface {
 
@@ -31,6 +32,7 @@ export default class NavigationDirectives extends Plugin implements PluginInterf
             new NavigationIput(document, graphdocPackage, projectPackage),
             new NavigationDirective(document, graphdocPackage, projectPackage),
             new DocumentSchema(document, graphdocPackage, projectPackage),
+            new RequireByPlugin(document, graphdocPackage, projectPackage),
         ];
     }
 

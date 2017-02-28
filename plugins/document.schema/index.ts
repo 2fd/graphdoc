@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, split, Plugin} from '../../lib/utility';
+import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, split, Plugin, DocumentSection} from '../../lib/utility';
 import {
     PluginInterface,
     DocumentSectionInterface,
@@ -34,10 +34,9 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
         const code = this.code(buildForType);
 
         if (code)
-            return [{
-                title: 'GraphQL Schema definition',
-                description: html.code(code)
-            }];
+            return [
+                new DocumentSection('GraphQL Schema definition',  html.code(code))
+            ];
 
         return [];
     }
