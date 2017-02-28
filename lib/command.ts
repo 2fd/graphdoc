@@ -121,9 +121,15 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
                 return this.getPlugins(projectPackage.graphdoc.plugins);
             })
-            .then((pluginContructors: PluginConstructor[]) => {
+            .then((pluginContructors: (PluginConstructor | PluginInterface)[]) => {
                 plugins = pluginContructors
-                    .map((Plugin) => new Plugin(schema, projectPackage, graphdocPackage));
+                    .map((Plugin) => {
+                        return typeof Plugin === 'function' ?
+                            // plugins as contructor
+                            new Plugin(schema, projectPackage, graphdocPackage) :
+                            // plugins plain object
+                            Plugin;
+                    });
             })
 
             // Collect assets
@@ -275,7 +281,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         return Promise.resolve(packageJSON);
     }
 
-    getPlugins(paths: string[]): PluginConstructor[] {
+    getPlugins(paths: string[]): (PluginConstructor | PluginInterface)[] {
         return paths
             .map(path => resolve(path))
             .map(path => require(path).default);
