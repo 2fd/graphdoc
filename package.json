@@ -63,6 +63,6 @@
     "logo": "<a href=\"https://developer.github.com/early-access/graphql\" target=\"_blank\" style=\"display:block;padding:1rem 3rem\"><img src=\"https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png\" /></a>",
     "schemaFile": "./test/github.json",
     "output": "./gh-pages/github",
-    "baseUrl": "/github"
+    "baseUrl": "./"
   }
 }

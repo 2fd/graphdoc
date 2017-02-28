@@ -7,6 +7,6 @@
     "ga": "UA-54154153-2",
     "endpoint": "http://localhost:4000/graphql",
     "output": "./gh-pages/star-wars",
-    "baseUrl": "/star-wars"
+    "baseUrl": "./"
   }
 }
