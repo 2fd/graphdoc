@@ -141,7 +141,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             })
 
             // Ensure Ourput directory
-            .then(() => output.info('output directory', projectPackage.graphdoc.output))
+            .then(() => output.info('output directory', path.relative(process.cwd(), projectPackage.graphdoc.output)))
             .then(() => this.ensureOutputDirectory(
                 projectPackage.graphdoc.output,
                 projectPackage.graphdoc.force,
