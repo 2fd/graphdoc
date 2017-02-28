@@ -68,6 +68,10 @@
     "@types/form-data" "*"
     "@types/node" "*"
 
+"@types/striptags@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@types/striptags/-/striptags-0.0.5.tgz#6465973627519c5b874e77c7eee3a08aaab07c86"
+
 abab@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
@@ -2430,6 +2434,10 @@ strip-indent@^1.0.1:
   resolved "https://registry.yarnpkg.com/strip-indent/-/strip-indent-1.0.1.tgz#0c7962a6adefa7bbd4ac366460a638552ae1a0a2"
   dependencies:
     get-stdin "^4.0.1"
+
+striptags@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/striptags/-/striptags-3.0.1.tgz#48f0d6932549c47bb3582920c87527cf49a160c1"
 
 supports-color@^0.2.0:
   version "0.2.0"

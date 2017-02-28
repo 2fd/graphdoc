@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import * as striptags from 'striptags';
 import {
     SCALAR,
     OBJECT,
@@ -102,8 +103,8 @@ export default class RequireByPlugin extends Plugin implements PluginInterface {
     getDescription(type: SchemaType): string {
         return '<li>' +
             '<a href="' + this.url(type) + '" title="' +
-            type.name + ' - ' + type.description +
-            + '">' +
+            type.name + ' - ' + striptags(type.description).replace(/"/gi, '&quot;') +
+            '">' +
             type.name + '<em>' + type.description + '</em>' +
             '</a>' +
             '<li>';
