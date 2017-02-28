@@ -260,7 +260,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         if (packageJSON.graphdoc.plugins.length === 0)
             packageJSON.graphdoc.plugins = ['graphdoc/plugins/default'];
 
-        packageJSON.graphdoc.baseUrl = path.resolve('/', packageJSON.graphdoc.baseUrl || '/');
+        packageJSON.graphdoc.baseUrl = packageJSON.graphdoc.baseUrl || './';
         packageJSON.graphdoc.template = resolve(packageJSON.graphdoc.template || 'graphdoc/template/slds');
         packageJSON.graphdoc.output = path.resolve(packageJSON.graphdoc.output);
         packageJSON.graphdoc.version = pack.version;

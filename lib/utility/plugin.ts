@@ -1,4 +1,4 @@
-import * as path from 'path';
+import * as url from 'url';
 import {
     Schema,
     PluginImplementedInterface,
@@ -119,7 +119,7 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
     }
 
     url(type: TypeRef): string {
-        return path.resolve(this.projectPackage.graphdoc.baseUrl, getFilenameOf(type));
+        return url.resolve(this.projectPackage.graphdoc.baseUrl, getFilenameOf(type));
     }
 }
 
