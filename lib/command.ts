@@ -131,7 +131,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             .then((pluginAssets) => {
                 assets = pluginAssets;
                 assets
-                    .forEach(asset => output.info('use asset', asset));
+                    .forEach(asset => output.info('use asset', path.relative(process.cwd(), asset)));
             })
 
             // Ensure Ourput directory
