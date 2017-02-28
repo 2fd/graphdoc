@@ -10,7 +10,7 @@ export interface PluginInterface {
     getNavigations?: (buildForType?: string) => NavigationSectionInterface[] | PromiseLike<NavigationSectionInterface[]>;
     getDocuments?: (buildForType?: string) => DocumentSectionInterface[] | PromiseLike<DocumentSectionInterface[]>;
     getHeaders?: (buildForType?: string) => string[] | PromiseLike<string[]>;
-    getAssets?: () => string[] | Promise<string[]>;
+    getAssets?: () => string[] | PromiseLike<string[]>;
 }
 
 export interface PluginImplementedInterface {
