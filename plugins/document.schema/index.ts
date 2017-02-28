@@ -201,7 +201,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
 
     inputValues(inputValues: InputValue[]): string {
         return inputValues
-            .map(inputValue => html.line(this.inputValue(inputValue)))
+            .map(inputValue => html.line(html.tab(this.inputValue(inputValue))))
             .join(html.line(''));
     }
 
