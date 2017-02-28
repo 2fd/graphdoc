@@ -123,26 +123,38 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
     }
 }
 
+/**
+ * NavigationSectionInterface short implementation
+ */
 export class NavigationSection implements NavigationSectionInterface {
-    title: string;
-    items: NavigationItemInterface[];
 
-    constructor(title: string, items: NavigationItem[] = []) {
-        this.title = title;
-        this.items = items;
-    }
+    constructor(
+        public title: string,
+        public items: NavigationItem[] = []
+    ) { }
 }
+
+/**
+ * NavigationItemInterface short implementation
+ */
 export class NavigationItem implements NavigationItemInterface {
 
-    text: string;
-    href: string;
-    isActive: boolean;
+    constructor(
+        public text: string,
+        public href: string,
+        public isActive: boolean
+    ) {}
+}
 
-    constructor(text, href, isActive) {
-        this.text = text;
-        this.href = href;
-        this.isActive = isActive;
-    }
+/**
+ * DocumentSectionInterface short implementation
+ */
+export class DocumentSection implements DocumentSectionInterface {
+
+    constructor(
+        public title: string,
+        public description: string,
+    ) {}
 }
 
 function priorityType(type: SchemaType): number {

@@ -6,6 +6,7 @@ export {
 export {
     NavigationItem,
     NavigationSection,
+    DocumentSection,
     Plugin,
     sortTypes
 } from './plugin';
