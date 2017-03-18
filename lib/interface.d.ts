@@ -201,3 +201,7 @@ type Field = Description & Deprecation & {
 type TypeRef = Description & {
     ofType?: TypeRef
 }
+
+export interface SchemaLoader {
+    (options: any): Promise<Schema>;
+}
