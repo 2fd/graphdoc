@@ -5,7 +5,7 @@
   "homepage": "https://github.com/2fd/graphdoc#readme",
   "graphdoc": {
     "ga": "UA-54154153-2",
-    "endpoint": "http://localhost:4000/graphql",
+    "schemaFile": "./test/starwars.graphql",
     "output": "./gh-pages/star-wars",
     "baseUrl": "./"
   }

@@ -1,16 +1,19 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as request from 'request';
 import * as glob from 'glob';
 import { render } from 'mustache';
-import { query as introspectionQuery, Output, Plugin, getFilenameOf, createData } from './utility';
+import { Output, Plugin, getFilenameOf, createData } from './utility';
 import { readFile, writeFile, createBuildDirectory, resolve, removeBuildDirectory } from './utility/fs';
+import {
+    httpSchemaLoader,
+    idlSchemaLoader,
+    jsonSchemaLoader
+} from './schema-loader';
 import {
     PluginInterface,
     PluginConstructor,
     Schema,
     TypeRef,
-    Introspection,
 } from './interface';
 import {
     Command,
@@ -262,7 +265,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
 
         if (packageJSON.graphdoc.data) {
             const data = packageJSON.graphdoc.data;
-             packageJSON.graphdoc = Object.assign(data, packageJSON.graphdoc);
+            packageJSON.graphdoc = Object.assign(data, packageJSON.graphdoc);
         }
 
         if (packageJSON.graphdoc.plugins.length === 0)
@@ -290,40 +293,21 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
     getSchema(projectPackage: ProjectPackage): Promise<Schema> {
 
         if (projectPackage.graphdoc.schemaFile) {
-            try {
-                const schemaPath = path.resolve(projectPackage.graphdoc.schemaFile);
-                const introspection: Introspection = require(schemaPath);
-                return Promise.resolve(introspection.data.__schema);
-
-            } catch (err) {
-                return Promise.reject(err);
+            const schemaFileExt = path.extname(projectPackage.graphdoc.schemaFile);
+            switch (schemaFileExt) {
+                case '.json':
+                    return jsonSchemaLoader(projectPackage.graphdoc);
+                case '.gql':
+                case '.graphql':
+                    return idlSchemaLoader(projectPackage.graphdoc);
+                default:
+                    return Promise.reject(new Error(
+                        'Unexpected schema extension name: ' + schemaFileExt
+                    ));
             }
 
         } else if (projectPackage.graphdoc.endpoint) {
-
-            let options = {
-                url: projectPackage.graphdoc.endpoint,
-                method: 'POST',
-                json: true,
-                body: { query: introspectionQuery }
-            } as any;
-
-            options.headers = projectPackage.graphdoc.headers.reduce((result: any, header: string) => {
-                const [name, value] = header.split(': ', 2);
-                result[name] = value;
-                return result;
-            }, {});
-
-            options.qs = projectPackage.graphdoc.queries.reduce((result: any, query: string) => {
-                const [name, value] = query.split('=', 2);
-                result[name] = value;
-                return result;
-            }, {});
-
-            return new Promise((resolve, reject) => {
-                request(options, (err, _, introspection: Introspection) => err ?
-                    reject(err) : resolve(introspection.data.__schema));
-            });
+            return httpSchemaLoader(projectPackage.graphdoc);
 
         } else {
             return Promise.reject(
