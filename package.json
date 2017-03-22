@@ -35,13 +35,13 @@
     "@types/fs-extra": "0.0.32",
     "@types/glob": "^5.0.30",
     "@types/graphql": "^0.8.6",
-    "@types/request": "^0.0.40",
-    "@types/marked": "0.0.27",
     "@types/jest": "^18.1.0",
-    "@types/striptags": "^0.0.5",
+    "@types/marked": "0.0.27",
     "@types/mocha": "^2.2.32",
     "@types/mustache": "^0.8.28",
     "@types/node": "^6.0.32",
+    "@types/request": "^0.0.40",
+    "@types/striptags": "^0.0.5",
     "chai": "^3.5.0",
     "jest": "^18.1.0",
     "node-sass": "^3.8.0",
@@ -55,7 +55,8 @@
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
     "request": "^2.79.0",
-    "striptags": "^3.0.1"
+    "striptags": "^3.0.1",
+    "word-wrap": "^1.2.1"
   },
   "graphdoc": {
     "ga": "UA-54154153-2",
