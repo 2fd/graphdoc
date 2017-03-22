@@ -1726,6 +1726,19 @@
               "deprecationReason": "Exposed database IDs will eventually be removed in favor of global Relay IDs."
             },
             {
+              "name": "defaultBranchRef",
+              "description": "The Ref associated with the repository's default branch.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Ref",
+                "description": "Represents a Git reference.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "description",
               "description": "The description of the repository.",
               "args": [],
@@ -1776,7 +1789,7 @@
             },
             {
               "name": "forks",
-              "description": "A list of child repositories.",
+              "description": "A list of forked repositories.",
               "args": [
                 {
                   "name": "first",
@@ -1823,12 +1836,50 @@
                   "defaultValue": null
                 },
                 {
+                  "name": "privacy",
+                  "description": "If non-null, filters repositories according to privacy",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "RepositoryPrivacy",
+                    "description": "The privacy of a repository",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
                   "name": "orderBy",
                   "description": "Ordering options for repositories returned from the connection",
                   "type": {
                     "kind": "INPUT_OBJECT",
                     "name": "RepositoryOrder",
                     "description": "Ordering options for repository connections",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "affiliation",
+                  "description": "Affiliation options for repositories returned from the connection",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "RepositoryAffiliation",
+                      "description": "The affiliation of a user to a repository",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "isLocked",
+                  "description": "If non-null, filters repositories according to whether they have been locked",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "Represents `true` or `false` values.",
                     "ofType": null
                   },
                   "defaultValue": null
@@ -2714,6 +2765,27 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "states",
+                  "description": "A list of states to filter the projects by.",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "description": null,
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "ProjectState",
+                        "description": "State of the project; either 'open' or 'closed'",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -3324,6 +3396,24 @@
               "deprecationReason": null
             },
             {
+              "name": "viewerCanUpdateTopics",
+              "description": "Indicates whether the viewer can update the topics of this repository.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "description": "Represents `true` or `false` values.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "viewerHasStarred",
               "description": "Returns a boolean indicating whether the viewing user has starred this repository.",
               "args": [],
@@ -3491,6 +3581,19 @@
                   "description": "A string containing HTML code.",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "closedAt",
+              "description": "Identifities the date and time when the project was closed.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "description": "An ISO-8601 encoded UTC date string.",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -4276,6 +4379,24 @@
               "deprecationReason": null
             },
             {
+              "name": "isCampusExpert",
+              "description": "Whether or not this user is a participant in the GitHub Campus Experts Program.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "description": "Represents `true` or `false` values.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "isDeveloperProgramMember",
               "description": "Whether or not this user is a GitHub Developer Program member.",
               "args": [],
@@ -4790,6 +4911,33 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "affiliation",
+                  "description": "Affiliation options for repositories returned from the connection",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "RepositoryAffiliation",
+                      "description": "The affiliation of a user to a repository",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "isLocked",
+                  "description": "If non-null, filters repositories according to whether they have been locked",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "Represents `true` or `false` values.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -4914,7 +5062,7 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "StarredRepositoryConnection",
-                  "description": "The connection type for User.",
+                  "description": "The connection type for Repository.",
                   "ofType": null
                 }
               },
@@ -6168,6 +6316,37 @@
                   "kind": "SCALAR",
                   "name": "String",
                   "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "headRepository",
+              "description": "The repository associated with this pull request's head Ref.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Repository",
+                "description": "A repository contains the content for a project.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "headRepositoryOwner",
+              "description": "The owner of the repository associated with this pull request's head Ref.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "INTERFACE",
+                  "name": "RepositoryOwner",
+                  "description": "Represents an owner of a Repository.",
                   "ofType": null
                 }
               },
@@ -11970,15 +12149,10 @@
               "description": "Identifies the commit associated with this pull request review.",
               "args": [],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Commit",
-                  "description": "Represents a Git commit.",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Commit",
+                "description": "Represents a Git commit.",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -17893,6 +18067,950 @@
           "possibleTypes": null
         },
         {
+          "name": "RepositoryOwner",
+          "kind": "INTERFACE",
+          "description": "Represents an owner of a Repository.",
+          "fields": [
+            {
+              "name": "avatarURL",
+              "description": "A URL pointing to the owner's public avatar.",
+              "args": [
+                {
+                  "name": "size",
+                  "description": "The size of the resulting square image.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "gist",
+              "description": "Find gist by repo name.",
+              "args": [
+                {
+                  "name": "name",
+                  "description": "The gist name to find.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Gist",
+                "description": "A Gist.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "gists",
+              "description": "A list of the Gists the user has created.",
+              "args": [
+                {
+                  "name": "first",
+                  "description": "Returns the first _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": "Returns the elements in the list that come after the specified global ID.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": "Returns the last _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "before",
+                  "description": "Returns the elements in the list that come before the specified global ID.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "visibility",
+                  "description": "Allows filtering by gist visibility.",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "GistVisibility",
+                    "description": "The possible Gist visibility types",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "GistConnection",
+                  "description": "The connection type for Gist.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "description": "Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"VXNlci0xMA==\"`) or integer (such as `4`) input value will be accepted as an ID.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "login",
+              "description": "The username used to login.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "path",
+              "description": "The HTTP url for the owner.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "repositories",
+              "description": "A list of repositories that the user owns.",
+              "args": [
+                {
+                  "name": "first",
+                  "description": "Returns the first _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": "Returns the elements in the list that come after the specified global ID.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": "Returns the last _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "before",
+                  "description": "Returns the elements in the list that come before the specified global ID.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "privacy",
+                  "description": "If non-null, filters repositories according to privacy",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "RepositoryPrivacy",
+                    "description": "The privacy of a repository",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "isFork",
+                  "description": "If non-null, filters repositories according to whether they are forks of another repository",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "Represents `true` or `false` values.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "orderBy",
+                  "description": "Ordering options for repositories returned from the connection",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "RepositoryOrder",
+                    "description": "Ordering options for repository connections",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "affiliation",
+                  "description": "Affiliation options for repositories returned from the connection",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "RepositoryAffiliation",
+                      "description": "The affiliation of a user to a repository",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "isLocked",
+                  "description": "If non-null, filters repositories according to whether they have been locked",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "Represents `true` or `false` values.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "RepositoryConnection",
+                  "description": "A list of repositories owned by the subject.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "repository",
+              "description": "Find Repository.",
+              "args": [
+                {
+                  "name": "name",
+                  "description": "Name of Repository to find.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Repository",
+                "description": "A repository contains the content for a project.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "url",
+              "description": "The HTTP url for the owner.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": [
+            {
+              "kind": "OBJECT",
+              "name": "Organization",
+              "description": "An account on GitHub, with one or more owners, that has repositories, members and teams.",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "User",
+              "description": "A user is an individual's account on GitHub that owns repositories and can make new content.",
+              "ofType": null
+            }
+          ]
+        },
+        {
+          "name": "RepositoryConnection",
+          "kind": "OBJECT",
+          "description": "A list of repositories owned by the subject.",
+          "fields": [
+            {
+              "name": "edges",
+              "description": "A list of edges.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "RepositoryEdge",
+                  "description": "An edge in a connection.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "nodes",
+              "description": "A list of nodes.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Repository",
+                  "description": "A repository contains the content for a project.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pageInfo",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PageInfo",
+                  "description": "Information about pagination in a connection.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "totalCount",
+              "description": "Identifies the total count of items in the connection.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "totalDiskUsage",
+              "description": "The total size in kilobytes of all repositories in the connection.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "RepositoryEdge",
+          "kind": "OBJECT",
+          "description": "An edge in a connection.",
+          "fields": [
+            {
+              "name": "cursor",
+              "description": "A cursor for use in pagination.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "node",
+              "description": "The item at the end of the edge.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Repository",
+                "description": "A repository contains the content for a project.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "RepositoryPrivacy",
+          "kind": "ENUM",
+          "description": "The privacy of a repository",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "PUBLIC",
+              "description": "Public",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "PRIVATE",
+              "description": "Private",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "name": "RepositoryOrder",
+          "kind": "INPUT_OBJECT",
+          "description": "Ordering options for repository connections",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "field",
+              "description": "The field to order repositories by.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "RepositoryOrderField",
+                  "description": "Properties by which repository connections can be ordered.",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "direction",
+              "description": "The ordering direction.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "OrderDirection",
+                  "description": "Possible directions in which to order a list of items when provided an `orderBy` argument.",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "RepositoryOrderField",
+          "kind": "ENUM",
+          "description": "Properties by which repository connections can be ordered.",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "CREATED_AT",
+              "description": "Order repositories by creation time",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "UPDATED_AT",
+              "description": "Order repositories by update time",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "PUSHED_AT",
+              "description": "Order repositories by push time",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "NAME",
+              "description": "Order repositories by name",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "name": "RepositoryAffiliation",
+          "kind": "ENUM",
+          "description": "The affiliation of a user to a repository",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "OWNER",
+              "description": "Repositories that are owned by the authenticated user.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "COLLABORATOR",
+              "description": "Repositories that the user has been added to as a collaborator.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ORGANIZATION_MEMBER",
+              "description": "Repositories that the user has access to through being a member of an organization. This includes every repository on every team that the user is on.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "name": "Gist",
+          "kind": "OBJECT",
+          "description": "A Gist.",
+          "fields": [
+            {
+              "name": "createdAt",
+              "description": "Identifies the date and time when the object was created.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "DateTime",
+                  "description": "An ISO-8601 encoded UTC date string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "description",
+              "description": "The gist description.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "description": "Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"VXNlci0xMA==\"`) or integer (such as `4`) input value will be accepted as an ID.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "The gist name.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "owner",
+              "description": "The gist owner.",
+              "args": [],
+              "type": {
+                "kind": "INTERFACE",
+                "name": "RepositoryOwner",
+                "description": "Represents an owner of a Repository.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "public",
+              "description": "Whether the gist is public or not.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "description": "Represents `true` or `false` values.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Identifies the date and time when the object was last updated.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "DateTime",
+                  "description": "An ISO-8601 encoded UTC date string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Node",
+              "description": "An object with an ID.",
+              "ofType": null
+            }
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "GistConnection",
+          "kind": "OBJECT",
+          "description": "The connection type for Gist.",
+          "fields": [
+            {
+              "name": "edges",
+              "description": "A list of edges.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "GistEdge",
+                  "description": "An edge in a connection.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "nodes",
+              "description": "A list of nodes.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Gist",
+                  "description": "A Gist.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pageInfo",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PageInfo",
+                  "description": "Information about pagination in a connection.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "totalCount",
+              "description": "Identifies the total count of items in the connection.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "GistEdge",
+          "kind": "OBJECT",
+          "description": "An edge in a connection.",
+          "fields": [
+            {
+              "name": "cursor",
+              "description": "A cursor for use in pagination.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "node",
+              "description": "The item at the end of the edge.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Gist",
+                "description": "A Gist.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "GistVisibility",
+          "kind": "ENUM",
+          "description": "The possible Gist visibility types",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "PUBLIC",
+              "description": "Gists that are public",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "SECRET",
+              "description": "Gists that are secret",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ALL",
+              "description": "Gists that are public and secret",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
           "name": "PullRequestState",
           "kind": "ENUM",
           "description": "The possible states of a pull request.",
@@ -18912,6 +20030,12 @@
             },
             {
               "kind": "OBJECT",
+              "name": "Team",
+              "description": "A team of users in an organization.",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
               "name": "User",
               "description": "A user is an individual's account on GitHub that owns repositories and can make new content.",
               "ofType": null
@@ -19126,894 +20250,6 @@
             }
           ],
           "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "name": "RepositoryConnection",
-          "kind": "OBJECT",
-          "description": "A list of repositories owned by the subject.",
-          "fields": [
-            {
-              "name": "edges",
-              "description": "A list of edges.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "RepositoryEdge",
-                  "description": "An edge in a connection.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "nodes",
-              "description": "A list of nodes.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Repository",
-                  "description": "A repository contains the content for a project.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "pageInfo",
-              "description": "Information to aid in pagination.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "PageInfo",
-                  "description": "Information about pagination in a connection.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "totalCount",
-              "description": "Identifies the total count of items in the connection.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "totalDiskUsage",
-              "description": "The total size in kilobytes of all repositories in the connection.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "name": "RepositoryEdge",
-          "kind": "OBJECT",
-          "description": "An edge in a connection.",
-          "fields": [
-            {
-              "name": "cursor",
-              "description": "A cursor for use in pagination.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "node",
-              "description": "The item at the end of the edge.",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Repository",
-                "description": "A repository contains the content for a project.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "name": "RepositoryPrivacy",
-          "kind": "ENUM",
-          "description": "The privacy of a repository",
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": [
-            {
-              "name": "PUBLIC",
-              "description": "Public",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "PRIVATE",
-              "description": "Private",
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "possibleTypes": null
-        },
-        {
-          "name": "RepositoryOrder",
-          "kind": "INPUT_OBJECT",
-          "description": "Ordering options for repository connections",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "field",
-              "description": "The field to order repositories by.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "RepositoryOrderField",
-                  "description": "Properties by which repository connections can be ordered.",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "direction",
-              "description": "The ordering direction.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "OrderDirection",
-                  "description": "Possible directions in which to order a list of items when provided an `orderBy` argument.",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "name": "RepositoryOrderField",
-          "kind": "ENUM",
-          "description": "Properties by which repository connections can be ordered.",
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": [
-            {
-              "name": "CREATED_AT",
-              "description": "Order repositories by creation time",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "UPDATED_AT",
-              "description": "Order repositories by update time",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "PUSHED_AT",
-              "description": "Order repositories by push time",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "NAME",
-              "description": "Order repositories by name",
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "possibleTypes": null
-        },
-        {
-          "name": "Gist",
-          "kind": "OBJECT",
-          "description": "A Gist.",
-          "fields": [
-            {
-              "name": "createdAt",
-              "description": "Identifies the date and time when the object was created.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "description": "An ISO-8601 encoded UTC date string.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "description",
-              "description": "The gist description.",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "id",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "description": "Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"VXNlci0xMA==\"`) or integer (such as `4`) input value will be accepted as an ID.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "name",
-              "description": "The gist name.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "owner",
-              "description": "The gist owner.",
-              "args": [],
-              "type": {
-                "kind": "INTERFACE",
-                "name": "RepositoryOwner",
-                "description": "Represents an owner of a Repository.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "public",
-              "description": "Whether the gist is public or not.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "description": "Represents `true` or `false` values.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "updatedAt",
-              "description": "Identifies the date and time when the object was last updated.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "description": "An ISO-8601 encoded UTC date string.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [
-            {
-              "kind": "INTERFACE",
-              "name": "Node",
-              "description": "An object with an ID.",
-              "ofType": null
-            }
-          ],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "name": "RepositoryOwner",
-          "kind": "INTERFACE",
-          "description": "Represents an owner of a Repository.",
-          "fields": [
-            {
-              "name": "avatarURL",
-              "description": "A URL pointing to the owner's public avatar.",
-              "args": [
-                {
-                  "name": "size",
-                  "description": "The size of the resulting square image.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "gist",
-              "description": "Find gist by repo name.",
-              "args": [
-                {
-                  "name": "name",
-                  "description": "The gist name to find.",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "description": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Gist",
-                "description": "A Gist.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "gists",
-              "description": "A list of the Gists the user has created.",
-              "args": [
-                {
-                  "name": "first",
-                  "description": "Returns the first _n_ elements from the list.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": "Returns the elements in the list that come after the specified global ID.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": "Returns the last _n_ elements from the list.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "before",
-                  "description": "Returns the elements in the list that come before the specified global ID.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "visibility",
-                  "description": "Allows filtering by gist visibility.",
-                  "type": {
-                    "kind": "ENUM",
-                    "name": "GistVisibility",
-                    "description": "The possible Gist visibility types",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "GistConnection",
-                  "description": "The connection type for Gist.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "id",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "description": "Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"VXNlci0xMA==\"`) or integer (such as `4`) input value will be accepted as an ID.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "login",
-              "description": "The username used to login.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "path",
-              "description": "The HTTP url for the owner.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "URI",
-                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "repositories",
-              "description": "A list of repositories that the user owns.",
-              "args": [
-                {
-                  "name": "first",
-                  "description": "Returns the first _n_ elements from the list.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": "Returns the elements in the list that come after the specified global ID.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": "Returns the last _n_ elements from the list.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "before",
-                  "description": "Returns the elements in the list that come before the specified global ID.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "privacy",
-                  "description": "If non-null, filters repositories according to privacy",
-                  "type": {
-                    "kind": "ENUM",
-                    "name": "RepositoryPrivacy",
-                    "description": "The privacy of a repository",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "isFork",
-                  "description": "If non-null, filters repositories according to whether they are forks of another repository",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "description": "Represents `true` or `false` values.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "orderBy",
-                  "description": "Ordering options for repositories returned from the connection",
-                  "type": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "RepositoryOrder",
-                    "description": "Ordering options for repository connections",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "RepositoryConnection",
-                  "description": "A list of repositories owned by the subject.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "repository",
-              "description": "Find Repository.",
-              "args": [
-                {
-                  "name": "name",
-                  "description": "Name of Repository to find.",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "description": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Repository",
-                "description": "A repository contains the content for a project.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "url",
-              "description": "The HTTP url for the owner.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "URI",
-                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": [
-            {
-              "kind": "OBJECT",
-              "name": "Organization",
-              "description": "An account on GitHub, with one or more owners, that has repositories, members and teams.",
-              "ofType": null
-            },
-            {
-              "kind": "OBJECT",
-              "name": "User",
-              "description": "A user is an individual's account on GitHub that owns repositories and can make new content.",
-              "ofType": null
-            }
-          ]
-        },
-        {
-          "name": "GistConnection",
-          "kind": "OBJECT",
-          "description": "The connection type for Gist.",
-          "fields": [
-            {
-              "name": "edges",
-              "description": "A list of edges.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "GistEdge",
-                  "description": "An edge in a connection.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "nodes",
-              "description": "A list of nodes.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Gist",
-                  "description": "A Gist.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "pageInfo",
-              "description": "Information to aid in pagination.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "PageInfo",
-                  "description": "Information about pagination in a connection.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "totalCount",
-              "description": "Identifies the total count of items in the connection.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "name": "GistEdge",
-          "kind": "OBJECT",
-          "description": "An edge in a connection.",
-          "fields": [
-            {
-              "name": "cursor",
-              "description": "A cursor for use in pagination.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "node",
-              "description": "The item at the end of the edge.",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Gist",
-                "description": "A Gist.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "name": "GistVisibility",
-          "kind": "ENUM",
-          "description": "The possible Gist visibility types",
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": [
-            {
-              "name": "PUBLIC",
-              "description": "Gists that are public",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "SECRET",
-              "description": "Gists that are secret",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "ALL",
-              "description": "Gists that are public and secret",
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
           "possibleTypes": null
         },
         {
@@ -20399,6 +20635,27 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "states",
+                  "description": "A list of states to filter the projects by.",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "description": null,
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "ProjectState",
+                        "description": "State of the project; either 'open' or 'closed'",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -20531,6 +20788,33 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "affiliation",
+                  "description": "Affiliation options for repositories returned from the connection",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "RepositoryAffiliation",
+                      "description": "The affiliation of a user to a repository",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "isLocked",
+                  "description": "If non-null, filters repositories according to whether they have been locked",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "Represents `true` or `false` values.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -20572,6 +20856,31 @@
                 "kind": "OBJECT",
                 "name": "Repository",
                 "description": "A repository contains the content for a project.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "team",
+              "description": "Find an organization's team by its slug.",
+              "args": [
+                {
+                  "name": "slug",
+                  "description": "The name or slug of the team to find.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Team",
+                "description": "A team of users in an organization.",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -20624,6 +20933,50 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "privacy",
+                  "description": "If non-null, filters teams according to privacy",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "TeamPrivacy",
+                    "description": "The possible team privacy values.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "role",
+                  "description": "If non-null, filters teams according to whether the viewer is an admin or member on team",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "TeamRole",
+                    "description": "The role of a user on a team.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "query",
+                  "description": "If non-null, filters teams with query on team name and team slug",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "orderBy",
+                  "description": "Ordering options for teams returned from the connection",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TeamOrder",
+                    "description": "Ways in which team connections can be ordered.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -20634,6 +20987,42 @@
                   "kind": "OBJECT",
                   "name": "TeamConnection",
                   "description": "The connection type for Team.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "teamsPath",
+              "description": "The HTTP path listing organization's teams",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "teamsUrl",
+              "description": "The HTTP url listing organization's teams",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
                   "ofType": null
                 }
               },
@@ -21204,14 +21593,408 @@
               "deprecationReason": null
             },
             {
-              "name": "HIRING_MANAGER",
-              "description": "The user is invited to be a hiring manager of the organization.",
+              "name": "REINSTATE",
+              "description": "The user's previous role will be reinstated.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "name": "Team",
+          "kind": "OBJECT",
+          "description": "A team of users in an organization.",
+          "fields": [
+            {
+              "name": "description",
+              "description": "The description of the team.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                "ofType": null
+              },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "REINSTATE",
-              "description": "The user's previous role will be reinstated.",
+              "name": "editTeamPath",
+              "description": "The HTTP path for editing this team",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "editTeamUrl",
+              "description": "The HTTP url for editing this team",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "description": "Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"VXNlci0xMA==\"`) or integer (such as `4`) input value will be accepted as an ID.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "invitations",
+              "description": "A list of pending invitations for users to this team",
+              "args": [
+                {
+                  "name": "first",
+                  "description": "Returns the first _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": "Returns the elements in the list that come after the specified global ID.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": "Returns the last _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "before",
+                  "description": "Returns the elements in the list that come before the specified global ID.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "OrganizationInvitationConnection",
+                "description": "The connection type for OrganizationInvitation.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "The name of the team.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "path",
+              "description": "The path to this resource.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "privacy",
+              "description": "The level of privacy the team has.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "TeamPrivacy",
+                  "description": "The possible team privacy values.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "slug",
+              "description": "The slug corresponding to the team.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "teamPath",
+              "description": "The HTTP path for this team",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "teamRepositoriesPath",
+              "description": "The HTTP path for this team's repositories",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "teamRepositoriesUrl",
+              "description": "The HTTP url for this team's repositories",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "teamUrl",
+              "description": "The HTTP url for this team",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "url",
+              "description": "The URL to this resource.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "URI",
+                  "description": "An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Node",
+              "description": "An object with an ID.",
+              "ofType": null
+            },
+            {
+              "kind": "INTERFACE",
+              "name": "UniformResourceLocatable",
+              "description": "Represents a type that can be retrieved by a URL.",
+              "ofType": null
+            }
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "TeamPrivacy",
+          "kind": "ENUM",
+          "description": "The possible team privacy values.",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "SECRET",
+              "description": "A secret team can only be seen by its members.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "VISIBLE",
+              "description": "A visible team can be seen and @mentioned by every member of the organization.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "name": "MemberOrder",
+          "kind": "INPUT_OBJECT",
+          "description": "Ways in which member connections can be ordered.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "field",
+              "description": "The field in which to order nodes by.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "UserOrderField",
+                  "description": "Properties by which user connections can be ordered.",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "direction",
+              "description": "The direction in which to order nodes.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "description": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "OrderDirection",
+                  "description": "Possible directions in which to order a list of items when provided an `orderBy` argument.",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "name": "UserOrderField",
+          "kind": "ENUM",
+          "description": "Properties by which user connections can be ordered.",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "LOGIN",
+              "description": "Allows ordering a list of users by their login.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ACTION",
+              "description": "Allows ordering a list of users by their ability action",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -21344,183 +22127,82 @@
           "possibleTypes": null
         },
         {
-          "name": "Team",
-          "kind": "OBJECT",
-          "description": "A team of users in an organization.",
-          "fields": [
+          "name": "TeamOrder",
+          "kind": "INPUT_OBJECT",
+          "description": "Ways in which team connections can be ordered.",
+          "fields": null,
+          "inputFields": [
             {
-              "name": "description",
-              "description": "The description of the team.",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "id",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "description": "Represents a unique identifier that is Base64 obfuscated. It is often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"VXNlci0xMA==\"`) or integer (such as `4`) input value will be accepted as an ID.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "invitations",
-              "description": "A list of pending invitations for users to this team",
-              "args": [
-                {
-                  "name": "first",
-                  "description": "Returns the first _n_ elements from the list.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": "Returns the elements in the list that come after the specified global ID.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": "Returns the last _n_ elements from the list.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "description": "Represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "before",
-                  "description": "Returns the elements in the list that come before the specified global ID.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "OrganizationInvitationConnection",
-                "description": "The connection type for OrganizationInvitation.",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "name",
-              "description": "The name of the team.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "description": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "privacy",
-              "description": "The level of privacy the team has.",
-              "args": [],
+              "name": "field",
+              "description": "The field in which to order nodes by.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "description": null,
                 "ofType": {
                   "kind": "ENUM",
-                  "name": "TeamPrivacy",
-                  "description": "The possible team privacy values.",
+                  "name": "TeamOrderField",
+                  "description": "Properties by which team connections can be ordered.",
                   "ofType": null
                 }
               },
-              "isDeprecated": false,
-              "deprecationReason": null
+              "defaultValue": null
             },
             {
-              "name": "slug",
-              "description": "The slug corresponding to the team.",
-              "args": [],
+              "name": "direction",
+              "description": "The direction in which to order nodes.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "description": null,
                 "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
+                  "kind": "ENUM",
+                  "name": "OrderDirection",
+                  "description": "Possible directions in which to order a list of items when provided an `orderBy` argument.",
                   "ofType": null
                 }
               },
-              "isDeprecated": false,
-              "deprecationReason": null
+              "defaultValue": null
             }
           ],
-          "inputFields": null,
-          "interfaces": [
-            {
-              "kind": "INTERFACE",
-              "name": "Node",
-              "description": "An object with an ID.",
-              "ofType": null
-            }
-          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
         {
-          "name": "TeamPrivacy",
+          "name": "TeamOrderField",
           "kind": "ENUM",
-          "description": "The possible team privacy values.",
+          "description": "Properties by which team connections can be ordered.",
           "fields": null,
           "inputFields": null,
           "interfaces": null,
           "enumValues": [
             {
-              "name": "SECRET",
-              "description": "A secret team can only be seen by its members.",
+              "name": "NAME",
+              "description": "Allows ordering a list of teams by name.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "name": "TeamRole",
+          "kind": "ENUM",
+          "description": "The role of a user on a team.",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "ADMIN",
+              "description": "User has admin rights on the team.",
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "VISIBLE",
-              "description": "A visible team can be seen and @mentioned by every member of the organization.",
+              "name": "MEMBER",
+              "description": "User is a member of the team.",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -21647,6 +22329,27 @@
                     "name": "String",
                     "description": "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text.",
                     "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "states",
+                  "description": "A list of states to filter the projects by.",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "description": null,
+                      "ofType": {
+                        "kind": "ENUM",
+                        "name": "ProjectState",
+                        "description": "State of the project; either 'open' or 'closed'",
+                        "ofType": null
+                      }
+                    }
                   },
                   "defaultValue": null
                 }
@@ -22032,7 +22735,7 @@
         {
           "name": "StarredRepositoryConnection",
           "kind": "OBJECT",
-          "description": "The connection type for User.",
+          "description": "The connection type for Repository.",
           "fields": [
             {
               "name": "edges",
@@ -22062,8 +22765,8 @@
                 "description": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "User",
-                  "description": "A user is an individual's account on GitHub that owns repositories and can make new content.",
+                  "name": "Repository",
+                  "description": "A repository contains the content for a project.",
                   "ofType": null
                 }
               },
@@ -24753,6 +25456,19 @@
               "deprecationReason": null
             },
             {
+              "name": "defaultBranchRef",
+              "description": "The Ref associated with the repository's default branch.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Ref",
+                "description": "Represents a Git reference.",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "description",
               "description": "The description of the repository.",
               "args": [],
@@ -25838,6 +26554,19 @@
                   "description": "An ISO-8601 encoded UTC date string.",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "defaultBranchRef",
+              "description": "The Ref associated with the repository's default branch.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Ref",
+                "description": "Represents a Git reference.",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -31501,7 +32230,6 @@
           "possibleTypes": null
         }
       ],
-
       "directives": [
         {
           "name": "include",
