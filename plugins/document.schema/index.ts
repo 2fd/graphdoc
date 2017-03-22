@@ -267,7 +267,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
                     .join('') +
 
                 html.line(html.tab(
-                    html.property('mutation') + ': ' + html.useIdentifier(schema.mutationType, this.url(schema.queryType))
+                    html.property('mutation') + ': ' + html.useIdentifier(schema.mutationType, this.url(schema.mutationType))
                 ));
 
         if (schema.subscriptionType)
@@ -277,7 +277,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
                     .join('') +
 
                 html.line(html.tab(
-                    html.property('suscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.queryType))
+                    html.property('subscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.mutationType))
                 ));
 
         definition += html.line('}');
