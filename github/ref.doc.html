@@ -205,6 +205,11 @@
                 <code>ReactionOrderField</code>
             </a>
         </li>
+        <li  title="RepositoryAffiliation">
+            <a href="repositoryaffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>RepositoryAffiliation</code>
+            </a>
+        </li>
         <li  title="RepositoryCollaboratorAffiliation">
             <a href="repositorycollaboratoraffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>RepositoryCollaboratorAffiliation</code>
@@ -245,9 +250,24 @@
                 <code>SubscriptionState</code>
             </a>
         </li>
+        <li  title="TeamOrderField">
+            <a href="teamorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrderField</code>
+            </a>
+        </li>
         <li  title="TeamPrivacy">
             <a href="teamprivacy.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>TeamPrivacy</code>
+            </a>
+        </li>
+        <li  title="TeamRole">
+            <a href="teamrole.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamRole</code>
+            </a>
+        </li>
+        <li  title="UserOrderField">
+            <a href="userorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>UserOrderField</code>
             </a>
         </li>
         <li  title="__DirectiveLocation">
@@ -1290,6 +1310,11 @@
                 <code>LanguageOrder</code>
             </a>
         </li>
+        <li  title="MemberOrder">
+            <a href="memberorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>MemberOrder</code>
+            </a>
+        </li>
         <li  title="MoveProjectCardInput">
             <a href="moveprojectcardinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>MoveProjectCardInput</code>
@@ -1338,6 +1363,11 @@
         <li  title="SubmitPullRequestReviewInput">
             <a href="submitpullrequestreviewinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>SubmitPullRequestReviewInput</code>
+            </a>
+        </li>
+        <li  title="TeamOrder">
+            <a href="teamorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrder</code>
             </a>
         </li>
         <li  title="UpdateProjectCardInput">
@@ -1416,16 +1446,16 @@
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Ref</span> <span class="keyword operator ts">implements</span> <a class="support type" href="node.doc.html">Node</a> {</li><li></li><li><span class="tab"><span class="comment line"># A list of pull requests with this ref as the head ref.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line"># <strong>first</strong>: Returns the first _n_ elements</span></span></li><li><span class="tab"><span class="comment line"># from the list.</span></span></li><li><span class="tab"><span class="comment line"># <strong>after</strong>: Returns the elements in the</span></span></li><li><span class="tab"><span class="comment line"># list that come after the specified global ID.</span></span></li><li><span class="tab"><span class="comment line"># <strong>last</strong>: Returns the last _n_ elements</span></span></li><li><span class="tab"><span class="comment line"># from the list.</span></span></li><li><span class="tab"><span class="comment line"># <strong>before</strong>: Returns the elements in the</span></span></li><li><span class="tab"><span class="comment line"># list that come before the specified global ID.</span></span></li><li><span class="tab"><span class="comment line"># <strong>states</strong>: A list of states to filter</span></span></li><li><span class="tab"><span class="comment line"># the pull requests by.</span></span></li><li><span class="tab"><span class="meta">associatedPullRequests</span>(<span class="variable parameter">first</span>: <a class="support type" href="int.doc.html">Int</a>, <span class="variable parameter">after</span>: <a class="support type" href="string.doc.html">String</a>, <span class="variable parameter">last</span>: <a class="support type" href="int.doc.html">Int</a>, <span class="variable parameter">before</span>: <a class="support type" href="string.doc.html">String</a>, <span class="variable parameter">states</span>: [<a class="support type" href="pullrequeststate.doc.html">PullRequestState</a>!]): <a class="support type" href="pullrequestconnection.doc.html">PullRequestConnection</a>! </span></li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The ref name.</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The ref's prefix, such as `refs/heads/` or `refs/tags/`.</span></span></li><li><span class="tab"><span class="meta">prefix</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The repository the ref belongs to.</span></span></li><li><span class="tab"><span class="meta">repository</span>: <a class="support type" href="repository.doc.html">Repository</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The object the ref points to.</span></span></li><li><span class="tab"><span class="meta">target</span>: <a class="support type" href="gitobject.doc.html">GitObject</a>! </span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Ref</span> <span class="keyword operator ts">implements</span> <a class="support type" href="node.doc.html">Node</a> {</li><li></li><li><span class="tab"><span class="comment line">#   A list of pull requests with this ref as the head ref.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>first</strong>: Returns the first _n_ elements from the list.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>after</strong>: Returns the elements in the list that come after the </span></span></li><li><span class="tab"><span class="comment line">#   specified global ID.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>last</strong>: Returns the last _n_ elements from the list.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>before</strong>: Returns the elements in the list that come before the </span></span></li><li><span class="tab"><span class="comment line">#   specified global ID.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>states</strong>: A list of states to filter the pull requests by.</span></span></li><li><span class="tab"><span class="meta">associatedPullRequests</span>(<li><span class="tab"><span class="comment line">#   Returns the first _n_ elements from the list.</span></span></li><li><span class="tab"><span class="meta">first</span>: <a class="support type" href="int.doc.html">Int</a></span></li>, <li><span class="tab"><span class="comment line">#   Returns the elements in the list that come after the specified global ID.</span></span></li><li><span class="tab"><span class="meta">after</span>: <a class="support type" href="string.doc.html">String</a></span></li>, <li><span class="tab"><span class="comment line">#   Returns the last _n_ elements from the list.</span></span></li><li><span class="tab"><span class="meta">last</span>: <a class="support type" href="int.doc.html">Int</a></span></li>, <li><span class="tab"><span class="comment line">#   Returns the elements in the list that come before the specified global ID.</span></span></li><li><span class="tab"><span class="meta">before</span>: <a class="support type" href="string.doc.html">String</a></span></li>, <li><span class="tab"><span class="comment line">#   A list of states to filter the pull requests by.</span></span></li><li><span class="tab"><span class="meta">states</span>: [<a class="support type" href="pullrequeststate.doc.html">PullRequestState</a>!]</span></li>): <a class="support type" href="pullrequestconnection.doc.html">PullRequestConnection</a>! </span></li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   The ref name.</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   The ref's prefix, such as `refs/heads/` or `refs/tags/`.</span></span></li><li><span class="tab"><span class="meta">prefix</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   The repository the ref belongs to.</span></span></li><li><span class="tab"><span class="meta">repository</span>: <a class="support type" href="repository.doc.html">Repository</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   The object the ref points to.</span></span></li><li><span class="tab"><span class="meta">target</span>: <a class="support type" href="gitobject.doc.html">GitObject</a>! </span></li><li>}</li></ul></code>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">Require by</h3>
-<ul class="require-by"><li><a href="baserefforcepushedevent.doc.html" title="BaseRefForcePushedEvent - Represents a 'base_ref_force_pushed' event on a given pull request.">BaseRefForcePushedEvent<em>Represents a 'base_ref_force_pushed' event on a given pull request.</em></a><li><li><a href="deployedevent.doc.html" title="DeployedEvent - Represents a 'deployed' event on a given issue or pull request.">DeployedEvent<em>Represents a 'deployed' event on a given issue or pull request.</em></a><li><li><a href="headrefdeletedevent.doc.html" title="HeadRefDeletedEvent - Represents a 'head_ref_deleted' event on a given pull request.">HeadRefDeletedEvent<em>Represents a 'head_ref_deleted' event on a given pull request.</em></a><li><li><a href="headrefforcepushedevent.doc.html" title="HeadRefForcePushedEvent - Represents a 'head_ref_force_pushed' event on a given pull request.">HeadRefForcePushedEvent<em>Represents a 'head_ref_force_pushed' event on a given pull request.</em></a><li><li><a href="mergedevent.doc.html" title="MergedEvent - Represents a 'merged' event on a given pull request.">MergedEvent<em>Represents a 'merged' event on a given pull request.</em></a><li><li><a href="pullrequest.doc.html" title="PullRequest - A repository pull request.">PullRequest<em>A repository pull request.</em></a><li><li><a href="refconnection.doc.html" title="RefConnection - The connection type for Ref.">RefConnection<em>The connection type for Ref.</em></a><li><li><a href="refedge.doc.html" title="RefEdge - An edge in a connection.">RefEdge<em>An edge in a connection.</em></a><li><li><a href="release.doc.html" title="Release - A release contains the content for a release.">Release<em>A release contains the content for a release.</em></a><li><li><a href="repository.doc.html" title="Repository - A repository contains the content for a project.">Repository<em>A repository contains the content for a project.</em></a><li></ul>
+<ul class="require-by"><li><a href="baserefforcepushedevent.doc.html" title="BaseRefForcePushedEvent - Represents a 'base_ref_force_pushed' event on a given pull request.">BaseRefForcePushedEvent<em>Represents a 'base_ref_force_pushed' event on a given pull request.</em></a><li><li><a href="deployedevent.doc.html" title="DeployedEvent - Represents a 'deployed' event on a given issue or pull request.">DeployedEvent<em>Represents a 'deployed' event on a given issue or pull request.</em></a><li><li><a href="headrefdeletedevent.doc.html" title="HeadRefDeletedEvent - Represents a 'head_ref_deleted' event on a given pull request.">HeadRefDeletedEvent<em>Represents a 'head_ref_deleted' event on a given pull request.</em></a><li><li><a href="headrefforcepushedevent.doc.html" title="HeadRefForcePushedEvent - Represents a 'head_ref_force_pushed' event on a given pull request.">HeadRefForcePushedEvent<em>Represents a 'head_ref_force_pushed' event on a given pull request.</em></a><li><li><a href="mergedevent.doc.html" title="MergedEvent - Represents a 'merged' event on a given pull request.">MergedEvent<em>Represents a 'merged' event on a given pull request.</em></a><li><li><a href="pullrequest.doc.html" title="PullRequest - A repository pull request.">PullRequest<em>A repository pull request.</em></a><li><li><a href="refconnection.doc.html" title="RefConnection - The connection type for Ref.">RefConnection<em>The connection type for Ref.</em></a><li><li><a href="refedge.doc.html" title="RefEdge - An edge in a connection.">RefEdge<em>An edge in a connection.</em></a><li><li><a href="release.doc.html" title="Release - A release contains the content for a release.">Release<em>A release contains the content for a release.</em></a><li><li><a href="repository.doc.html" title="Repository - A repository contains the content for a project.">Repository<em>A repository contains the content for a project.</em></a><li><li><a href="repositoryinfo.doc.html" title="RepositoryInfo - A subset of repository info.">RepositoryInfo<em>A subset of repository info.</em></a><li><li><a href="repositoryinvitationrepository.doc.html" title="RepositoryInvitationRepository - A subset of repository info shared with potential collaborators.">RepositoryInvitationRepository<em>A subset of repository info shared with potential collaborators.</em></a><li></ul>
 </section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.1</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.2.1</a>
     </p>
 </div>
 </footer>

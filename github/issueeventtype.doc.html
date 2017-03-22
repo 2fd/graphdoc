@@ -205,6 +205,11 @@
                 <code>ReactionOrderField</code>
             </a>
         </li>
+        <li  title="RepositoryAffiliation">
+            <a href="repositoryaffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>RepositoryAffiliation</code>
+            </a>
+        </li>
         <li  title="RepositoryCollaboratorAffiliation">
             <a href="repositorycollaboratoraffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>RepositoryCollaboratorAffiliation</code>
@@ -245,9 +250,24 @@
                 <code>SubscriptionState</code>
             </a>
         </li>
+        <li  title="TeamOrderField">
+            <a href="teamorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrderField</code>
+            </a>
+        </li>
         <li  title="TeamPrivacy">
             <a href="teamprivacy.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>TeamPrivacy</code>
+            </a>
+        </li>
+        <li  title="TeamRole">
+            <a href="teamrole.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamRole</code>
+            </a>
+        </li>
+        <li  title="UserOrderField">
+            <a href="userorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>UserOrderField</code>
             </a>
         </li>
         <li  title="__DirectiveLocation">
@@ -1290,6 +1310,11 @@
                 <code>LanguageOrder</code>
             </a>
         </li>
+        <li  title="MemberOrder">
+            <a href="memberorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>MemberOrder</code>
+            </a>
+        </li>
         <li  title="MoveProjectCardInput">
             <a href="moveprojectcardinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>MoveProjectCardInput</code>
@@ -1338,6 +1363,11 @@
         <li  title="SubmitPullRequestReviewInput">
             <a href="submitpullrequestreviewinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>SubmitPullRequestReviewInput</code>
+            </a>
+        </li>
+        <li  title="TeamOrder">
+            <a href="teamorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrder</code>
             </a>
         </li>
         <li  title="UpdateProjectCardInput">
@@ -1416,7 +1446,7 @@
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">enum</span> <span class="identifier">IssueEventType</span> {</li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was assigned to the actor.</span></span></li><li><span class="tab"><span class="meta">ASSIGNED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The base branch was force pushed by the actor.</span></span></li><li><span class="tab"><span class="meta">BASE_REF_FORCE_PUSHED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was closed by the actor.</span></span></li><li><span class="tab"><span class="meta">CLOSED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue had a milestone removed from it.</span></span></li><li><span class="tab"><span class="meta">DEMILESTONED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The branch was deployed by the actor.</span></span></li><li><span class="tab"><span class="meta">DEPLOYED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The head branch was deleted by the actor.</span></span></li><li><span class="tab"><span class="meta">HEAD_REF_DELETED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The head branch was force pushed by the actor.</span></span></li><li><span class="tab"><span class="meta">HEAD_REF_FORCE_PUSHED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The head branch was restored by the actor.</span></span></li><li><span class="tab"><span class="meta">HEAD_REF_RESTORED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># A label was added to the issue.</span></span></li><li><span class="tab"><span class="meta">LABELED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was locked by the actor.</span></span></li><li><span class="tab"><span class="meta">LOCKED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The pull request or issue was mentioned by the actor.</span></span></li><li><span class="tab"><span class="meta">MENTIONED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was merged by the actor.</span></span></li><li><span class="tab"><span class="meta">MERGED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue had a milestone added to it.</span></span></li><li><span class="tab"><span class="meta">MILESTONED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was referenced from a commit message.</span></span></li><li><span class="tab"><span class="meta">REFERENCED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue's title was changed.</span></span></li><li><span class="tab"><span class="meta">RENAMED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was reopened by the actor.</span></span></li><li><span class="tab"><span class="meta">REOPENED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The actor requested review from the subject.</span></span></li><li><span class="tab"><span class="meta">REVIEW_REQUESTED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The actor removed the review request for the subject.</span></span></li><li><span class="tab"><span class="meta">REVIEW_REQUEST_REMOVED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The review was dismissed by the actor.</span></span></li><li><span class="tab"><span class="meta">REVIEW_DISMISSED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The pull request or issue was subscribed to by the</span></span></li><li><span class="tab"><span class="comment line"># actor.</span></span></li><li><span class="tab"><span class="meta">SUBSCRIBED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was unassigned to the actor.</span></span></li><li><span class="tab"><span class="meta">UNASSIGNED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># A label was removed from the issue.</span></span></li><li><span class="tab"><span class="meta">UNLABELED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The issue was unlocked by the actor.</span></span></li><li><span class="tab"><span class="meta">UNLOCKED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The pull request or issue was unsubscribed from by</span></span></li><li><span class="tab"><span class="comment line"># the actor.</span></span></li><li><span class="tab"><span class="meta">UNSUBSCRIBED</span></span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">enum</span> <span class="identifier">IssueEventType</span> {</li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was assigned to the actor.</span></span></li><li><span class="tab"><span class="meta">ASSIGNED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The base branch was force pushed by the actor.</span></span></li><li><span class="tab"><span class="meta">BASE_REF_FORCE_PUSHED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was closed by the actor.</span></span></li><li><span class="tab"><span class="meta">CLOSED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue had a milestone removed from it.</span></span></li><li><span class="tab"><span class="meta">DEMILESTONED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The branch was deployed by the actor.</span></span></li><li><span class="tab"><span class="meta">DEPLOYED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The head branch was deleted by the actor.</span></span></li><li><span class="tab"><span class="meta">HEAD_REF_DELETED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The head branch was force pushed by the actor.</span></span></li><li><span class="tab"><span class="meta">HEAD_REF_FORCE_PUSHED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The head branch was restored by the actor.</span></span></li><li><span class="tab"><span class="meta">HEAD_REF_RESTORED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   A label was added to the issue.</span></span></li><li><span class="tab"><span class="meta">LABELED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was locked by the actor.</span></span></li><li><span class="tab"><span class="meta">LOCKED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The pull request or issue was mentioned by the actor.</span></span></li><li><span class="tab"><span class="meta">MENTIONED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was merged by the actor.</span></span></li><li><span class="tab"><span class="meta">MERGED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue had a milestone added to it.</span></span></li><li><span class="tab"><span class="meta">MILESTONED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was referenced from a commit message.</span></span></li><li><span class="tab"><span class="meta">REFERENCED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue's title was changed.</span></span></li><li><span class="tab"><span class="meta">RENAMED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was reopened by the actor.</span></span></li><li><span class="tab"><span class="meta">REOPENED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The actor requested review from the subject.</span></span></li><li><span class="tab"><span class="meta">REVIEW_REQUESTED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The actor removed the review request for the subject.</span></span></li><li><span class="tab"><span class="meta">REVIEW_REQUEST_REMOVED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The review was dismissed by the actor.</span></span></li><li><span class="tab"><span class="meta">REVIEW_DISMISSED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The pull request or issue was subscribed to by the actor.</span></span></li><li><span class="tab"><span class="meta">SUBSCRIBED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was unassigned to the actor.</span></span></li><li><span class="tab"><span class="meta">UNASSIGNED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   A label was removed from the issue.</span></span></li><li><span class="tab"><span class="meta">UNLABELED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The issue was unlocked by the actor.</span></span></li><li><span class="tab"><span class="meta">UNLOCKED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The pull request or issue was unsubscribed from by the actor.</span></span></li><li><span class="tab"><span class="meta">UNSUBSCRIBED</span></span></li><li>}</li></ul></code>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">Require by</h3>
@@ -1425,7 +1455,7 @@
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.1</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.2.1</a>
     </p>
 </div>
 </footer>

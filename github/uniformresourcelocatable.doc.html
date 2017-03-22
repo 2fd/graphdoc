@@ -205,6 +205,11 @@
                 <code>ReactionOrderField</code>
             </a>
         </li>
+        <li  title="RepositoryAffiliation">
+            <a href="repositoryaffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>RepositoryAffiliation</code>
+            </a>
+        </li>
         <li  title="RepositoryCollaboratorAffiliation">
             <a href="repositorycollaboratoraffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>RepositoryCollaboratorAffiliation</code>
@@ -245,9 +250,24 @@
                 <code>SubscriptionState</code>
             </a>
         </li>
+        <li  title="TeamOrderField">
+            <a href="teamorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrderField</code>
+            </a>
+        </li>
         <li  title="TeamPrivacy">
             <a href="teamprivacy.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>TeamPrivacy</code>
+            </a>
+        </li>
+        <li  title="TeamRole">
+            <a href="teamrole.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamRole</code>
+            </a>
+        </li>
+        <li  title="UserOrderField">
+            <a href="userorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>UserOrderField</code>
             </a>
         </li>
         <li  title="__DirectiveLocation">
@@ -1290,6 +1310,11 @@
                 <code>LanguageOrder</code>
             </a>
         </li>
+        <li  title="MemberOrder">
+            <a href="memberorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>MemberOrder</code>
+            </a>
+        </li>
         <li  title="MoveProjectCardInput">
             <a href="moveprojectcardinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>MoveProjectCardInput</code>
@@ -1338,6 +1363,11 @@
         <li  title="SubmitPullRequestReviewInput">
             <a href="submitpullrequestreviewinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>SubmitPullRequestReviewInput</code>
+            </a>
+        </li>
+        <li  title="TeamOrder">
+            <a href="teamorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrder</code>
             </a>
         </li>
         <li  title="UpdateProjectCardInput">
@@ -1416,16 +1446,16 @@
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">interface</span> <span class="identifier">UniformResourceLocatable</span> {</li><li></li><li><span class="tab"><span class="comment line"># The path to this resource.</span></span></li><li><span class="tab"><span class="meta">path</span>: <a class="support type" href="uri.doc.html">URI</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># The URL to this resource.</span></span></li><li><span class="tab"><span class="meta">url</span>: <a class="support type" href="uri.doc.html">URI</a>! </span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">interface</span> <span class="identifier">UniformResourceLocatable</span> {</li><li></li><li><span class="tab"><span class="comment line">#   The path to this resource.</span></span></li><li><span class="tab"><span class="meta">path</span>: <a class="support type" href="uri.doc.html">URI</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   The URL to this resource.</span></span></li><li><span class="tab"><span class="meta">url</span>: <a class="support type" href="uri.doc.html">URI</a>! </span></li><li>}</li></ul></code>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">Require by</h3>
-<ul class="require-by"><li><a href="bot.doc.html" title="Bot - A special type of user which takes actions on behalf of integrations.">Bot<em>A special type of user which takes actions on behalf of integrations.</em></a><li><li><a href="issue.doc.html" title="Issue - An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.">Issue<em>An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.</em></a><li><li><a href="organization.doc.html" title="Organization - An account on GitHub, with one or more owners, that has repositories, members and teams.">Organization<em>An account on GitHub, with one or more owners, that has repositories, members and teams.</em></a><li><li><a href="pullrequest.doc.html" title="PullRequest - A repository pull request.">PullRequest<em>A repository pull request.</em></a><li><li><a href="query.doc.html" title="Query - The query root of GitHub's GraphQL interface.">Query<em>The query root of GitHub's GraphQL interface.</em></a><li><li><a href="release.doc.html" title="Release - A release contains the content for a release.">Release<em>A release contains the content for a release.</em></a><li><li><a href="repository.doc.html" title="Repository - A repository contains the content for a project.">Repository<em>A repository contains the content for a project.</em></a><li><li><a href="user.doc.html" title="User - A user is an individual's account on GitHub that owns repositories and can make new content.">User<em>A user is an individual's account on GitHub that owns repositories and can make new content.</em></a><li></ul>
+<ul class="require-by"><li><a href="bot.doc.html" title="Bot - A special type of user which takes actions on behalf of integrations.">Bot<em>A special type of user which takes actions on behalf of integrations.</em></a><li><li><a href="issue.doc.html" title="Issue - An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.">Issue<em>An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.</em></a><li><li><a href="organization.doc.html" title="Organization - An account on GitHub, with one or more owners, that has repositories, members and teams.">Organization<em>An account on GitHub, with one or more owners, that has repositories, members and teams.</em></a><li><li><a href="pullrequest.doc.html" title="PullRequest - A repository pull request.">PullRequest<em>A repository pull request.</em></a><li><li><a href="query.doc.html" title="Query - The query root of GitHub's GraphQL interface.">Query<em>The query root of GitHub's GraphQL interface.</em></a><li><li><a href="release.doc.html" title="Release - A release contains the content for a release.">Release<em>A release contains the content for a release.</em></a><li><li><a href="repository.doc.html" title="Repository - A repository contains the content for a project.">Repository<em>A repository contains the content for a project.</em></a><li><li><a href="team.doc.html" title="Team - A team of users in an organization.">Team<em>A team of users in an organization.</em></a><li><li><a href="user.doc.html" title="User - A user is an individual's account on GitHub that owns repositories and can make new content.">User<em>A user is an individual's account on GitHub that owns repositories and can make new content.</em></a><li></ul>
 </section>
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.1</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.2.1</a>
     </p>
 </div>
 </footer>
