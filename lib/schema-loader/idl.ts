@@ -8,14 +8,14 @@ export type TIDLSchemaLoaderOptions = {
     schemaFile: string
 };
 
-export const idlSchemaLoader: SchemaLoader = function (options: TIDLSchemaLoaderOptions) {
+export const idlSchemaLoader: SchemaLoader = async function (options: TIDLSchemaLoaderOptions) {
 
     const schemaPath = resolve(options.schemaFile);
+    const idl = await readFile(schemaPath, 'utf8');
+    const introspection = await execute(
+        buildSchema(idl),
+        parse(introspectionQuery)
+    ) as Introspection;
 
-    return readFile(schemaPath)
-        .then((idl: string) => execute(
-            buildSchema(idl),
-            parse(introspectionQuery)
-        ))
-        .then((introspection: Introspection) => introspection.data.__schema);
+    return introspection.data.__schema;
 };

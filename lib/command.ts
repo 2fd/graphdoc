@@ -11,7 +11,6 @@ import {
 } from './schema-loader';
 import {
     PluginInterface,
-    PluginConstructor,
     Schema,
     TypeRef,
 } from './interface';
@@ -25,7 +24,7 @@ import {
     OutputInterface
 } from '@2fd/command';
 
-const pack = require(path.resolve(__dirname, '../package.json'));
+const graphdocPakageJSON = require(path.resolve(__dirname, '../package.json'));
 
 export type Params = {};
 
@@ -51,13 +50,13 @@ export type Partials = {
 
 export type ProjectPackage = {
     graphdoc: Flags
-}
+};
 
 export type Input = InputInterface<Flags, Params>;
 
 export class GraphQLDocumentor extends Command<Flags, Params> {
 
-    description = pack.description + ' v' + pack.version;
+    description = graphdocPakageJSON.description + ' v' + graphdocPakageJSON.version;
 
     params = new NoParams();
 
@@ -66,9 +65,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new ValueFlag('endpoint', ['-e', '--endpoint'], 'Graphql http endpoint ["https://domain.com/graphql"].'),
         new ListValueFlag('headers', ['-x', '--header'], 'HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].'),
         new ListValueFlag('queries', ['-q', '--query'], 'HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].'),
-        new ValueFlag('schemaFile', ['-s', '--schema', '--schema-file'],
-            'Graphql Schema file ["./schema.json"].'
-        ),
+        new ValueFlag('schemaFile', ['-s', '--schema', '--schema-file'], 'Graphql Schema file ["./schema.json"].'),
         new ListValueFlag('plugins', ['-p', '--plugin'], 'Use plugins [default=graphdoc/plugins/default].'),
         new ValueFlag('template', ['-t', '--template'], 'Use template [default=graphdoc/template/slds].'),
         new ValueFlag('output', ['-o', '--output'], 'Output directory.'),
@@ -79,113 +76,89 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         new BooleanFlag('version', ['-V', '--version'], 'Show graphdoc version.'),
     ];
 
-    action(input: Input, out: OutputInterface) {
+    async action(input: Input, out: OutputInterface) {
 
         const output = new Output(out, input.flags);
-        const graphdocPackage = pack;
-        let projectPackage: ProjectPackage;
-        let schema: Schema;
-        let plugins: PluginInterface[];
-        let partials: Partials;
-        let assets: string[];
 
-        if (input.flags.version)
-            return output.out.log('graphdoc v%s', graphdocPackage.version);
+        try {
 
-        function renderFile(type?: TypeRef) {
-            return createData(projectPackage, graphdocPackage, plugins, type)
-                .then(data => {
+            if (input.flags.version)
+                return output.out.log('graphdoc v%s', graphdocPakageJSON.version);
 
-                    const file = type ? getFilenameOf(type) : 'index.html';
-                    const filepath = path.resolve(projectPackage.graphdoc.output, file);
-                    const relativeFilepath = path.relative(process.cwd(), filepath);
-
-                    output.info('render', relativeFilepath);
-                    return writeFile(filepath, render(partials.index, data, partials));
-                });
-        }
-
-        // Load project info
-        return this.getProjectPackage(input)
-            .then(config => {
-                projectPackage = config;
-            })
+            // Load project info
+            const projectPackageJSON: ProjectPackage = await this.getProjectPackage(input);
 
             // Load Schema
-            .then(() => this.getSchema(projectPackage))
-            .then((introspection: Schema) => {
-                schema = introspection;
-            })
+            const schema: Schema = await this.getSchema(projectPackageJSON);
 
             // Load plugins
-            .then(() => {
-                projectPackage.graphdoc.plugins
-                    .forEach(plugin => output.info('use plugin', plugin));
+            const plugins: PluginInterface[] = this.getPluginInstances(
+                projectPackageJSON.graphdoc.plugins,
+                schema,
+                projectPackageJSON,
+                graphdocPakageJSON
+            );
 
-                return this.getPlugins(projectPackage.graphdoc.plugins);
-            })
-            .then((pluginContructors: (PluginConstructor | PluginInterface)[]) => {
-                plugins = pluginContructors
-                    .map((Plugin) => {
-                        return typeof Plugin === 'function' ?
-                            // plugins as contructor
-                            new Plugin(schema, projectPackage, graphdocPackage) :
-                            // plugins plain object
-                            Plugin;
-                    });
-            })
+            projectPackageJSON.graphdoc.plugins
+                .forEach(plugin => output.info('use plugin', plugin));
+
 
             // Collect assets
-            .then(() => Plugin.collectAssets(plugins))
-            .then((pluginAssets) => {
-                assets = pluginAssets;
-                assets
-                    .forEach(asset => output.info('use asset', path.relative(process.cwd(), asset)));
-            })
+            const assets: string[] = await Plugin.collectAssets(plugins);
+            assets
+                .forEach(asset => output.info('use asset', path.relative(process.cwd(), asset)));
 
             // Ensure Ourput directory
-            .then(() => output.info('output directory', path.relative(process.cwd(), projectPackage.graphdoc.output)))
-            .then(() => this.ensureOutputDirectory(
-                projectPackage.graphdoc.output,
-                projectPackage.graphdoc.force,
-            ))
+            output.info('output directory', path.relative(
+                process.cwd(),
+                projectPackageJSON.graphdoc.output)
+            );
+            await this.ensureOutputDirectory(
+                projectPackageJSON.graphdoc.output,
+                projectPackageJSON.graphdoc.force
+            );
 
             // Create Ourput directory
-            .then(() => createBuildDirectory(
-                projectPackage.graphdoc.output,
-                projectPackage.graphdoc.template,
+            await createBuildDirectory(
+                projectPackageJSON.graphdoc.output,
+                projectPackageJSON.graphdoc.template,
                 assets
-            ))
+            );
 
             // Collect partials
-            .then(() => this.getTemplatePartials(
-                projectPackage.graphdoc.template
-            ))
-            .then(p => {
-                partials = p;
-            })
-
+            const partials: Partials = await this.getTemplatePartials(
+                projectPackageJSON.graphdoc.template
+            );
             // Render index.html
-            .then(() => renderFile())
+            output.info('render', 'index');
+            await this.renderFile(
+                projectPackageJSON,
+                partials,
+                plugins
+            );
 
-            // Render [types | directives].html
-            .then(() => ([] as TypeRef[])
+            // Render types
+            const renderTypes = ([] as any[])
                 .concat(schema.types || [])
                 .concat(schema.directives || [])
-            )
-            .then(types => Promise
-                .all(types.map(t => renderFile(t)))
-            )
+                .map((type: TypeRef) => {
+                    output.info('render', type.name);
+                    return this.renderFile(
+                        projectPackageJSON,
+                        partials,
+                        plugins,
+                        type);
+                });
 
-            // Output resolve resolves
-            .then(files => {
-                output.ok('complete', String(files.length + 1) + ' files generated.');
-            })
+            const files = await Promise.all(renderTypes);
+            output.ok('complete', String(files.length + 1 /* index.html */) + ' files generated.');
 
-            .catch((err) => output.error(err));
+        } catch (err) {
+            output.error(err);
+        }
     }
 
-    ensureOutputDirectory(dir: string, force: boolean): Promise<void> {
+    async ensureOutputDirectory(dir: string, force: boolean) {
 
         try {
             const stats = fs.statSync(dir);
@@ -208,47 +181,6 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                 Promise.resolve() :
                 Promise.reject(err);
         }
-    }
-
-    getTemplatePartials(templateDir: string): Promise<Partials> {
-
-        return new Promise((resolve, reject) => {
-            glob('**/*.mustache', { cwd: templateDir }, (err, files) => {
-                return err ? reject(err) : resolve(files);
-            });
-        })
-            .then((files: string[]) => {
-
-                return Promise.all(
-                    files.map(file => readFile(
-                        path.resolve(templateDir, file), 'utf8'
-                    ))
-                )
-                    .then((content: string[]) => {
-
-                        let partials = {};
-
-                        files
-                            .forEach((file, i) => {
-                                const name = path.basename(file, '.mustache');
-                                partials[name] = content[i];
-                            });
-
-                        return partials as Partials;
-                    });
-            })
-            .then((partials: Partials) => {
-
-                if (partials.index)
-                    return partials;
-
-                return Promise.reject(
-                    new Error(
-                        'The index partial is missing (file ' +
-                        path.resolve(templateDir, 'index.mustache') + ' not found).'
-                    )
-                );
-            });
     }
 
     getProjectPackage(input: Input) {
@@ -274,7 +206,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         packageJSON.graphdoc.baseUrl = packageJSON.graphdoc.baseUrl || './';
         packageJSON.graphdoc.template = resolve(packageJSON.graphdoc.template || 'graphdoc/template/slds');
         packageJSON.graphdoc.output = path.resolve(packageJSON.graphdoc.output);
-        packageJSON.graphdoc.version = pack.version;
+        packageJSON.graphdoc.version = graphdocPakageJSON.version;
 
         if (!packageJSON.graphdoc.output)
             return Promise.reject(
@@ -284,13 +216,46 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
         return Promise.resolve(packageJSON);
     }
 
-    getPlugins(paths: string[]): (PluginConstructor | PluginInterface)[] {
+    getPluginInstances(paths: string[], schema: Schema, projectPackageJSON: object, graphdocPakageJSON: object): PluginInterface[] {
         return paths
-            .map(path => resolve(path))
-            .map(path => require(path).default);
+            .map(path => {
+                const absolutePaths = resolve(path);
+                const Plugin = require(absolutePaths).default;
+
+                return typeof Plugin === 'function' ?
+                    // plugins as contructor
+                    new Plugin(schema, projectPackageJSON, graphdocPakageJSON) :
+                    // plugins plain object
+                    Plugin;
+            });
     }
 
-    getSchema(projectPackage: ProjectPackage): Promise<Schema> {
+    async getTemplatePartials(templateDir: string): Promise<Partials> {
+
+        const files = await new Promise<string[]>((resolve, reject) => glob(
+            '**/*.mustache',
+            { cwd: templateDir },
+            (err, files) => err ? reject(err) : resolve(files)
+        ));
+
+        const partials = {} as Partials;
+        await Promise.all(files.map(file => {
+
+            const name = path.basename(file, '.mustache');
+            return readFile(path.resolve(templateDir, file), 'utf8')
+                .then(content => partials[name] = content);
+        }));
+
+        if (!partials.index)
+            throw new Error(
+                'The index partial is missing (file ' +
+                path.resolve(templateDir, 'index.mustache') + ' not found).'
+            );
+
+        return partials;
+    }
+
+    async getSchema(projectPackage: ProjectPackage): Promise<Schema> {
 
         if (projectPackage.graphdoc.schemaFile) {
             const schemaFileExt = path.extname(projectPackage.graphdoc.schemaFile);
@@ -314,5 +279,12 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                 new Error('Endpoint (--endpoint, -e) or Schema File (--schema, -s) are require.')
             );
         }
+    }
+
+    async renderFile(projectPackageJSON: ProjectPackage, partials: Partials, plugins: PluginInterface[], type?: TypeRef) {
+        const templateData = await createData(projectPackageJSON, graphdocPakageJSON, plugins, type);
+        const file = type ? getFilenameOf(type) : 'index.html';
+        const filepath = path.resolve(projectPackageJSON.graphdoc.output, file);
+        return await writeFile(filepath, render(partials.index, templateData, partials));
     }
 }
