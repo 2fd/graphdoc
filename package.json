@@ -1,6 +1,6 @@
 {
   "name": "@2fd/graphdoc",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Static page generator for documenting GraphQL Schema",
   "main": "bin/graphdoc",
   "bin": {
@@ -57,7 +57,8 @@
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
     "request": "^2.79.0",
-    "striptags": "^3.0.1"
+    "striptags": "^3.0.1",
+    "word-wrap": "^1.2.1"
   },
   "graphdoc": {
     "ga": "UA-54154153-2",

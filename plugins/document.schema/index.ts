@@ -1,5 +1,6 @@
 import { resolve } from 'path';
-import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, split, Plugin, DocumentSection} from '../../lib/utility';
+import * as wrap from 'word-wrap';
+import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, Plugin, DocumentSection} from '../../lib/utility';
 import {
     PluginInterface,
     DocumentSectionInterface,
@@ -11,7 +12,7 @@ import {
     Directive
 } from '../../lib/interface';
 
-const MAX_CODE_LEN = 50;
+const MAX_CODE_LEN = 80;
 // const MAX_COMMENT_LEN = 80;
 
 export default class SchemaPlugin  extends Plugin implements PluginInterface {
@@ -100,7 +101,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
     argumentDescription(arg: InputValue): string[] {
 
         const desc = arg.description === null ?
-            '[' + html.highlight('NULL') + ']' : arg.description;
+            '[' + html.highlight('Not documented') + ']' : arg.description;
 
         return this.description(html.highlight(arg.name) + ': ' + desc);
     }
@@ -133,8 +134,9 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
     description(description: string): string[] {
 
         if (description)
-            return split(description, MAX_CODE_LEN)
-                .map(descriptionLine => html.comment(descriptionLine));
+            return wrap(description, { width: MAX_CODE_LEN })
+                .split('\n')
+                .map(l => html.comment(l));
 
         return [];
     }
@@ -201,15 +203,21 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
     inputValues(inputValues: InputValue[]): string {
         return inputValues
             .map(inputValue => html.line(html.tab(this.inputValue(inputValue))))
-            .join(html.line(''));
+            .join('');
     }
 
     inputValue(arg: InputValue): string {
 
-        const defaultValue = arg.defaultValue ?
-            ' = ' + html.value(arg.defaultValue as string) : '';
+        const argDescription = this.description(arg.description);
 
-        return html.parameter(arg) + ': ' + html.useIdentifier(arg.type, this.url(arg.type)) + defaultValue;
+        return ([] as string[])
+            .concat(argDescription)
+            .concat([
+                html.property(arg.name) + ': ' +
+                html.useIdentifier(arg.type, this.url(arg.type)) // + ' ' + this.deprecated(arg)
+            ])
+            .map(line => html.line(html.tab(line)))
+            .join('');
     }
 
     interfaces(type: SchemaType): string {
@@ -225,10 +233,10 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
             .map(i => html.useIdentifier(i, this.url(i)))
             .join(', ');
 
-        const implemente = interfaces.length === 0 ? '' :
+        const implement = interfaces.length === 0 ? '' :
             ' ' + html.keyword('implements') + ' ' + interfaces;
 
-        return html.line(html.keyword('type') + ' ' + html.identifier(type) + implemente + ' {') +
+        return html.line(html.keyword('type') + ' ' + html.identifier(type) + implement + ' {') +
             this.fields(type) +
             html.line('}');
     }
@@ -259,7 +267,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
                     .join('') +
 
                 html.line(html.tab(
-                    html.property('mutation') + ': ' + html.useIdentifier(schema.mutationType, this.url(schema.queryType))
+                    html.property('mutation') + ': ' + html.useIdentifier(schema.mutationType, this.url(schema.mutationType))
                 ));
 
         if (schema.subscriptionType)
@@ -269,7 +277,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
                     .join('') +
 
                 html.line(html.tab(
-                    html.property('suscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.queryType))
+                    html.property('subscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.mutationType))
                 ));
 
         definition += html.line('}');

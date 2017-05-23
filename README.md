@@ -24,13 +24,21 @@
     > graphdoc -e http://localhost:8080/graphql -o ./doc/schema
 ```
 
+### Generate documentation from IDL file
+
+```bash
+    > graphdoc -s ./schema.graphql -o ./doc/schema
+```
+
+> [`./schema.graphql`](https://github.com/2fd/graphdoc/blob/master/test/starwars.graphql) must be able to be interpreted with [graphql-js/utilities#buildSchema](http://graphql.org/graphql-js/utilities/#buildschema)
+
 ### Generate documentation from json file
 
 ```bash
     > graphdoc -s ./schema.json -o ./doc/schema
 ```
 
-> `./schema.json` contains the result of [GraphQL instrospection query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+> `./schema.json` contains the result of [GraphQL introspection query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
 
 ### Puts the options in your `package.json`
 
@@ -112,17 +120,17 @@ This object should only implements the `PluginInterface`.
         *  }
         *  // ...
         * ]
-        * 
+        *
         * @example with graphdoc utilities:
         * import { NavigationSection, NavigationItem } from 'graphdoc/lib/utility';
-        * 
+        *
         * [
         *  new NavigationSection('Schema', [
         *      new NavigationItem('Query', ./query.doc.html', false)
         *  ]),
         *  // ...
         * ]
-        * 
+        *
         * @param {string} [buildForType] -
         *  the name of the element for which the navigation section is being generated,
         *  if it is `undefined it means that the index of documentation is being generated
@@ -132,7 +140,7 @@ This object should only implements the `PluginInterface`.
         /**
         * Return  section elements that is going to be
         * inserted into the main section.
-        * 
+        *
         * @example plain javascript:
         * [
         *  {
@@ -141,26 +149,26 @@ This object should only implements the `PluginInterface`.
         *  },
         *  // ...
         * ]
-        * 
+        *
         * @example with graphdoc utilities:
         * import { DocumentSection } from 'graphdoc/lib/utility';
-        * 
+        *
         * [
         *  new DocumentSection('GraphQL Schema definition', 'HTML'),
         *  // ...
         * ]
-        * 
+        *
         * @param {string} [buildForType] -
         *  the name of the element for which the navigation section is being generated,
         *  if it is `undefined it means that the index of documentation is being generated
-        * 
+        *
         */
         getDocuments?: (buildForType?: string) => DocumentSectionInterface[] | PromiseLike<DocumentSectionInterface[]>;
 
         /**
         * Return a list of html tags that is going to be
         * inserted into the head tag of each page.
-        * 
+        *
         * @example
         *  [
         *      '<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>',
@@ -172,23 +180,23 @@ This object should only implements the `PluginInterface`.
         /**
         * Return a list of abasolute path to files that is going to be
         * copied to the assets directory.
-        * 
+        *
         * Unlike the previous methods that are executed each time that a page generated,
         * this method is called a single time before starting to generate the documentation
-        * 
+        *
         * @example
         * [
         *  '/local/path/to/my-custom-style.css',
         *  '/local/path/to/my-custom-image.png',
         * ]
-        * 
+        *
         * there's will be copied to
         * /local/path/to/my-custom-style.css -> [OUTPUT_DIRETORY]/assets/my-custom-style.css
         * /local/path/to/my-custom-image.png -> [OUTPUT_DIRETORY]/assets/my-custom-image.png
-        * 
+        *
         * If you want to insert styles or scripts to the documentation,
         * you must combine this method with getHeaders
-        * 
+        *
         * @example
         * getAssets(): ['/local/path/to/my-custom-style.css']
         * getHeaders(): ['<link href="assets/my-custom-style.css" rel="stylesheet">']
