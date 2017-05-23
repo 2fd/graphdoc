@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "@2fd/command": "^1.1.2",
+    "@types/bluebird": "^3.5.4",
     "bluebird": "^3.5.0",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",

@@ -10,6 +10,10 @@
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.3.0.tgz#ed261afb3762775183058ad9c97794b4c8b2405e"
 
+"@types/bluebird@^3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.4.tgz#f120162b04fd6d55e10346d7e2e96eed462b02cf"
+
 "@types/chai@^3.4.34":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-3.5.2.tgz#c11cd2817d3a401b7ba0f5a420f35c56139b1c1e"
