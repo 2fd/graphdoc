@@ -1,6 +1,7 @@
 import { SchemaLoader, Introspection } from '../interface';
 import { query as introspectionQuery } from '../utility';
 import * as request from 'request';
+import * as Bluebird from 'bluebird';
 
 export type THttpSchemaLoaderOptions = {
     endpoint: string,
@@ -8,14 +9,38 @@ export type THttpSchemaLoaderOptions = {
     queries: string[],
 };
 
-export const httpSchemaLoader: SchemaLoader = function (options: THttpSchemaLoaderOptions) {
+async function r(options: request.OptionsWithUrl) {
 
-    let requestOptions = {
+    return new Bluebird((resolve, reject) => {
+        const req = request(options, function (error, res, body: Introspection | string) {
+
+            if (error)
+                return reject(error);
+
+            if ((res.statusCode as number) >= 400)
+                return reject(new Error(
+                    'Unexpected HTTP Status Code ' + res.statusCode +
+                    ' (' + res.statusMessage + ') from: ' + options.url
+                ));
+
+            if (typeof body === 'string')
+                return reject(new Error(
+                    'Unexpected response from "' + options.url + '": ' + body.slice(0, 10) + '...'
+                ));
+
+            return resolve(body.data.__schema);
+        });
+    });
+}
+
+export const httpSchemaLoader: SchemaLoader = async function (options: THttpSchemaLoaderOptions) {
+
+    let requestOptions: request.OptionsWithUrl = {
         url: options.endpoint,
         method: 'POST',
+        body: { query: introspectionQuery },
         json: true,
-        body: { query: introspectionQuery }
-    } as any;
+    };
 
     requestOptions.headers = options.headers.reduce((result: any, header: string) => {
         const [name, value] = header.split(': ', 2);
@@ -29,8 +54,5 @@ export const httpSchemaLoader: SchemaLoader = function (options: THttpSchemaLoad
         return result;
     }, {});
 
-    return new Promise((resolve, reject) => {
-        request(requestOptions, (err, _, introspection: Introspection) => err ?
-            reject(err) : resolve(introspection.data.__schema));
-    });
+    return await r(requestOptions);
 };
