@@ -277,7 +277,7 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
                     .join('') +
 
                 html.line(html.tab(
-                    html.property('subscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.mutationType))
+                    html.property('subscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.subscriptionType))
                 ));
 
         definition += html.line('}');
