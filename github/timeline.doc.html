@@ -205,6 +205,11 @@
                 <code>ReactionOrderField</code>
             </a>
         </li>
+        <li  title="RepositoryAffiliation">
+            <a href="repositoryaffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>RepositoryAffiliation</code>
+            </a>
+        </li>
         <li  title="RepositoryCollaboratorAffiliation">
             <a href="repositorycollaboratoraffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>RepositoryCollaboratorAffiliation</code>
@@ -245,9 +250,24 @@
                 <code>SubscriptionState</code>
             </a>
         </li>
+        <li  title="TeamOrderField">
+            <a href="teamorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrderField</code>
+            </a>
+        </li>
         <li  title="TeamPrivacy">
             <a href="teamprivacy.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>TeamPrivacy</code>
+            </a>
+        </li>
+        <li  title="TeamRole">
+            <a href="teamrole.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamRole</code>
+            </a>
+        </li>
+        <li  title="UserOrderField">
+            <a href="userorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>UserOrderField</code>
             </a>
         </li>
         <li  title="__DirectiveLocation">
@@ -1290,6 +1310,11 @@
                 <code>LanguageOrder</code>
             </a>
         </li>
+        <li  title="MemberOrder">
+            <a href="memberorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>MemberOrder</code>
+            </a>
+        </li>
         <li  title="MoveProjectCardInput">
             <a href="moveprojectcardinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>MoveProjectCardInput</code>
@@ -1338,6 +1363,11 @@
         <li  title="SubmitPullRequestReviewInput">
             <a href="submitpullrequestreviewinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>SubmitPullRequestReviewInput</code>
+            </a>
+        </li>
+        <li  title="TeamOrder">
+            <a href="teamorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrder</code>
             </a>
         </li>
         <li  title="UpdateProjectCardInput">
@@ -1416,7 +1446,7 @@
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">interface</span> <span class="identifier">Timeline</span> {</li><li></li><li><span class="tab"><span class="comment line"># A list of events associated with an Issue or PullRequest.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line"># <strong>first</strong>: Returns the first _n_ elements</span></span></li><li><span class="tab"><span class="comment line"># from the list.</span></span></li><li><span class="tab"><span class="comment line"># <strong>after</strong>: Returns the elements in the</span></span></li><li><span class="tab"><span class="comment line"># list that come after the specified global ID.</span></span></li><li><span class="tab"><span class="comment line"># <strong>last</strong>: Returns the last _n_ elements</span></span></li><li><span class="tab"><span class="comment line"># from the list.</span></span></li><li><span class="tab"><span class="comment line"># <strong>before</strong>: Returns the elements in the</span></span></li><li><span class="tab"><span class="comment line"># list that come before the specified global ID.</span></span></li><li><span class="tab"><span class="comment line"># <strong>since</strong>: Allows filtering timeline events</span></span></li><li><span class="tab"><span class="comment line"># by a `since` timestamp.</span></span></li><li><span class="tab"><span class="meta">timeline</span>(<span class="variable parameter">first</span>: <a class="support type" href="int.doc.html">Int</a>, <span class="variable parameter">after</span>: <a class="support type" href="string.doc.html">String</a>, <span class="variable parameter">last</span>: <a class="support type" href="int.doc.html">Int</a>, <span class="variable parameter">before</span>: <a class="support type" href="string.doc.html">String</a>, <span class="variable parameter">since</span>: <a class="support type" href="string.doc.html">String</a>): <a class="support type" href="issuetimelineconnection.doc.html">IssueTimelineConnection</a>! </span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">interface</span> <span class="identifier">Timeline</span> {</li><li></li><li><span class="tab"><span class="comment line">#   A list of events associated with an Issue or PullRequest.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>first</strong>: Returns the first _n_ elements from the list.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>after</strong>: Returns the elements in the list that come after the </span></span></li><li><span class="tab"><span class="comment line">#   specified global ID.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>last</strong>: Returns the last _n_ elements from the list.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>before</strong>: Returns the elements in the list that come before the </span></span></li><li><span class="tab"><span class="comment line">#   specified global ID.</span></span></li><li><span class="tab"><span class="comment line">#   <strong>since</strong>: Allows filtering timeline events by a `since` timestamp.</span></span></li><li><span class="tab"><span class="meta">timeline</span>(<span class="meta">first</span>: <a class="support type" href="int.doc.html">Int</a>, <span class="meta">after</span>: <a class="support type" href="string.doc.html">String</a>, <span class="meta">last</span>: <a class="support type" href="int.doc.html">Int</a>, <span class="meta">before</span>: <a class="support type" href="string.doc.html">String</a>, <span class="meta">since</span>: <a class="support type" href="string.doc.html">String</a>): <a class="support type" href="issuetimelineconnection.doc.html">IssueTimelineConnection</a>! </span></li><li>}</li></ul></code>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">Require by</h3>
@@ -1425,7 +1455,7 @@
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.1</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.2.1</a>
     </p>
 </div>
 </footer>

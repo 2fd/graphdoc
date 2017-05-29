@@ -205,6 +205,11 @@
                 <code>ReactionOrderField</code>
             </a>
         </li>
+        <li  title="RepositoryAffiliation">
+            <a href="repositoryaffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>RepositoryAffiliation</code>
+            </a>
+        </li>
         <li  title="RepositoryCollaboratorAffiliation">
             <a href="repositorycollaboratoraffiliation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>RepositoryCollaboratorAffiliation</code>
@@ -245,9 +250,24 @@
                 <code>SubscriptionState</code>
             </a>
         </li>
+        <li  title="TeamOrderField">
+            <a href="teamorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrderField</code>
+            </a>
+        </li>
         <li  title="TeamPrivacy">
             <a href="teamprivacy.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>TeamPrivacy</code>
+            </a>
+        </li>
+        <li  title="TeamRole">
+            <a href="teamrole.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamRole</code>
+            </a>
+        </li>
+        <li  title="UserOrderField">
+            <a href="userorderfield.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>UserOrderField</code>
             </a>
         </li>
         <li  title="__DirectiveLocation">
@@ -1290,6 +1310,11 @@
                 <code>LanguageOrder</code>
             </a>
         </li>
+        <li  title="MemberOrder">
+            <a href="memberorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>MemberOrder</code>
+            </a>
+        </li>
         <li  title="MoveProjectCardInput">
             <a href="moveprojectcardinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>MoveProjectCardInput</code>
@@ -1338,6 +1363,11 @@
         <li  title="SubmitPullRequestReviewInput">
             <a href="submitpullrequestreviewinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 <code>SubmitPullRequestReviewInput</code>
+            </a>
+        </li>
+        <li  title="TeamOrder">
+            <a href="teamorder.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                <code>TeamOrder</code>
             </a>
         </li>
         <li  title="UpdateProjectCardInput">
@@ -1416,7 +1446,7 @@
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">enum</span> <span class="identifier">GitSignatureState</span> {</li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Valid signature and verified by GitHub.</span></span></li><li><span class="tab"><span class="meta">VALID</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Invalid signature.</span></span></li><li><span class="tab"><span class="meta">INVALID</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Malformed signature.</span></span></li><li><span class="tab"><span class="meta">MALFORMED_SIG</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Key used for signing not known to GitHub.</span></span></li><li><span class="tab"><span class="meta">UNKNOWN_KEY</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Invalid email used for signing.</span></span></li><li><span class="tab"><span class="meta">BAD_EMAIL</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Email used for signing unverified on GitHub.</span></span></li><li><span class="tab"><span class="meta">UNVERIFIED_EMAIL</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Email used for signing not known to GitHub.</span></span></li><li><span class="tab"><span class="meta">NO_USER</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Unknown signature type.</span></span></li><li><span class="tab"><span class="meta">UNKNOWN_SIG_TYPE</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Unsigned.</span></span></li><li><span class="tab"><span class="meta">UNSIGNED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Internal error - the GPG verification service is unavailable</span></span></li><li><span class="tab"><span class="comment line"># at the moment.</span></span></li><li><span class="tab"><span class="meta">GPGVERIFY_UNAVAILABLE</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Internal error - the GPG verification service misbehaved.</span></span></li><li><span class="tab"><span class="meta">GPGVERIFY_ERROR</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># The usage flags for the key that signed this don't</span></span></li><li><span class="tab"><span class="comment line"># allow signing.</span></span></li><li><span class="tab"><span class="meta">NOT_SIGNING_KEY</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line"># Signing key expired.</span></span></li><li><span class="tab"><span class="meta">EXPIRED_KEY</span></span></li><li>}</li></ul></code>
+<code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">enum</span> <span class="identifier">GitSignatureState</span> {</li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Valid signature and verified by GitHub.</span></span></li><li><span class="tab"><span class="meta">VALID</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Invalid signature.</span></span></li><li><span class="tab"><span class="meta">INVALID</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Malformed signature.</span></span></li><li><span class="tab"><span class="meta">MALFORMED_SIG</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Key used for signing not known to GitHub.</span></span></li><li><span class="tab"><span class="meta">UNKNOWN_KEY</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Invalid email used for signing.</span></span></li><li><span class="tab"><span class="meta">BAD_EMAIL</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Email used for signing unverified on GitHub.</span></span></li><li><span class="tab"><span class="meta">UNVERIFIED_EMAIL</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Email used for signing not known to GitHub.</span></span></li><li><span class="tab"><span class="meta">NO_USER</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Unknown signature type.</span></span></li><li><span class="tab"><span class="meta">UNKNOWN_SIG_TYPE</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Unsigned.</span></span></li><li><span class="tab"><span class="meta">UNSIGNED</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Internal error - the GPG verification service is unavailable at the moment.</span></span></li><li><span class="tab"><span class="meta">GPGVERIFY_UNAVAILABLE</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Internal error - the GPG verification service misbehaved.</span></span></li><li><span class="tab"><span class="meta">GPGVERIFY_ERROR</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   The usage flags for the key that signed this don't allow signing.</span></span></li><li><span class="tab"><span class="meta">NOT_SIGNING_KEY</span></span></li><li><span class="tab"></span></li><li><span class="tab"><span class="comment line">#   Signing key expired.</span></span></li><li><span class="tab"><span class="meta">EXPIRED_KEY</span></span></li><li>}</li></ul></code>
 </section>
 <section>
 <h2 class="slds-section__title slds-m-top--small">Require by</h3>
@@ -1425,7 +1455,7 @@
     </main>
     <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
     <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.1</a>
+        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.2.1</a>
     </p>
 </div>
 </footer>
