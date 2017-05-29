@@ -38,6 +38,7 @@ jspm_packages
 
 .vscode
 *.js
+!template/**/*.js
 *.js.map
 *.d.ts
 gh-pages
