@@ -83,6 +83,19 @@ export class HTML {
         }
     }
 
+    useIdentifierLength(type: TypeRef, base: number = 0): number {
+        switch (type.kind) {
+            case LIST:
+                return this.useIdentifierLength(type.ofType as TypeRef, base + 2);
+
+            case NON_NULL:
+                return this.useIdentifierLength(type.ofType as TypeRef, base + 1);
+
+            default:
+                return base + type.name.length;
+        }
+    }
+
     value(val: string): string {
         return val[0] === '"' ?
             `<span class="string">${val}</span>` :

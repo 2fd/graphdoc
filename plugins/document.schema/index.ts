@@ -1,6 +1,18 @@
-import { resolve } from 'path';
+import {
+    resolve
+} from 'path';
 import * as wrap from 'word-wrap';
-import { SCALAR, OBJECT, INPUT_OBJECT, INTERFACE, ENUM, UNION, html, Plugin, DocumentSection} from '../../lib/utility';
+import {
+    SCALAR,
+    OBJECT,
+    INPUT_OBJECT,
+    INTERFACE,
+    ENUM,
+    UNION,
+    html,
+    Plugin,
+    DocumentSection
+} from '../../lib/utility';
 import {
     PluginInterface,
     DocumentSectionInterface,
@@ -15,7 +27,7 @@ import {
 const MAX_CODE_LEN = 80;
 // const MAX_COMMENT_LEN = 80;
 
-export default class SchemaPlugin  extends Plugin implements PluginInterface {
+export default class SchemaPlugin extends Plugin implements PluginInterface {
 
     getHeaders(): string[] {
         return [
@@ -30,19 +42,19 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
         ];
     }
 
-    getDocuments(buildForType?: string): DocumentSectionInterface[] {
+    getDocuments(buildForType ? : string): DocumentSectionInterface[] {
 
         const code = this.code(buildForType);
 
         if (code)
             return [
-                new DocumentSection('GraphQL Schema definition',  html.code(code))
+                new DocumentSection('GraphQL Schema definition', html.code(code))
             ];
 
         return [];
     }
 
-    code(buildForType?: string): string {
+    code(buildForType ? : string): string {
 
         if (!buildForType)
             return this.schema(this.document);
@@ -84,6 +96,18 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
         throw new TypeError('Unexpected type: ' + buildForType);
     }
 
+    argument(arg: InputValue): string {
+
+        return html.property(arg.name) + ': ' +
+            html.useIdentifier(arg.type, this.url(arg.type)) // + ' ' + this.deprecated(arg);
+        ;
+    }
+
+    argumentLength(arg: InputValue): number {
+
+        return arg.name.length + 1 + html.useIdentifierLength(arg.type);
+    }
+
     arguments(fieldOrDirectives: Field | Directive): string {
 
         if (fieldOrDirectives.args.length === 0) {
@@ -91,11 +115,35 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
         }
 
         return '(' +
-            fieldOrDirectives
-                .args
-                .map((arg) => this.inputValue(arg))
-                .join(', ') +
+            fieldOrDirectives.args
+            .map((arg) => this.argument(arg))
+            .join(', ') +
             ')';
+    }
+
+    argumentsLength(fieldOrDirectives: Field | Directive): number {
+
+        if (fieldOrDirectives.args.length === 0) {
+            return 0;
+        }
+
+        return fieldOrDirectives.args.reduce((sum, arg) => sum + this.argumentLength(arg), 2);
+    }
+
+    argumentsMultiline(fieldOrDirectives: Field | Directive): string[] {
+
+        if (fieldOrDirectives.args.length === 0) {
+            return [];
+        }
+
+        const maxIndex = fieldOrDirectives.args.length - 1;
+        return fieldOrDirectives.args
+            .map((arg, index) => {
+
+                return index < maxIndex ?
+                    this.argument(arg) + ',' :
+                    this.argument(arg);
+            });
     }
 
     argumentDescription(arg: InputValue): string[] {
@@ -127,14 +175,28 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
             return html.keyword('@deprecated');
         }
 
-        return html.keyword('@deprecated')
-            + '( reason: ' + html.value('"' + fieldOrEnumVal.deprecationReason + '" ') + ' )';
+        return html.keyword('@deprecated') +
+            '( reason: ' + html.value('"' + fieldOrEnumVal.deprecationReason + '" ') + ' )';
+    }
+
+    deprecatedLength(fieldOrEnumVal: Field | EnumValue): number {
+
+        if (!fieldOrEnumVal.isDeprecated)
+            return 0;
+
+        if (!fieldOrEnumVal.deprecationReason) {
+            return '@deprecated'.length;
+        }
+
+        return '@deprecated( reason: "'.length + fieldOrEnumVal.deprecationReason.length + '" )'.length;
     }
 
     description(description: string): string[] {
 
         if (description)
-            return wrap(description, { width: MAX_CODE_LEN })
+            return wrap(description, {
+                    width: MAX_CODE_LEN
+                })
                 .split('\n')
                 .map(l => html.comment(l));
 
@@ -153,16 +215,15 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
 
         const reduceEnumValues = (lines: string[], enumValue: EnumValue) => lines
             .concat(
-            [''],
-            this.description(enumValue.description),
-            [html.property(enumValue.name) + this.deprecated(enumValue)],
-        );
+                [''],
+                this.description(enumValue.description), [html.property(enumValue.name) + this.deprecated(enumValue)],
+            );
 
         return html.line(html.keyword('enum') + ' ' + html.identifier(type) + ' {') +
             type.enumValues
-                .reduce(reduceEnumValues, [])
-                .map(line => html.line(html.tab(line)))
-                .join('') +
+            .reduce(reduceEnumValues, [])
+            .map(line => html.line(html.tab(line)))
+            .join('') +
             html.line('}');
     }
 
@@ -174,23 +235,46 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
         if (fieldDescription.length > 0 && argumentsDescription.length)
             fieldDescription.push(html.comment(''));
 
+        const fieldDefinition = field.args.length > 0 && this.fieldLength(field) > MAX_CODE_LEN ?
+
+            // Multiline definition:
+            // fieldName(
+            //     argumentName: ArgumentType, \n ...
+            // ): ReturnType [@deprecated...]
+            [
+                html.property(field.name) + '(',
+                ...this.argumentsMultiline(field).map(l => html.tab(l)),
+                '): ' + html.useIdentifier(field.type, this.url(field.type)) + ' ' + this.deprecated(field)
+            ] :
+
+            // Single line
+            // fieldName(argumentName: ArgumentType): ReturnType [@deprecated...]
+            [
+                html.property(field.name) + this.arguments(field) + ': ' +
+                html.useIdentifier(field.type, this.url(field.type)) + ' ' + this.deprecated(field)
+            ];
+
         return ([] as string[])
             .concat(fieldDescription)
             .concat(argumentsDescription)
-            .concat([
-                html.property(field.name) + this.arguments(field) + ': ' +
-                html.useIdentifier(field.type, this.url(field.type)) + ' ' + this.deprecated(field)
-            ])
+            .concat(fieldDefinition)
             .map(line => html.line(html.tab(line)))
             .join('');
+    }
+
+    fieldLength(field: Field): number {
+
+        return field.name.length + this.argumentsLength(field) +
+            ': '.length + html.useIdentifierLength(field) + ' '.length +
+            this.deprecatedLength(field);
     }
 
     fields(type: SchemaType): string {
 
         return html.line('') +
             type.fields
-                .map(field => this.field(field))
-                .join(html.line(''));
+            .map(field => this.field(field))
+            .join(html.line(''));
     }
 
     inputObject(type: SchemaType): string {
@@ -251,58 +335,58 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
 
         if (schema.queryType)
             definition += html.line('') +
-                this.description(schema.queryType.description)
-                    .map(line => html.line(html.tab(line)))
-                    .join('') +
+            this.description(schema.queryType.description)
+            .map(line => html.line(html.tab(line)))
+            .join('') +
 
-                html.line(html.tab(
-                    html.property('query') + ': ' + html.useIdentifier(schema.queryType, this.url(schema.queryType))
-                ));
+            html.line(html.tab(
+                html.property('query') + ': ' + html.useIdentifier(schema.queryType, this.url(schema.queryType))
+            ));
 
         if (schema.mutationType)
             definition += html.line('') +
 
-                this.description(schema.mutationType.description)
-                    .map(line => html.line(html.tab(line)))
-                    .join('') +
+            this.description(schema.mutationType.description)
+            .map(line => html.line(html.tab(line)))
+            .join('') +
 
-                html.line(html.tab(
-                    html.property('mutation') + ': ' + html.useIdentifier(schema.mutationType, this.url(schema.mutationType))
-                ));
+            html.line(html.tab(
+                html.property('mutation') + ': ' + html.useIdentifier(schema.mutationType, this.url(schema.mutationType))
+            ));
 
         if (schema.subscriptionType)
             definition += html.line('') +
-                this.description(schema.subscriptionType.description)
-                    .map(line => html.line(html.tab(line)))
-                    .join('') +
+            this.description(schema.subscriptionType.description)
+            .map(line => html.line(html.tab(line)))
+            .join('') +
 
-                html.line(html.tab(
-                    html.property('subscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.subscriptionType))
-                ));
+            html.line(html.tab(
+                html.property('subscription') + ': ' + html.useIdentifier(schema.subscriptionType, this.url(schema.subscriptionType))
+            ));
 
         definition += html.line('}');
 
         return [definition]
-           /* .concat(
-            schema.directives
-                .map((directive) => {
-                    return html.line(html.comment('DIRECTIVE')) +
-                        this.description(directive.description)
-                        .map(line => html.line(line))
-                        .join('') +
-                        this.code(directive.name);
-                }),
-            schema.types
-                .sort((a: SchemaType, b: SchemaType) => {
-                    return order[a.kind].localeCompare(order[b.kind]);
-                })
-                .map((type) => {
-                    return html.line(html.comment(type.kind)) +
-                        this.description(type.description)
-                        .map(line => html.line(line))
-                        .join('') +
-                        this.code(type.name);
-                }))*/
+            /* .concat(
+             schema.directives
+                 .map((directive) => {
+                     return html.line(html.comment('DIRECTIVE')) +
+                         this.description(directive.description)
+                         .map(line => html.line(line))
+                         .join('') +
+                         this.code(directive.name);
+                 }),
+             schema.types
+                 .sort((a: SchemaType, b: SchemaType) => {
+                     return order[a.kind].localeCompare(order[b.kind]);
+                 })
+                 .map((type) => {
+                     return html.line(html.comment(type.kind)) +
+                         this.description(type.description)
+                         .map(line => html.line(line))
+                         .join('') +
+                         this.code(type.name);
+                 }))*/
             .join(html.line(''));
 
         /* return [this.schemaDefinition(schema)]
@@ -318,8 +402,8 @@ export default class SchemaPlugin  extends Plugin implements PluginInterface {
         return html.line(
             html.keyword('union') + ' ' + html.identifier(type) + ' = ' +
             type.possibleTypes
-                .map(type => html.useIdentifier(type, this.url(type)))
-                .join(' | ')
+            .map(type => html.useIdentifier(type, this.url(type)))
+            .join(' | ')
         );
     }
 }
