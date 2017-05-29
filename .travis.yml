@@ -14,4 +14,6 @@ before_script:
   - npm prune --production
   - mkdir gh-pages
   - npm run doc.github
+  - npm run doc.shopify
   - npm run doc.starwars
+  - npm run doc.scaphold
