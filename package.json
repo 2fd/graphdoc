@@ -10,9 +10,11 @@
     "sass": "node-sass --output-style compressed template/slds/styles/graphdoc.scss > template/slds/styles/graphdoc.css",
     "compile": "tsc -p .",
     "declaration": "tsc -d -p tsconfig.json",
-    "doc.github": "node bin/graphdoc.js -c package.github.json -f -v",
-    "doc.pokemon": "node bin/graphdoc.js -c package.pokemon.json -f -v",
-    "doc.starwars": "node bin/graphdoc.js -c package.starWars.json -f -v",
+    "doc.github": "node bin/graphdoc.js -c example.github.json -f -v",
+    "doc.pokemon": "node bin/graphdoc.js -c example.pokemon.json -f -v",
+    "doc.shopify": "node bin/graphdoc.js -c example.shopify.json -f -v",
+    "doc.scaphold": "node bin/graphdoc.js -c example.scaphold.json -f -v",
+    "doc.starwars": "node bin/graphdoc.js -c example.starWars.json -f -v",
     "test": "jest"
   },
   "repository": {
@@ -31,6 +33,7 @@
   "homepage": "https://github.com/2fd/graphdoc#readme",
   "devDependencies": {
     "@salesforce-ux/design-system": "^2.2.1",
+    "@types/bluebird": "^3.5.4",
     "@types/chai": "^3.4.34",
     "@types/fs-extra": "0.0.32",
     "@types/glob": "^5.0.30",
@@ -49,7 +52,6 @@
   },
   "dependencies": {
     "@2fd/command": "^1.1.2",
-    "@types/bluebird": "^3.5.4",
     "bluebird": "^3.5.0",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",

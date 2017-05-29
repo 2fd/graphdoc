@@ -1,0 +1,12 @@
+{
+  "name": "graphql-pokemon",
+  "description": "Get information of a Pokémon with GraphQL!",
+  "graphdoc": {
+    "ga": "UA-54154153-2",
+    "graphiql": "https://help.shopify.com/api/storefront-api/graphql-explorer/graphiql",
+    "logo": "<a href=\"/shopify\" target=\"_blank\" style=\"display:block;padding:1rem 15%\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/e/e1/Shopify_Logo.png\" /></a>",
+    "schemaFile": "./test/shopify.json",
+    "output": "./gh-pages/shopify",
+    "baseUrl": "./"
+  }
+}
