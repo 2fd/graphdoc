@@ -1,0 +1,143 @@
+.code {
+  background-color: #f6f6f6;
+  color: #4D4D4C;
+  border: 1px solid #4D4D4C;
+  font-size: 14px;
+  font-family: 'Ubuntu Mono';
+  cursor: text;
+  list-style-type: decimal;
+  border-radius: 0.25rem; 
+}
+
+.code .gutter {
+  background: #f6f6f6;
+  color: #4D4D4C;
+}
+
+.code .print-margin {
+  width: 1px;
+  background: #f6f6f6
+}
+
+.code li {
+  min-height: 1em;
+  background: #FFF;
+  padding: 1px 8px;
+}
+.code li:hover {
+  background: #EFEFEF;
+}
+
+.code .tab {
+  padding-left: 2em;
+}
+
+.code .cursor {
+  color: #AEAFAD
+}
+
+.code .marker-layer .selection {
+  background: #D6D6D6
+}
+
+.code.multiselect .selection.start {
+  box-shadow: 0 0 3px 0px #FFFFFF;
+}
+
+.code .marker-layer .step {
+  background: rgb(255, 255, 0)
+}
+
+.code .marker-layer .bracket {
+  margin: -1px 0 0 -1px;
+  border: 1px solid #D1D1D1
+}
+
+.code .marker-layer .active-line {
+  background: #EFEFEF
+}
+
+.code .gutter-active-line {
+  background-color: #dcdcdc
+}
+
+.code .marker-layer .selected-word {
+  border: 1px solid #D6D6D6
+}
+
+.code .invisible {
+  color: #D1D1D1
+}
+
+.code .keyword,
+.code .meta,
+.code .storage,
+.code .storage.type,
+.code .support.type {
+  color: #8959A8
+}
+
+.code .keyword.operator {
+  color: #3E999F
+}
+
+.code .constant.character,
+.code .constant.language,
+.code .constant.numeric,
+.code .keyword.other.unit,
+.code .support.constant {
+  color: #F5871F
+}
+
+.code .constant.other {
+  color: #666969
+}
+
+.code .invalid {
+  color: #FFFFFF;
+  background-color: #C82829
+}
+
+.code .invalid.deprecated {
+  color: #FFFFFF;
+  background-color: #8959A8
+}
+
+.code .fold {
+  background-color: #4271AE;
+  border-color: #4D4D4C
+}
+
+.code .entity.name.function,
+.code .support.function,
+.code .variable.parameter,
+.code .variable {
+  color: #4271AE
+}
+
+.code .support.class,
+.code .support.type {
+  color: #C99E00
+}
+
+.code .heading,
+.code .markup.heading,
+.code .string {
+  color: #718C00
+}
+
+.code .entity.name.tag,
+.code .entity.other.attribute-name,
+.code .meta.tag,
+.code .string.regexp,
+.code .variable {
+  color: #C82829
+}
+
+.code .comment {
+  color: #8E908C
+}
+
+.code .indent-guide {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==) right repeat-y
+}

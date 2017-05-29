@@ -1,0 +1,43 @@
+div.require-by.anyone,
+ul.require-by a {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+div.require-by.anyone {
+    background-color: #f0f8fc;
+    border: 1px solid #d8dde6;
+    color: grey;
+    padding: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+    border-radius: 0.25rem;
+}
+
+ul.require-by {
+    margin: 0;
+    padding: 0;
+}
+
+ul.require-by a {
+    border-left: .25rem solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    padding: .5rem 1.5rem;
+}
+
+ul.require-by a:hover {
+    text-decoration: none;
+    background-color: #f0f8fc;
+    border-color: #d8dde6;
+    border-left-color: #005fb2;
+}
+
+ul.require-by a em {
+    margin-left: 1rem;
+    font-size: .75rem;
+    color: grey;
+}

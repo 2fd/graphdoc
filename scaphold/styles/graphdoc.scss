@@ -1,0 +1,180 @@
+@import
+  '../../../node_modules/@salesforce-ux/design-system/scss/init',
+  '../../../node_modules/@salesforce-ux/design-system/scss/vendor/normalize';
+
+@include core($scoped: false, $globals: true);
+
+@import
+  // Activity Timeline
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/activity-timeline/index',
+
+  // // Badges
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/badges/index',
+
+  // // Breadcrumbs
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/breadcrumbs/index',
+
+  // // Button Groups
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/button-groups/index',
+
+  // // Button
+  '../../../node_modules/@salesforce-ux/design-system/scss/components/buttons/flavors/base/index',
+  '../../../node_modules/@salesforce-ux/design-system/scss/components/buttons/flavors/stateful/index',
+
+  // // Button Icon
+  '../../../node_modules/@salesforce-ux/design-system/scss/components/button-icons/flavors/base/index',
+
+  // // Icons
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/icons/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/icons/flavors/icon-colors/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/icons/flavors/sizes/index',
+
+  // // Card
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/cards/index',
+
+  // // Forms
+  '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/index',
+  '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/input/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/textarea/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/radio/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/radio-group-alternate/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/checkbox/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/checkbox-toggle/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/select/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/checkbox-alternate/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/checkbox-add-button/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/multi-select/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/horizontal-form/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/stacked-form/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/inline-form/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/compound-form/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/forms/flavors/docked-form-footer/index',
+
+  // // File selector
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/file-selector/index',
+
+  // // Page Headers
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/page-headers/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/page-headers/flavors/record-home/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/page-headers/flavors/record-home-vertical/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/page-headers/flavors/object-home/index',
+
+  // // Panels
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/panels/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/panels/flavors/filtering/index',
+
+  // // Popovers
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/popovers/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/popovers/flavors/panels/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/popovers/flavors/nubbins/index',
+
+  // // Walkthrough
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/walkthrough/flavors/popovers/index',
+
+  // // Tooltips
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/tooltips/index',
+
+  // // Menus
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/menus/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/menus/flavors/action-overflow/index',
+
+  // // Picklist
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/picklist/index',
+
+  // // Datepicker
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/datepickers/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/datepickers/flavors/time/index',
+
+  // // Docked Composer
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/docked-composer/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/docked-composer/flavors/email/index',
+
+  // // Docked Utility Bar
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/docked-utility-bar/flavors/utility-bar/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/docked-utility-bar/flavors/utility-panel/index',
+
+  // // Global Header
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/global-header/flavors/base/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/global-header/flavors/notifications/index',
+
+  // // Global Navigation
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/global-navigation/index',
+
+  // // Publishers
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/publishers/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/publishers/flavors/discussion-feed/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/publishers/flavors/comment/index',
+
+  // // Discussion Feed
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/feeds/flavors/feed-list/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/feeds/flavors/comment/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/feeds/flavors/post/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/feeds/flavors/post-with-attachments/index',
+
+  // // Modal
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/modals/index',
+
+  // // App Launcher
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/app-launcher/index',
+
+  // // Pills
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/pills/index',
+
+  // // Process
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/process/flavors/wizard/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/process/flavors/sales-path-coach/index',
+
+  // // Progress Indicator
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/progress-indicator/index',
+
+  // // Rich Text Editor
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/rich-text-editor/index',
+
+  // // Spinners
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/spinners/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/spinners/flavors/sizes/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/spinners/flavors/colors/index',
+
+  // // Split view list
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/split-view/index',
+
+  // // Title
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/tiles/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/tiles/flavors/board/index',
+
+  // // Tabs
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/tabs/flavors/default/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/tabs/flavors/scoped/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/tabs/flavors/scrolling/index',
+
+  // // Navigation
+  '../../../node_modules/@salesforce-ux/design-system/scss/components/navigation/flavors/vertical/index',
+
+  // // Notifications -- Toasts & Alerts
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/notifications/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/notifications/flavors/alert/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/notifications/flavors/prompt/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/notifications/flavors/modal-toast/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/walkthrough/flavors/header/index',
+
+  // // Lookup
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/lookups/index',
+
+  // // Images
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/images/flavors/avatar/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/images/flavors/figure/index',
+
+  // // Tables
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/data-tables/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/data-tables/flavors/responsive/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/data-tables/flavors/inline-edit/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/data-tables/flavors/fixed-header/index',
+
+  // // Tree (Order matters)
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/trees/flavors/base/index',
+  // '../../../node_modules/@salesforce-ux/design-system/scss/components/trees/flavors/grid/index',
+
+  '../../../node_modules/@salesforce-ux/design-system/scss/utilities/index',
+  
+  './override',
+  './custom';

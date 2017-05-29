@@ -1,0 +1,124 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    left: $spacing-none;
+    top: $spacing-none;
+    width: 30%;
+    max-width: $size-medium;
+    padding: $spacing-none;
+    background: white;
+    z-index: $z-index-sticky;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    box-shadow: $shadow-drop-down;
+    transform: translateX(0);
+    transition: #{$duration-promptly} transform ease;
+    @media (max-width: #{$mq-medium}) {
+        transform: translateX(-100%);
+        width: $size-medium;
+        &.is-active {
+            transform: translateX(0);
+        }
+    }
+}
+
+nav sup {
+    font-style: italic;
+    opacity: .7;
+}
+
+header a {
+    text-decoration: none !important;
+}
+
+main,
+footer {
+    max-width: $size-xx-large;
+    min-width: $size-medium;
+    margin-left: 30%;
+    padding: $spacing-x-large;
+    padding-top: $spacing-medium;
+    box-sizing: border-box;
+    position: relative;
+    @media (max-width: #{$mq-medium}) {
+        margin-left: 0;
+    }
+    @media (min-width: 70rem) {
+        margin-left: 21rem;
+    }
+}
+
+main .title {
+    margin-top: $spacing-medium
+}
+
+main .title p {
+    font-size: $spacing-medium;
+    font-weight: $font-weight-light;
+    max-width: $size-x-large;
+}
+
+main section {
+    margin-bottom: $spacing-xx-large;
+}
+
+main section .slds-section__title {
+    border-bottom: #{$border-width-thin} solid #{$color-border};
+    margin-bottom: $spacing-large;
+}
+
+main code.highlight {
+    display: block;
+    background: #4D4D4C;
+    position: relative;
+    box-shadow: $elevation-shadow-4;
+    padding: $spacing-xxx-small;
+    padding-top: $spacing-large;
+    border-radius: $border-radius-medium;
+}
+
+main code.highlight::after,
+main code.highlight::before {
+    content: "";
+    display: block;
+    height: $spacing-small;
+    width: $spacing-small;
+    position: absolute;
+    top: $spacing-x-small;
+    //border: 1px solid darken($color: #4D4D4C, $amount: 10%);
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+main code.highlight::before {
+    background: $color-background-destructive;
+    left: $spacing-x-small;
+}
+
+main code.highlight::after {
+    background: lighten($color: #4D4D4C, $amount: 10%);
+    left: $spacing-x-small + $square-icon-utility-small + $spacing-xx-small;
+}
+
+.less-than-medium {
+    @media (min-width: #{$mq-medium}) {
+        display: none;
+    }
+}
+
+.less-than-small {
+    @media (min-width: #{$mq-small}) {
+        display: none;
+    }
+}
