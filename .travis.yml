@@ -10,6 +10,7 @@ cache:
 install:
   - npm install
   - npm run compile
+  - npm install -g jest
 before_script:
   - npm prune --production
   - mkdir gh-pages
