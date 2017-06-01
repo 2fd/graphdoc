@@ -6,9 +6,9 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@2fd/command/-/command-1.1.2.tgz#b831d511bdd3b4e2d88139aaddb06d3d6aa0b08a"
 
-"@salesforce-ux/design-system@^2.2.1":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.3.0.tgz#ed261afb3762775183058ad9c97794b4c8b2405e"
+"@salesforce-ux/design-system@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.2.1.tgz#ed4951a2a2c9c75d8653b75839b94562cc087f57"
 
 "@types/bluebird@^3.5.4":
   version "3.5.4"
@@ -2124,6 +2124,12 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
+slug@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/slug/-/slug-0.9.1.tgz#af08f608a7c11516b61778aa800dce84c518cfda"
+  dependencies:
+    unicode ">= 0.3.1"
+
 sntp@1.x.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
@@ -2331,6 +2337,10 @@ uglify-js@^2.6:
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
+
+"unicode@>= 0.3.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/unicode/-/unicode-9.0.1.tgz#104706272c6464c574801be1b086f7245cf25158"
 
 util-deprecate@~1.0.1:
   version "1.0.2"

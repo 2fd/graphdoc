@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/2fd/graphdoc#readme",
   "devDependencies": {
-    "@salesforce-ux/design-system": "^2.2.1",
+    "@salesforce-ux/design-system": "2.2.1",
     "@types/bluebird": "^3.5.4",
     "@types/chai": "^3.4.34",
     "@types/fs-extra": "0.0.32",
@@ -59,6 +59,7 @@
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
     "request": "^2.79.0",
+    "slug": "^0.9.1",
     "striptags": "^3.0.1",
     "word-wrap": "^1.2.1"
   },
