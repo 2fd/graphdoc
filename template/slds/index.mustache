@@ -26,30 +26,11 @@
                 <input id="type-search" type="text" placeholder="Search a type" autofocus="" class="slds-input" />
             </div>
         </header>
-        <div class="slds-scrollable--y slds-col slds-grow">
+        <div id="navication-scroll" class="slds-scrollable--y slds-col slds-grow">
             {{> nav}}
         </div>
     </nav>
-    <main>
-        <div class="slds-grid">
-            <div>
-            <button class="slds-button js-toggle-navigation less-than-medium">
-                <i class="material-icons slds-button__icon slds-button__icon--left">menu</i>
-                <span class="slds-text-title--caps">Types<span>
-            </button>
-            </div>
-            {{#projectPackage.graphdoc.graphiql}}
-            <div class="slds-col--bump-left">
-            <a class="slds-button js-toggle-navigation" target="_blank" href="{{projectPackage.graphdoc.graphiql}}">
-                <span class="slds-text-title--caps">GraphiQL<span>
-                <i class="material-icons slds-button__icon slds-button__icon--rigth">open_in_new</i>
-            </a>
-            {{/projectPackage.graphdoc.graphiql}}
-            </div>
-        </div>
-        {{> main}}
-    </main>
-    <footer>{{> footer}}</footer>
+    <main>{{> main}}</main>
     <script src="./scripts/focus-active.js"></script>
     <script src="./scripts/filter-types.js"></script>
     <script src="./scripts/toggle-navigation.js"></script>

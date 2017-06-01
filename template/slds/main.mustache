@@ -1,3 +1,20 @@
+<section class="title slds-theme--inverse">
+    <div class="container slds-grid">
+        <div>
+        <button class="slds-button js-toggle-navigation less-than-medium">
+            <i class="material-icons slds-button__icon slds-button__icon--left">menu</i>
+            <span class="slds-text-title--caps">Types<span>
+        </button>
+        </div>
+        {{#projectPackage.graphdoc.graphiql}}
+        <div class="slds-col--bump-left">
+        <a class="slds-button js-toggle-navigation" target="_blank" href="{{projectPackage.graphdoc.graphiql}}">
+            <span class="slds-text-title--caps">GraphiQL<span>
+            <i class="material-icons slds-button__icon slds-button__icon--rigth">open_in_new</i>
+        </a>
+        {{/projectPackage.graphdoc.graphiql}}
+        </div>
+    </div>
 {{!
  Only navs varaible is defined:
  @example:
@@ -11,13 +28,32 @@
 
         -- MORE SECTIONS --
     ]
-}}<section class="title">
-    <h1 class="slds-text-heading--large"><code>{{title}}</code></h1>
-    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large">{{{description}}}</div>
+}}
+    <div class="container">
+        {{#type}}<p class="slds-text-title--caps slds-text-color--weak">{{type.kind}}</p>{{/type}}
+        <h1 class="slds-text-heading--large">{{title}}</h1>
+        <div class="slds-text-body--regular">{{{description}}}</div>
+    </div>
 </section>
 {{#documents}}
 <section>
-<h2 class="slds-section__title slds-m-top--small">{{title}}</h3>
-{{{description}}}
+    <div class="container">
+        <h2 id="{{#slug}}{{title}}{{/slug}}" class="graphdoc-section__title slds-text-heading--medium slds-m-top--small">
+            <a href="#{{#slug}}{{title}}{{/slug}}">
+                <i class="material-icons">link</i>
+            </a>
+            {{title}}
+        </h2>
+        {{{description}}}
+    </div>
 </section>
 {{/documents}}
+{{#graphdocPackage}}
+<footer>
+<div class="container slds-p-around--large">
+    <p class="slds-text-align--right slds-text-title--caps">
+        Generated with <a href="{{{graphdocPackage.homepage}}}" target="_blank">graphdoc {{graphdocPackage.version}}</a>
+    </p>
+</div>
+</footer>
+{{/graphdocPackage}}
