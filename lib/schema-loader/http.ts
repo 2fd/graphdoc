@@ -12,7 +12,7 @@ export type THttpSchemaLoaderOptions = {
 async function r(options: request.OptionsWithUrl) {
 
     return new Bluebird((resolve, reject) => {
-        const req = request(options, function (error, res, body: Introspection | string) {
+        request(options, function (error, res, body: Introspection | string) {
 
             if (error)
                 return reject(error);
