@@ -90,10 +90,10 @@ And execute
 
 ## Plugin
 
-In graphdoc a plugins is simply an object that controls the content that is displayed
+In graphdoc a plugin is simply an object that controls the content that is displayed
 on every page of your document.
 
-This object should only implements the `PluginInterface`.
+This object should only implement the `PluginInterface`.
 
 ```typescript
 
