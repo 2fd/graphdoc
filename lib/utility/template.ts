@@ -8,10 +8,10 @@ import {
     DocumentSectionInterface
 } from '../interface';
 
- function slugTemplate() {
+ export function slugTemplate() {
     return function(text, render) {
         return slug(render(text)).toLowerCase();
-    }
+    };
 }
 
 export type TemplateData = {
@@ -24,7 +24,7 @@ export type TemplateData = {
     projectPackage: any,
     graphdocPackage: any,
     slug: typeof slugTemplate,
-}
+};
 
 type Headers = string[];
 type Navs = NavigationSectionInterface[];
