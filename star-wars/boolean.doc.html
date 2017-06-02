@@ -21,18 +21,18 @@
                 <input id="type-search" type="text" placeholder="Search a type" autofocus="" class="slds-input" />
             </div>
         </header>
-        <div class="slds-scrollable--y slds-col slds-grow">
+        <div id="navication-scroll" class="slds-scrollable--y slds-col slds-grow">
 <div class="slds-grid slds-grid--vertical slds-navigation-list--vertical">
     <h4 class="slds-text-title--caps slds-p-around--medium">Schema</h4>
     <ul>
         <li  title="Query">
             <a href="query.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>Query</code>
+                Query
             </a>
         </li>
         <li  title="Mutation">
             <a href="mutation.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>Mutation</code>
+                Mutation
             </a>
         </li>
     </ul>
@@ -42,17 +42,17 @@
     <ul>
         <li class="slds-is-active" title="Boolean">
             <a href="boolean.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>Boolean</code>
+                Boolean
             </a>
         </li>
         <li  title="ID">
             <a href="id.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>ID</code>
+                ID
             </a>
         </li>
         <li  title="String">
             <a href="string.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>String</code>
+                String
             </a>
         </li>
     </ul>
@@ -62,17 +62,17 @@
     <ul>
         <li  title="Episode">
             <a href="episode.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>Episode</code>
+                Episode
             </a>
         </li>
         <li  title="__DirectiveLocation">
             <a href="directivelocation.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__DirectiveLocation</code>
+                __DirectiveLocation
             </a>
         </li>
         <li  title="__TypeKind">
             <a href="typekind.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__TypeKind</code>
+                __TypeKind
             </a>
         </li>
     </ul>
@@ -82,7 +82,7 @@
     <ul>
         <li  title="Character">
             <a href="character.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>Character</code>
+                Character
             </a>
         </li>
     </ul>
@@ -92,42 +92,42 @@
     <ul>
         <li  title="Droid">
             <a href="droid.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>Droid</code>
+                Droid
             </a>
         </li>
         <li  title="Human">
             <a href="human.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>Human</code>
+                Human
             </a>
         </li>
         <li  title="__Directive">
             <a href="directive.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__Directive</code>
+                __Directive
             </a>
         </li>
         <li  title="__EnumValue">
             <a href="enumvalue.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__EnumValue</code>
+                __EnumValue
             </a>
         </li>
         <li  title="__Field">
             <a href="field.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__Field</code>
+                __Field
             </a>
         </li>
         <li  title="__InputValue">
             <a href="inputvalue.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__InputValue</code>
+                __InputValue
             </a>
         </li>
         <li  title="__Schema">
             <a href="schema.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__Schema</code>
+                __Schema
             </a>
         </li>
         <li  title="__Type">
             <a href="type.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>__Type</code>
+                __Type
             </a>
         </li>
     </ul>
@@ -137,45 +137,60 @@
     <ul>
         <li  title="deprecated">
             <a href="deprecated.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>deprecated</code>
+                deprecated
             </a>
         </li>
         <li  title="include">
             <a href="include.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>include</code>
+                include
             </a>
         </li>
         <li  title="skip">
             <a href="skip.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                <code>skip</code>
+                skip
             </a>
         </li>
     </ul>
 </div>
         </div>
     </nav>
-    <main>
-        <div class="slds-grid">
-            <div>
-            <button class="slds-button js-toggle-navigation less-than-medium">
-                <i class="material-icons slds-button__icon slds-button__icon--left">menu</i>
-                <span class="slds-text-title--caps">Types<span>
-            </button>
-            </div>
-            </div>
+    <main><section class="title slds-theme--inverse">
+    <div class="container slds-grid">
+        <div>
+        <button class="slds-button js-toggle-navigation less-than-medium">
+            <i class="material-icons slds-button__icon slds-button__icon--left">menu</i>
+            <span class="slds-text-title--caps">Types<span>
+        </button>
         </div>
-<section class="title">
-    <h1 class="slds-text-heading--large"><code>Boolean</code></h1>
-    <div class="gdoc-text--introduction slds-m-top--small slds-m-bottom--x-large"><p>The <code>Boolean</code> scalar type represents <code>true</code> or <code>false</code>.</p>
+        </div>
+    </div>
+    <div class="container">
+        <p class="slds-text-title--caps slds-text-color--weak">SCALAR</p>
+        <h1 class="slds-text-heading--large">Boolean</h1>
+        <div class="slds-text-body--regular"><p>The <code>Boolean</code> scalar type represents <code>true</code> or <code>false</code>.</p>
 </div>
+    </div>
 </section>
 <section>
-<h2 class="slds-section__title slds-m-top--small">GraphQL Schema definition</h3>
-<code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">scalar</span> <span class="identifier">Boolean</span></li></ul></code>
+    <div class="container">
+        <h2 id="graphql-schema-definition" class="graphdoc-section__title slds-text-heading--medium slds-m-top--small">
+            <a href="#graphql-schema-definition">
+                <i class="material-icons">link</i>
+            </a>
+            GraphQL Schema definition
+        </h2>
+        <code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">scalar</span> <span class="identifier">Boolean</span></li></ul></code>
+    </div>
 </section>
 <section>
-<h2 class="slds-section__title slds-m-top--small">Require by</h3>
-<ul class="require-by"><li><a href="directive.spec.html" title="__Directive - A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.
+    <div class="container">
+        <h2 id="require-by" class="graphdoc-section__title slds-text-heading--medium slds-m-top--small">
+            <a href="#require-by">
+                <i class="material-icons">link</i>
+            </a>
+            Require by
+        </h2>
+        <ul class="require-by"><li><a href="directive.spec.html" title="__Directive - A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.
 
 In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.">__Directive<em>A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.
 
@@ -184,14 +199,16 @@ In some cases, you need to provide options to alter GraphQL's execution behavior
 Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.">__Type<em>The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
 
 Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.</em></a><li></ul>
+    </div>
 </section>
-    </main>
-    <footer><div class="slds-col-rule--top slds-p-around--large slds-section-title--divider">
-    <p class="slds-text-align--right">
-        <a href="https://github.com/2fd/graphdoc#readme">graphdoc 2.1.1</a>
+<footer>
+<div class="container slds-p-around--large">
+    <p class="slds-text-align--right slds-text-title--caps">
+        Generated with <a href="https://github.com/2fd/graphdoc#readme" target="_blank">graphdoc 2.3.0</a>
     </p>
 </div>
 </footer>
+</main>
     <script src="./scripts/focus-active.js"></script>
     <script src="./scripts/filter-types.js"></script>
     <script src="./scripts/toggle-navigation.js"></script>

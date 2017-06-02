@@ -1,15 +1,8 @@
 (function () {
+    var navScroll = document.getElementById('navication-scroll');
+    var header = document.querySelector('nav header');
+    var active = document.querySelector('.slds-is-active a');
 
-    var autofocus = document.querySelector('[autofocus]');
-    var actives = document.querySelectorAll('.slds-is-active a');
-    var len = actives.length;
-    var i = 0;
-
-    while (i < len) {
-        actives[i].focus();
-        i++;
-    }
-
-    if (autofocus)
-        autofocus.focus();
+    if(active)
+        navScroll.scrollTop = active.offsetTop - header.offsetHeight - Math.ceil(active.offsetHeight / 2)
 })()
