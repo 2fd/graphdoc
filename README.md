@@ -74,7 +74,7 @@ And execute
     [OPTIONS]:
     -c, --config      Configuration file [./package.json].
     -e, --endpoint    Graphql http endpoint ["https://domain.com/graphql"].
-    -x, --header      HTTP header for request (use with --endpoint). ["Authorization=Token cb8795e7"].
+    -x, --header      HTTP header for request (use with --endpoint). ["Authorization: Token cb8795e7"].
     -q, --query       HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].
     -s, --schema      Graphql Schema file ["./schema.json"].
     -p, --plugin      Use plugins [default=graphdoc/plugins/default].
