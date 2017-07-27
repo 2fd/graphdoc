@@ -15,6 +15,8 @@ export const jsSchemaLoader: SchemaLoader = async function (options: TJsSchemaLo
     let schema = require(schemaPath);
     if (typeof schema === 'function') {
         schema = schema().join('');
+    } else if (typeof schema === 'object' && typeof schema.default === 'function') {
+        schema = schema.default().join('');
     }
 
     const introspection = await execute(
