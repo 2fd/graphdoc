@@ -1,3 +1,4 @@
-export {THttpSchemaLoaderOptions, httpSchemaLoader} from './http';
-export {TJsonSchemaLoaderOptions, jsonSchemaLoader} from './json';
-export {TIDLSchemaLoaderOptions, idlSchemaLoader} from './idl';
+export { THttpSchemaLoaderOptions, httpSchemaLoader } from './http';
+export { TIDLSchemaLoaderOptions, idlSchemaLoader } from './idl';
+export { TJsSchemaLoaderOptions, jsSchemaLoader } from './js';
+export { TJsonSchemaLoaderOptions, jsonSchemaLoader } from './json';
