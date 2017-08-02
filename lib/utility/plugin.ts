@@ -1,12 +1,13 @@
 import * as url from 'url';
+
 import {
-    Schema,
+    Directive,
+    DocumentSectionInterface,
+    NavigationItemInterface,
+    NavigationSectionInterface,
     PluginImplementedInterface,
     PluginInterface,
-    DocumentSectionInterface,
-    NavigationSectionInterface,
-    NavigationItemInterface,
-    Directive,
+    Schema,
     SchemaType,
     TypeRef,
 } from '../interface';
@@ -16,7 +17,7 @@ import { getFilenameOf } from './introspection';
 /**
  * Plugin Base implementation
  */
-export class Plugin implements PluginInterface, PluginImplementedInterface {
+export abstract class Plugin implements PluginInterface, PluginImplementedInterface {
 
     static collect<T>(collection: T[][]): T[] {
 
@@ -38,7 +39,7 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
                     plugin.getNavigations(buildForType) :
                     null as any;
             }))
-            .then((navigationCollection) => Plugin.collect(navigationCollection));
+            .then<NavigationSectionInterface[]>((navigationCollection) => Plugin.collect(navigationCollection));
     }
 
     static collectDocuments(plugins: PluginInterface[], buildForType?: string): Promise<DocumentSectionInterface[]> {
@@ -48,7 +49,7 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
                     plugin.getDocuments(buildForType) :
                     null as any;
             }))
-            .then((navigationCollection) => Plugin.collect(navigationCollection));
+            .then<DocumentSectionInterface[]>((navigationCollection) => Plugin.collect(navigationCollection));
     }
 
     static collectHeaders(plugins: PluginInterface[], buildForType?: string): Promise<string[]> {
@@ -58,7 +59,7 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
                     plugin.getHeaders(buildForType) :
                     null as any;
             }))
-            .then((assetCollection) => Plugin.collect(assetCollection));
+            .then<string[]>((assetCollection) => Plugin.collect(assetCollection));
     }
 
     static collectAssets(plugins: PluginInterface[]): Promise<string[]> {
@@ -68,7 +69,7 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
                     plugin.getAssets() :
                     null as any;
             }))
-            .then((assetCollection) => Plugin.collect(assetCollection));
+            .then<string[]>((assetCollection) => Plugin.collect(assetCollection));
     }
 
     queryType: SchemaType | null = null;
@@ -77,13 +78,14 @@ export class Plugin implements PluginInterface, PluginImplementedInterface {
 
     subscriptionType: SchemaType | null = null;
 
-    typeMap: {
-        [name: string]: SchemaType
-    } = {};
+    typeMap: { [name: string]: SchemaType } = {};
 
-    directiveMap: {
-        [name: string]: Directive
-    } = {};
+    directiveMap: { [name: string]: Directive } = {};
+
+    getNavigations?: (buildForType?: string) => NavigationSectionInterface[] | PromiseLike<NavigationSectionInterface[]>;
+    getDocuments?: (buildForType?: string) => DocumentSectionInterface[] | PromiseLike<DocumentSectionInterface[]>;
+    getHeaders?: (buildForType?: string) => string[] | PromiseLike<string[]>;
+    getAssets?: () => string[] | PromiseLike<string[]>;
 
     constructor(
         public document: Schema,
@@ -176,6 +178,4 @@ export function sortTypes(a: SchemaType, b: SchemaType): number {
     } else {
         return priorityA - priorityB;
     }
-
-
 }

@@ -1,7 +1,9 @@
-import { SchemaLoader, Introspection } from '../interface';
-import { query as introspectionQuery } from '../utility';
-import * as request from 'request';
 import * as Bluebird from 'bluebird';
+import * as request from 'request';
+
+import { Introspection, Schema, SchemaLoader } from '../interface';
+
+import { query as introspectionQuery } from '../utility';
 
 export type THttpSchemaLoaderOptions = {
     endpoint: string,
@@ -11,7 +13,7 @@ export type THttpSchemaLoaderOptions = {
 
 async function r(options: request.OptionsWithUrl) {
 
-    return new Bluebird((resolve, reject) => {
+    return new Bluebird<Schema>((resolve, reject) => {
         request(options, function (error, res, body: Introspection | string) {
 
             if (error)
