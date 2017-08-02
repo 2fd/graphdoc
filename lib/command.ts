@@ -7,6 +7,7 @@ import { readFile, writeFile, createBuildDirectory, resolve, removeBuildDirector
 import {
     httpSchemaLoader,
     idlSchemaLoader,
+    jsSchemaLoader,
     jsonSchemaLoader
 } from './schema-loader';
 import {
@@ -265,6 +266,8 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                 case '.gql':
                 case '.graphql':
                     return idlSchemaLoader(projectPackage.graphdoc);
+                case '.js':
+                    return jsSchemaLoader(projectPackage.graphdoc);
                 default:
                     return Promise.reject(new Error(
                         'Unexpected schema extension name: ' + schemaFileExt
