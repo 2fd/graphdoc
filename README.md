@@ -30,7 +30,14 @@
     > graphdoc -s ./schema.graphql -o ./doc/schema
 ```
 
+### Generate documentation from for the ["modularized schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
+
+```bash
+    > graphdoc -s ./schema.js -o ./doc/schema
+```
+
 > [`./schema.graphql`](https://github.com/2fd/graphdoc/blob/master/test/starwars.graphql) must be able to be interpreted with [graphql-js/utilities#buildSchema](http://graphql.org/graphql-js/utilities/#buildschema)
+
 
 ### Generate documentation from json file
 

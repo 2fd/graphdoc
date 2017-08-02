@@ -1,5 +1,5 @@
 /**
- * Test case for the "modularized schema" of graphql-tools.
+ * Test case for the ["modularized schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools.
  */
 const Character = `
 # A character in the Star Wars Trilogy
