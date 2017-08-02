@@ -16,5 +16,6 @@ before_script:
   - mkdir gh-pages
   - npm run doc.github
   - npm run doc.shopify
+  - npm run doc.starwars-js
   - npm run doc.starwars
   - npm run doc.scaphold

@@ -32,44 +32,50 @@ export abstract class Plugin implements PluginInterface, PluginImplementedInterf
         return result;
     }
 
-    static collectNavigations(plugins: PluginInterface[], buildForType?: string): Promise<NavigationSectionInterface[]> {
-        return Promise
-            .all(plugins.map(plugin => {
+    static async collectNavigations(plugins: PluginInterface[], buildForType?: string): Promise<NavigationSectionInterface[]> {
+        
+        const navigationCollection = await Promise
+            .all<NavigationSectionInterface[]>(plugins.map(plugin => {
                 return plugin.getNavigations ?
                     plugin.getNavigations(buildForType) :
                     null as any;
             }))
-            .then<NavigationSectionInterface[]>((navigationCollection) => Plugin.collect(navigationCollection));
+        
+        return Plugin.collect(navigationCollection)
     }
 
-    static collectDocuments(plugins: PluginInterface[], buildForType?: string): Promise<DocumentSectionInterface[]> {
-        return Promise
-            .all(plugins.map(plugin => {
+    static async collectDocuments(plugins: PluginInterface[], buildForType?: string): Promise<DocumentSectionInterface[]> {
+        const navigationCollection = await Promise
+            .all<DocumentSectionInterface[]>(plugins.map(plugin => {
                 return plugin.getDocuments ?
                     plugin.getDocuments(buildForType) :
                     null as any;
             }))
-            .then<DocumentSectionInterface[]>((navigationCollection) => Plugin.collect(navigationCollection));
+
+        return Plugin.collect(navigationCollection)
     }
 
-    static collectHeaders(plugins: PluginInterface[], buildForType?: string): Promise<string[]> {
-        return Promise
-            .all(plugins.map(plugin => {
+    static async collectHeaders(plugins: PluginInterface[], buildForType?: string): Promise<string[]> {
+        const headerCollection = await Promise
+            .all<string[]>(plugins.map(plugin => {
                 return plugin.getHeaders ?
                     plugin.getHeaders(buildForType) :
                     null as any;
             }))
-            .then<string[]>((assetCollection) => Plugin.collect(assetCollection));
+
+        return Plugin.collect(headerCollection)
     }
 
-    static collectAssets(plugins: PluginInterface[]): Promise<string[]> {
-        return Promise
-            .all(plugins.map(plugin => {
+    static async collectAssets(plugins: PluginInterface[]): Promise<string[]> {
+
+        const assetCollection = await Promise
+            .all<string[]>(plugins.map(plugin => {
                 return plugin.getAssets ?
                     plugin.getAssets() :
                     null as any;
             }))
-            .then<string[]>((assetCollection) => Plugin.collect(assetCollection));
+
+        return Plugin.collect(assetCollection)
     }
 
     queryType: SchemaType | null = null;
@@ -82,10 +88,10 @@ export abstract class Plugin implements PluginInterface, PluginImplementedInterf
 
     directiveMap: { [name: string]: Directive } = {};
 
-    getNavigations?: (buildForType?: string) => NavigationSectionInterface[] | PromiseLike<NavigationSectionInterface[]>;
-    getDocuments?: (buildForType?: string) => DocumentSectionInterface[] | PromiseLike<DocumentSectionInterface[]>;
-    getHeaders?: (buildForType?: string) => string[] | PromiseLike<string[]>;
-    getAssets?: () => string[] | PromiseLike<string[]>;
+    // getNavigations?: (buildForType?: string) => NavigationSectionInterface[] | PromiseLike<NavigationSectionInterface[]>;
+    // getDocuments?: (buildForType?: string) => DocumentSectionInterface[] | PromiseLike<DocumentSectionInterface[]>;
+    // getHeaders?: (buildForType?: string) => string[] | PromiseLike<string[]>;
+    // getAssets?: () => string[] | PromiseLike<string[]>;
 
     constructor(
         public document: Schema,

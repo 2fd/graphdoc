@@ -1,9 +1,8 @@
-import { SchemaLoader, Introspection } from '../interface';
-import { resolve } from 'path';
-import { buildSchema, parse, execute } from 'graphql';
+import { Introspection, SchemaLoader } from '../interface';
+import { buildSchema, execute, parse } from 'graphql';
+
 import { query as introspectionQuery } from '../utility';
-
-
+import { resolve } from 'path';
 
 export type TJsSchemaLoaderOptions = {
     schemaFile: string
@@ -12,11 +11,24 @@ export type TJsSchemaLoaderOptions = {
 export const jsSchemaLoader: SchemaLoader = async function (options: TJsSchemaLoaderOptions) {
 
     const schemaPath = resolve(options.schemaFile);
-    let schema = require(schemaPath);
-    if (typeof schema === 'function') {
-        schema = schema().join('');
-    } else if (typeof schema === 'object' && typeof schema.default === 'function') {
-        schema = schema.default().join('');
+    let schemaModule = require(schemaPath);
+    let schema: string;
+
+    // check if exist default in module
+    if (typeof schemaModule === 'object') {
+        schemaModule = schemaModule.default
+    }
+
+    // check for array of definition
+    if (Array.isArray(schemaModule)){
+        schema = schemaModule.join('');
+
+    // check for array array wrapped in a function
+    } else if  (typeof schemaModule === 'function')  {
+        schema = schemaModule().join('');
+
+    } else {
+        throw new Error(`Unexpected schema definition on "${schemaModule}", must be an array or function`)
     }
 
     const introspection = await execute(
@@ -25,5 +37,4 @@ export const jsSchemaLoader: SchemaLoader = async function (options: TJsSchemaLo
     ) as Introspection;
 
     return introspection.data.__schema;
-
 };
