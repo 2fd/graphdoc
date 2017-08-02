@@ -18,7 +18,7 @@ export class Output {
     info(ref: string, value: string) {
 
         if (this.options.verbose)
-            this.out.log('%c ❗ %s: %c%s', 'color:yellow', ref, 'color:grey', value);
+            this.out.log('%c ❭ %s: %c%s', 'color:yellow', ref, 'color:grey', value);
     }
 
     error(err: NodeJS.ErrnoException) {
