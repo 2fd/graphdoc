@@ -9,7 +9,6 @@ export class HTML {
     index = 1;
 
     code(code: string): string {
-        // return `<code class="highlight"><ul class="code" style="padding-left:${padding(code)}">${code}</ul></code>`;
       return `<code class="highlight"><table class="code"><tbody>${code}</tbody></table></code>`;
     }
 
