@@ -10,6 +10,7 @@
     "sass": "node-sass --output-style compressed template/slds/styles/graphdoc.scss > template/slds/styles/graphdoc.css",
     "compile": "tsc -p .",
     "declaration": "tsc -d -p tsconfig.json",
+    "readme": "node ./README.js",
     "doc.github": "node bin/graphdoc.js -c example.github.json -f -v",
     "doc.pokemon": "node bin/graphdoc.js -c example.pokemon.json -f -v",
     "doc.shopify": "node bin/graphdoc.js -c example.shopify.json -f -v",
@@ -47,6 +48,7 @@
     "@types/request": "^0.0.40",
     "@types/striptags": "^0.0.5",
     "chai": "^3.5.0",
+    "handlebars": "^4.0.10",
     "jest": "^18.1.0",
     "node-sass": "^3.8.0",
     "typescript": "~2.3.0"

@@ -1,20 +1,21 @@
-# Static page generator for documenting GraphQL Schema
+# {{project.description}}
 
 [![Build Status](https://travis-ci.org/2fd/graphdoc.svg?branch=master)](https://travis-ci.org/2fd/graphdoc)
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
 
-* (demos)[#demos]
-* (install)[#install]
-* (use)[#use]
-* (plugin)[#plugin]
-* (template)[#template]
-* (contributors)[#contributors]
+* [demos](#demos)
+* [install](#install)
+* [use](#use)
+* [plugin](#plugin)
+* [template](#template)
+* [contributors](#contributors)
 
 ## Demos
 
 * Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
-* [Github GraphQL](https://2fd.github.io/graphdoc/github)
+* [Github V4 API](https://2fd.github.io/graphdoc/github)
+* [Shopify API](https://2fd.github.io/graphdoc/shopify/)
 * [Pokemon GraphQL](https://2fd.github.io/graphdoc/pokemon)
 
 ## Install
@@ -80,29 +81,7 @@ And execute
 ```bash
 
     > graphdoc -h
-    
-    Static page generator for documenting GraphQL Schema v2.4.0
-
-    Usage: node bin/graphdoc.js [OPTIONS] 
-
-    
-    [OPTIONS]:
-    -c, --config                   Configuration file [./package.json].
-    -e, --endpoint                 Graphql http endpoint ["https://domain.com/graphql"].
-    -x, --header                   HTTP header for request (use with --endpoint). ["Authorization: Token cb8795e7"].
-    -q, --query                    HTTP querystring for request (use with --endpoint) ["token=cb8795e7"].
-    -s, --schema, --schema-file    Graphql Schema file ["./schema.json"].
-    -p, --plugin                   Use plugins [default=graphdoc/plugins/default].
-    -t, --template                 Use template [default=graphdoc/template/slds].
-    -o, --output                   Output directory.
-    -d, --data                     Inject custom data.
-    -b, --base-url                 Base url for templates.
-    -f, --force                    Delete outputDirectory if exists.
-    -v, --verbose                  Output more information.
-    -V, --version                  Show graphdoc version.
-    -h, --help                     Print this help
-
-
+    {{{bash "node ./bin/graphdoc.js --help"}}}
 ```
 
 ## Plugin
@@ -216,6 +195,6 @@ You can use the plugins in 2 ways.
 
 ## Contributors
 
-- [<img src="https://avatars2.githubusercontent.com/u/1301838?v=4" width="40"> bitliner](https://github.com/bitliner)
-- [<img src="https://avatars0.githubusercontent.com/u/605742?v=4" width="40"> kbariotis](https://github.com/kbariotis)
-- [<img src="https://avatars1.githubusercontent.com/u/2903325?v=4" width="40"> dnalborczyk](https://github.com/dnalborczyk)
+{{#each contributors}}
+- [<img src="{{{avatar_url}}}" width="40"> {{{login}}}]({{{html_url}}})
+{{/each}}
