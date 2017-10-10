@@ -56,5 +56,5 @@ export const httpSchemaLoader: SchemaLoader = async function (options: THttpSche
         return result;
     }, {});
 
-    return await r(requestOptions);
+    return r(requestOptions);
 };
