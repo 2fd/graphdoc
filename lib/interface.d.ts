@@ -90,7 +90,7 @@ export interface PluginInterface {
     getHeaders?: (buildForType?: string) => string[] | PromiseLike<string[]>;
 
     /**
-     * Return a list of abasolute path to files that is going to be
+     * Return a list of absolute path to files that is going to be
      * copied to the assets directory.
      * 
      * Unlike the previous methods that are executed each time that a page generated,
