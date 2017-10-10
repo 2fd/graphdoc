@@ -4,17 +4,18 @@
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
 
-* (demos)[#demos]
-* (install)[#install]
-* (use)[#use]
-* (plugin)[#plugin]
-* (template)[#template]
-* (contributors)[#contributors]
+* [demos](#demos)
+* [install](#install)
+* [use](#use)
+* [plugin](#plugin)
+* [template](#template)
+* [contributors](#contributors)
 
 ## Demos
 
 * Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
-* [Github GraphQL](https://2fd.github.io/graphdoc/github)
+* [Github V4 API](https://2fd.github.io/graphdoc/github)
+* [Shopify API](https://2fd.github.io/graphdoc/shopify/)
 * [Pokemon GraphQL](https://2fd.github.io/graphdoc/pokemon)
 
 ## Install
