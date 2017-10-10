@@ -1,10 +1,9 @@
 .code {
-  background-color: #f6f6f6;
+  background-color: #fff;
   color: #4D4D4C;
   border: 1px solid #4D4D4C;
   font-size: 14px;
   font-family: 'Ubuntu Mono';
-  cursor: text;
   list-style-type: decimal;
   border-radius: 0.25rem; 
 }
@@ -19,13 +18,28 @@
   background: #f6f6f6
 }
 
-.code li {
-  min-height: 1em;
-  background: #FFF;
+.code .row:hover {
+  background: #EFEFEF;
+}
+
+.code .td-index {
+  color: rgba(27, 31, 35, .3);
+  padding: 1px 8px 1px 16px;
+  text-align: right;
+  width: 1%;
+}
+
+.code .td-index:hover {
+  cursor: pointer;
+  color: rgba(27, 31, 35, .6);
+}
+
+.code .td-code {
   padding: 1px 8px;
 }
-.code li:hover {
-  background: #EFEFEF;
+
+.code .td-code.highlighted {
+  background-color: #fffbdd;
 }
 
 .code .tab {

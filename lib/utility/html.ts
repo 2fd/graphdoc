@@ -5,33 +5,11 @@ import {
 
 import { LIST, NON_NULL } from './introspection';
 
-const EM_SIZE = 14;
-
-function htmlLines(html: string): number {
-
-    let count = 0;
-    let position = 0;
-
-    while (position !== -1) {
-        position = html.indexOf('</li><li>', position + 1);
-        count++;
-    }
-
-    return count;
-};
-
-function padding(html: string): string {
-
-    const lines = htmlLines(html);
-    const orderOfMagnitude = lines.toString().length;
-
-    return (orderOfMagnitude * EM_SIZE + EM_SIZE).toString() + 'px';
-};
-
 export class HTML {
+    index = 1;
 
     code(code: string): string {
-        return `<code class="highlight"><ul class="code" style="padding-left:${padding(code)}">${code}</ul></code>`;
+      return `<code class="highlight"><table class="code"><tbody>${code}</tbody></table></code>`;
     }
 
     highlight(text: string): string {
@@ -42,8 +20,9 @@ export class HTML {
         return ` <sup>${text}</sup>`;
     }
 
-    line(code: string): string {
-        return `<li>${code}</li>`;
+    line(code?: string): string {
+        const row = this.index++;
+        return `<tr class="row"><td id="L${row}" class="td-index">${row}</td><td id="LC${row}" class="td-code">${code || ''}</td></tr>`;
     }
 
     tab(code: string): string {
@@ -102,9 +81,6 @@ export class HTML {
             `<span class="constant numeric">${val}</span>`;
     }
 }
-
-
-export const html = new HTML;
 
 export function split(text: string, len: number): string[] {
 

@@ -40,7 +40,9 @@ jspm_packages
 .vscode
 *.js
 !template/**/*.js
+!plugins/**/assets/*.js
 *.js.map
 *.d.ts
 gh-pages
 build/*
+/.idea

@@ -1,5 +1,5 @@
 export {
-    html,
+    HTML,
     split
 } from './html';
 
