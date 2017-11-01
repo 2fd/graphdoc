@@ -264,6 +264,8 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
                 case '.json':
                     return jsonSchemaLoader(projectPackage.graphdoc);
                 case '.gql':
+                case '.gqls':
+                case '.graphqls':
                 case '.graphql':
                     return idlSchemaLoader(projectPackage.graphdoc);
                 case '.js':
