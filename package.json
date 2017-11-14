@@ -56,7 +56,7 @@
     "bluebird": "^3.5.0",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",
-    "graphql": "^0.7.0",
+    "graphql": "^0.11.7",
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
     "request": "^2.79.0",
