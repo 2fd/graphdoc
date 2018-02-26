@@ -195,7 +195,7 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             packageJSON = {};
         }
 
-        packageJSON.graphdoc = deepmerge(packageJSON.graphdoc || {}, input.flags);
+        packageJSON.graphdoc = deepmerge(input.flags, packageJSON.graphdoc || {});
 
         if (packageJSON.graphdoc.data) {
             const data = packageJSON.graphdoc.data;
