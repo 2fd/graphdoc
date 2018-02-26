@@ -131,7 +131,7 @@ export default class RequireByPlugin extends Plugin implements PluginInterface {
         let used = new Set();
 
         return [{
-            title: 'Require by',
+            title: 'Required by',
             description: '<ul class="require-by">' +
             requireBy
                 .filter((t) => {
