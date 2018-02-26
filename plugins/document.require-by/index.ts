@@ -18,7 +18,7 @@ import {
 } from '../../lib/interface';
 
 // Fix signature
-const stript: typeof striptags.default = striptags as any;
+const stript: typeof striptags = striptags as any;
 
 export default class RequireByPlugin extends Plugin implements PluginInterface {
 

@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import { render } from 'mustache';
+import * as deepmerge from 'deepmerge';
 import { Output, Plugin, getFilenameOf, createData } from './utility';
 import { readFile, writeFile, createBuildDirectory, resolve, removeBuildDirectory } from './utility/fs';
 import {
@@ -194,11 +195,11 @@ export class GraphQLDocumentor extends Command<Flags, Params> {
             packageJSON = {};
         }
 
-        packageJSON.graphdoc = Object.assign(packageJSON.graphdoc || {}, input.flags);
+        packageJSON.graphdoc = deepmerge(packageJSON.graphdoc || {}, input.flags);
 
         if (packageJSON.graphdoc.data) {
             const data = packageJSON.graphdoc.data;
-            packageJSON.graphdoc = Object.assign(data, packageJSON.graphdoc);
+            packageJSON.graphdoc = deepmerge(data, packageJSON.graphdoc);
         }
 
         if (packageJSON.graphdoc.plugins.length === 0)
