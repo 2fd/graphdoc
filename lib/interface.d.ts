@@ -152,6 +152,8 @@ type Introspection = {
     data: {
         __schema: Schema
     }
+} | {
+    __schema: Schema
 }
 
 type Schema = {
