@@ -192,6 +192,30 @@ You can use the plugins in 2 ways.
 
 > TODO
 
+### Track website usage
+
+#### Add Google Analytics tracking with command line
+
+```bash
+    > graphdoc --data '{"ga":"UA-1234..."}'
+               -s ./schema.json -o ./doc/schema
+```
+
+#### Add Google Analytics tracking with `package.json`
+
+```javascript
+     // package.json
+
+    {
+        "name": "project",
+        // [...]
+        "graphdoc": {
+            "ga": "UA-1234...",
+            "endpoint": "http://localhost:8080/graphql",
+            "output": "./doc/schema"
+        }
+    }
+```
 
 ## Contributors
 
