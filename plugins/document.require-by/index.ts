@@ -122,7 +122,7 @@ export default class RequireByPlugin extends Plugin implements PluginInterface {
 
         if (!Array.isArray(requireBy) || requireBy.length === 0)
             return [{
-                title: 'Require by',
+                title: 'Required by',
                 description: '<div class="require-by anyone">' +
                 'This element is not required by anyone' +
                 '</div>',
