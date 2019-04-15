@@ -99,9 +99,9 @@ or a `constructor` and export it as `default`
 If you export your plugin as a constructor, when going to be initialized,
 will receive three parameters
 
-* `schema`: The full the result of [GraphQL instrospection query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+* `schema`: The full the result of [GraphQL introspection query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
 * `projectPackage`: The content of `package.json` of current project (or the content of file defined with `--config` flag).
-* `graphdocPackag`: The content of `package.json` of graphdoc.
+* `graphdocPackage`: The content of `package.json` of graphdoc.
 
 > For performance reasons all plugins receive the reference to the same object
 > and therefore should not modify them directly as it could affect the behavior
@@ -113,7 +113,7 @@ will receive three parameters
 
     // es2015 export constructor
     export default class MyPlugin {
-        constructor(schema, projectPackage, graphdocPackag){}
+        constructor(schema, projectPackage, graphdocPackage){}
         getAssets() { /* ... */ }
         /* ... */
     }
@@ -159,7 +159,7 @@ You can use the plugins in 2 ways.
 
 ```bash
     > graphdoc  -p graphdoc/plugins/default \
-                -p some-dependencie/plugin \
+                -p some-dependencies/plugin \
                 -p ./lib/plugin/my-own-plugin \
                 -s ./schema.json -o ./doc/schema
 ```
