@@ -1,18 +1,18 @@
-import { TypeRef } from '../interface';
+import { TypeRef } from "../interface";
 
-export const LIST = 'LIST';
-export const NON_NULL = 'NON_NULL';
-export const SCALAR = 'SCALAR';
-export const OBJECT = 'OBJECT';
-export const INTERFACE = 'INTERFACE';
-export const UNION = 'UNION';
-export const ENUM = 'ENUM';
-export const INPUT_OBJECT = 'INPUT_OBJECT';
+export const LIST = "LIST";
+export const NON_NULL = "NON_NULL";
+export const SCALAR = "SCALAR";
+export const OBJECT = "OBJECT";
+export const INTERFACE = "INTERFACE";
+export const UNION = "UNION";
+export const ENUM = "ENUM";
+export const INPUT_OBJECT = "INPUT_OBJECT";
 
 export function getTypeOf(type: TypeRef): TypeRef {
-
-  while (type.kind === LIST || type.kind === NON_NULL)
+  while (type.kind === LIST || type.kind === NON_NULL) {
     type = type.ofType as TypeRef;
+  }
 
   return type;
 }
@@ -20,10 +20,11 @@ export function getTypeOf(type: TypeRef): TypeRef {
 export function getFilenameOf(type: TypeRef): string {
   const name = (getTypeOf(type).name as string).toLowerCase();
 
-  if (name[0] === '_' && name[1] === '_')
-    return name.slice(2) + '.spec.html';
+  if (name[0] === "_" && name[1] === "_") {
+    return name.slice(2) + ".spec.html";
+  }
 
-  return name + '.doc.html';
+  return name + ".doc.html";
 }
 
 const fullTypeFragment = `

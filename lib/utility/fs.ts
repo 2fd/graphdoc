@@ -1,7 +1,7 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import * as fse from 'fs-extra';
-import * as Bluebird from 'bluebird';
+import Bluebird from "bluebird";
+import fs from "fs";
+import fse from "fs-extra";
+import path from "path";
 
 /**
  * resolve
@@ -10,52 +10,72 @@ import * as Bluebird from 'bluebird';
  * path start with `graphdoc/` return absolute path to
  * plugins directory
  */
-const MODULE_BASEPATH = 'graphdoc/';
+const MODULE_BASE_PATH = "graphdoc/";
 
 export function resolve(relative: string): string {
+  if (relative.slice(0, MODULE_BASE_PATH.length) === MODULE_BASE_PATH) {
+    return path.resolve(
+      __dirname,
+      "../../",
+      relative.slice(MODULE_BASE_PATH.length)
+    );
+  }
 
-    if (relative.slice(0, MODULE_BASEPATH.length) === MODULE_BASEPATH)
-        return path.resolve(__dirname, '../../', relative.slice(MODULE_BASEPATH.length));
-
-    return path.resolve(relative);
+  return path.resolve(relative);
 }
 
 /**
  * Execute fs.read as Promise
  */
 export const readFile = Bluebird.promisify<string, string, string>(fs.readFile);
-export const writeFile = Bluebird.promisify<string, string, string>(fs.writeFile);
-export const copyAll = Bluebird.promisify<void, string, string>(fse.copy);
+export const writeFile = Bluebird.promisify(
+  (file: string, data: any, cb: (err: Error) => void) =>
+    fs.writeFile(file, data, cb)
+);
+export const copyAll = Bluebird.promisify<undefined, string, string>(
+  (from: string, to: string, cb: (err: Error, result?: undefined) => void) =>
+    fse.copy(from, to, cb)
+);
 export const readDir = Bluebird.promisify<string[], string>(fs.readdir);
 export const mkDir = Bluebird.promisify<string, string>(fs.mkdir as any);
-export const removeBuildDirectory = Bluebird.promisify<void, string>(fse.remove as any);
+export const removeBuildDirectory = Bluebird.promisify<void, string>(
+  fse.remove as any
+);
 
 /**
- * Create build directory from a templete directory
+ * Create build directory from a template directory
  */
-export async function createBuildDirectory(buildDirectory: string, templateDirectory: string, assets: string[]) {
+export async function createBuildDirectory(
+  buildDirectory: string,
+  templateDirectory: string,
+  assets: string[]
+) {
+  // read directory
+  const files = await readDir(templateDirectory);
+  await Bluebird.all(
+    files
 
-    // read directory
-    const files = await readDir(templateDirectory);
-    await Bluebird.all(files
+      // ignore *.mustache templates
+      .filter(file => path.extname(file) !== ".mustache")
 
-        // ignore *.mustache templates
-        .filter(file => path.extname(file) !== '.mustache')
+      // copy recursive
+      .map(file =>
+        copyAll(
+          path.resolve(templateDirectory, file),
+          path.resolve(buildDirectory, file)
+        )
+      )
+  );
 
-        // copy recursive
-        .map(file => copyAll(
-            path.resolve(templateDirectory, file),
-            path.resolve(buildDirectory, file),
-        ))
-    );
+  // create assets directory
+  await mkDir(path.resolve(buildDirectory, "assets"));
 
-    // create assets directory
-    await mkDir(path.resolve(buildDirectory, 'assets'));
-
-    await Bluebird.all(assets
-        .map(asset => copyAll(
-            asset,
-            path.resolve(buildDirectory, 'assets', path.basename(asset))
-        ))
-    );
+  await Bluebird.all(
+    assets.map(asset =>
+      copyAll(
+        asset,
+        path.resolve(buildDirectory, "assets", path.basename(asset))
+      )
+    )
+  );
 }
