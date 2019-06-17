@@ -183,7 +183,7 @@ export class GraphQLDocumentGenerator extends Command<IFlags, {}> {
         .concat(schema.types || [])
         .concat(schema.directives || [])
         .map((type: TypeRef) => {
-          output.info("render", type.name);
+          output.info("render", type.name || "");
           return this.renderFile(projectPackageJSON, partials, plugins, type);
         });
 
@@ -347,6 +347,9 @@ export class GraphQLDocumentGenerator extends Command<IFlags, {}> {
     );
     const file = type ? getFilenameOf(type) : "index.html";
     const filePath = path.resolve(projectPackageJSON.graphdoc.output, file);
-    return writeFile(filePath, render(partials.index, templateData, partials));
+    return writeFile(
+      filePath,
+      render(partials.index as string, templateData, partials)
+    );
   }
 }

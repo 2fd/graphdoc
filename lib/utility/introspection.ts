@@ -1,4 +1,4 @@
-import { TypeRef } from "../interface";
+import { DeepTypeRef, Description, TypeRef } from "../interface";
 
 export const LIST = "LIST";
 export const NON_NULL = "NON_NULL";
@@ -9,16 +9,21 @@ export const UNION = "UNION";
 export const ENUM = "ENUM";
 export const INPUT_OBJECT = "INPUT_OBJECT";
 
-export function getTypeOf(type: TypeRef): TypeRef {
-  while (type.kind === LIST || type.kind === NON_NULL) {
-    type = type.ofType as TypeRef;
+export function getTypeOf(t: DeepTypeRef | TypeRef): TypeRef {
+  if (t.kind === LIST || t.kind === NON_NULL) {
+    return getTypeOf((t as DeepTypeRef).ofType);
   }
 
-  return type;
+  return t as TypeRef;
 }
 
-export function getFilenameOf(type: TypeRef): string {
-  const name = (getTypeOf(type).name as string).toLowerCase();
+export function getFilenameOf(
+  type: DeepTypeRef | TypeRef | Description
+): string {
+  const name =
+    type.kind === LIST || type.kind === NON_NULL
+      ? getTypeOf(type as DeepTypeRef).name.toLowerCase()
+      : (type as Description).name.toLowerCase();
 
   if (name[0] === "_" && name[1] === "_") {
     return name.slice(2) + ".spec.html";

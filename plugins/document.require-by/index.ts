@@ -102,7 +102,7 @@ export default class RequireByPlugin extends Plugin implements PluginInterface {
       '" title="' +
       type.name +
       " - " +
-      striptags(type.description).replace(/"/gi, "&quot;") +
+      striptags(type.description || "").replace(/"/gi, "&quot;") +
       '">' +
       type.name +
       "<em>" +

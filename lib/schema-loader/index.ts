@@ -1,5 +1,5 @@
-export { THttpSchemaLoaderOptions, httpSchemaLoader } from "./http";
-export { TIDLSchemaLoaderOptions, idlSchemaLoader } from "./idl";
+export { IHttpSchemaLoaderOptions, httpSchemaLoader } from "./http";
+export { IIdlSchemaLoaderOptions, idlSchemaLoader } from "./idl";
 export {
   IJsSchemaLoaderOptions as TJsSchemaLoaderOptions,
   jsSchemaLoader

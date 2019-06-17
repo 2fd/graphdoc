@@ -1,4 +1,4 @@
-import { InputValue, TypeRef } from "../interface";
+import { DeepTypeRef, Description, InputValue, TypeRef } from "../interface";
 import { LIST, NON_NULL } from "./introspection";
 
 export class HTML {
@@ -34,7 +34,7 @@ export class HTML {
     return `<span class="comment line"># ${comment}</span>`;
   }
 
-  identifier(type: TypeRef): string {
+  identifier(type: Description): string {
     return `<span class="identifier">${type.name}</span>`;
   }
 
@@ -46,29 +46,37 @@ export class HTML {
     return `<span class="meta">${name}</span>`;
   }
 
-  useIdentifier(type: TypeRef, toUrl: string): string {
+  useIdentifier(
+    type: DeepTypeRef | TypeRef | Description,
+    toUrl: string
+  ): string {
     switch (type.kind) {
       case LIST:
-        return "[" + this.useIdentifier(type.ofType as TypeRef, toUrl) + "]";
+        return (
+          "[" + this.useIdentifier((type as DeepTypeRef).ofType, toUrl) + "]"
+        );
 
       case NON_NULL:
-        return this.useIdentifier(type.ofType as TypeRef, toUrl) + "!";
+        return this.useIdentifier((type as DeepTypeRef).ofType, toUrl) + "!";
 
       default:
         return `<a class="support type" href="${toUrl}">${type.name}</a>`;
     }
   }
 
-  useIdentifierLength(type: TypeRef, base: number = 0): number {
+  useIdentifierLength(
+    type: DeepTypeRef | TypeRef | Description,
+    base: number = 0
+  ): number {
     switch (type.kind) {
       case LIST:
-        return this.useIdentifierLength(type.ofType as TypeRef, base + 2);
+        return this.useIdentifierLength((type as DeepTypeRef).ofType, base + 2);
 
       case NON_NULL:
-        return this.useIdentifierLength(type.ofType as TypeRef, base + 1);
+        return this.useIdentifierLength((type as DeepTypeRef).ofType, base + 1);
 
       default:
-        return base + type.name.length;
+        return base + (type.name || "").length;
     }
   }
 

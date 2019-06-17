@@ -1,24 +1,22 @@
 import url from "url";
-
 import {
+  DeepTypeRef,
+  Description,
   Directive,
   DocumentSectionInterface,
   NavigationItemInterface,
   NavigationSectionInterface,
-  PluginImplementedInterface,
   PluginInterface,
   Schema,
   SchemaType,
   TypeRef
 } from "../interface";
-
 import { getFilenameOf } from "./introspection";
 
 /**
  * Plugin Base implementation
  */
-export abstract class Plugin
-  implements PluginInterface, PluginImplementedInterface {
+export abstract class Plugin {
   static collect<T>(collection: T[][]): T[] {
     let result: T[] = [];
 
@@ -113,31 +111,35 @@ export abstract class Plugin
       : [];
 
     this.document.directives = this.document.directives
-      ? this.document.directives.sort((a, b) => a.name.localeCompare(b.name))
+      ? this.document.directives.sort((a, b) =>
+          (a.name || "").localeCompare(b.name || "")
+        )
       : [];
 
     this.document.types.forEach(type => {
-      this.typeMap[type.name] = type;
+      this.typeMap[type.name || ""] = type;
     });
 
     this.document.directives.forEach(directive => {
-      this.directiveMap[directive.name] = directive;
+      this.directiveMap[directive.name || ""] = directive;
     });
 
     if (document.queryType) {
-      this.queryType = this.typeMap[document.queryType.name];
+      this.queryType = this.typeMap[document.queryType.name || ""];
     }
 
     if (document.mutationType) {
-      this.mutationType = this.typeMap[document.mutationType.name];
+      this.mutationType = this.typeMap[document.mutationType.name || ""];
     }
 
     if (document.subscriptionType) {
-      this.subscriptionType = this.typeMap[document.subscriptionType.name];
+      this.subscriptionType = this.typeMap[
+        document.subscriptionType.name || ""
+      ];
     }
   }
 
-  url(type: TypeRef): string {
+  url(type: DeepTypeRef | TypeRef | Description): string {
     return url.resolve(
       this.projectPackage.graphdoc.baseUrl,
       getFilenameOf(type)
@@ -174,9 +176,10 @@ export class DocumentSection implements DocumentSectionInterface {
 }
 
 function priorityType(type: SchemaType): number {
-  if (type.name[0] === "_" && type.name[1] === "_") {
+  const name = type.name || "";
+  if (name[0] === "_" && name[1] === "_") {
     return 2;
-  } else if (type.name[0] === "_") {
+  } else if (name[0] === "_") {
     return 1;
   } else {
     return 0;
@@ -188,7 +191,7 @@ export function sortTypes(a: SchemaType, b: SchemaType): number {
   const priorityB = priorityType(b);
 
   if (priorityA === priorityB) {
-    return a.name.localeCompare(b.name);
+    return (a.name || "").localeCompare(b.name || "");
   } else {
     return priorityA - priorityB;
   }

@@ -106,8 +106,8 @@ export interface PluginInterface {
    * ]
    *
    * there's will be copied to
-   * /local/path/to/my-custom-style.css -> [OUTPUT_DIRETORY]/assets/my-custom-style.css
-   * /local/path/to/my-custom-image.png -> [OUTPUT_DIRETORY]/assets/my-custom-image.png
+   * /local/path/to/my-custom-style.css -> [OUTPUT_DIRECTORY]/assets/my-custom-style.css
+   * /local/path/to/my-custom-image.png -> [OUTPUT_DIRECTORY]/assets/my-custom-image.png
    *
    * If you want to insert styles or scripts to the documentation,
    * you must combine this method with getHeaders
@@ -167,7 +167,7 @@ type Schema = {
 
 type Description = {
   name: string;
-  description: string;
+  description: string | null;
   kind?: string;
 };
 
@@ -182,6 +182,7 @@ type SchemaType = Description & {
   interfaces: TypeRef[] | null;
   enumValues: EnumValue[] | null;
   possibleTypes: TypeRef[] | null;
+  kind: string;
 };
 
 type Directive = Description & {
@@ -192,18 +193,28 @@ type Directive = Description & {
 type EnumValue = Description & Deprecation;
 
 type InputValue = Description & {
-  type: TypeRef;
+  type: DeepTypeRef | TypeRef;
   defaultValue: string | number | null;
 };
 
 type Field = Description &
   Deprecation & {
     args: InputValue[];
-    type: TypeRef;
+    type: DeepTypeRef | TypeRef;
   };
 
-type TypeRef = Description & {
-  ofType?: TypeRef;
+type TypeRef = {
+  name: string;
+  description: string | null;
+  kind: string;
+  ofType: null;
+};
+
+type DeepTypeRef = {
+  name: string | null;
+  description: null;
+  kind: "LIST" | "NON_NULL" | string;
+  ofType: DeepTypeRef | TypeRef;
 };
 
 export interface SchemaLoader {

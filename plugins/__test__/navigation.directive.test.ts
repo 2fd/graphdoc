@@ -10,9 +10,9 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
   );
 
   test("plugin return navigation", () => {
-    const navigations = plugin.getNavigations("Query");
-    expect(navigations).toBeInstanceOf(Array);
-    expect(navigations).toEqual([
+    const nav = plugin.getNavigations("Query");
+    expect(nav).toBeInstanceOf(Array);
+    expect(nav).toEqual([
       {
         title: "Directives",
         items: [

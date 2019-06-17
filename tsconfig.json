@@ -1,29 +1,17 @@
 {
-    "compileOnSave": true,
-    "compilerOptions": {
-        "target": "es5",
-        "moduleResolution": "node",
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "module": "commonjs",
-        "lib": [
-            "es5",
-            "es2015",
-            "es2015.core",
-            "scripthost"
-        ],
-        "types": [
-            "node",
-            "jest"
-        ],
-        "strictNullChecks": true,
-        "sourceMap": false
-    },
-    "exclude": [
-        "node_modules",
-        "gh-pages",
-        "templates"
-    ]
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "lib": ["es5", "es2015", "es2015.core", "scripthost"],
+    "types": ["node", "jest"],
+    "strictNullChecks": true,
+    "sourceMap": false
+  },
+  "exclude": ["node_modules/*", "gh-pages", "templates"]
 }

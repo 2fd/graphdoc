@@ -34,7 +34,7 @@ export async function createData(
   plugins: PluginInterface[],
   type?: TypeRef
 ): Promise<ITemplateData> {
-  const name = type && type.name;
+  const name = (type && type.name) || "";
   const [headers, navigations, documents]: [
     Headers,
     Navs,

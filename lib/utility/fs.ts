@@ -28,8 +28,8 @@ export function resolve(relative: string): string {
  * Execute fs.read as Promise
  */
 export const readFile = Bluebird.promisify<string, string, string>(fs.readFile);
-export const writeFile = Bluebird.promisify(
-  (file: string, data: any, cb: (err: Error) => void) =>
+export const writeFile = Bluebird.promisify<undefined, string, any>(
+  (file: string, data: any, cb: (err: Error, result?: undefined) => void) =>
     fs.writeFile(file, data, cb)
 );
 export const copyAll = Bluebird.promisify<undefined, string, string>(

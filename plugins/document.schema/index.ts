@@ -199,7 +199,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
     );
   }
 
-  description(description: string): string[] {
+  description(description: string | null): string[] {
     if (description) {
       return wrap(description, {
         width: MAX_CODE_LEN
@@ -234,7 +234,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       this.html.line(
         this.html.keyword("enum") + " " + this.html.identifier(type) + " {"
       ) +
-      type.enumValues
+      (type.enumValues || [])
         .reduce(reduceEnumValues, [])
         .map(line => this.html.line(this.html.tab(line)))
         .join("") +
@@ -297,11 +297,11 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
   fields(type: SchemaType): string {
     let fields = "";
     fields += this.html.line();
-    fields += type.fields
+    fields += (type.fields || [])
       .map(field => this.field(field))
       .join(this.html.line());
 
-    if (type.fields.length > 0) {
+    if (type.fields && type.fields.length > 0) {
       fields += this.html.line();
     }
 
@@ -313,7 +313,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       this.html.line(
         this.html.keyword("input") + " " + this.html.identifier(type) + " {"
       ) +
-      this.inputValues(type.inputFields) +
+      this.inputValues(type.inputFields || []) +
       this.html.line("}")
     );
   }
@@ -351,7 +351,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
   }
 
   object(type: SchemaType): string {
-    const interfaces = type.interfaces
+    const interfaces = (type.interfaces || [])
       .map(i => this.html.useIdentifier(i, this.url(i)))
       .join(", ");
 
@@ -474,7 +474,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
         " " +
         this.html.identifier(type) +
         " = " +
-        type.possibleTypes
+        (type.possibleTypes || [])
           .map(eachType =>
             this.html.useIdentifier(eachType, this.url(eachType))
           )
