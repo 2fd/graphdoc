@@ -32,6 +32,15 @@
   "bugs": {
     "url": "https://github.com/2fd/graphdoc/issues"
   },
+  "jest": {
+    "testRegex": "\\.(test|spec)\\.js$",
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
   "homepage": "https://github.com/2fd/graphdoc#readme",
   "devDependencies": {
     "@salesforce-ux/design-system": "2.2.1",
