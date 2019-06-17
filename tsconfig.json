@@ -7,6 +7,7 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "module": "commonjs",
     "lib": ["es5", "es2015", "es2015.core", "scripthost"],
     "types": ["node", "jest"],

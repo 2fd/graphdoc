@@ -45,7 +45,7 @@
     "@types/mocha": "^2.2.32",
     "@types/mustache": "^0.8.28",
     "@types/node": "^6.0.32",
-    "@types/request": "^0.0.40",
+    "@types/request": "0.0.40",
     "@types/striptags": "^0.0.5",
     "chai": "^3.5.0",
     "express": "^4.17.1",
@@ -66,7 +66,7 @@
     "graphql": "^0.7.0",
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
-    "request": "^2.79.0",
+    "request": "^2.88.0",
     "slug": "^0.9.1",
     "striptags": "^3.0.1",
     "word-wrap": "^1.2.1"
