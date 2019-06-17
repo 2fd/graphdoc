@@ -1,40 +1,41 @@
-import { Introspection, SchemaLoader } from '../interface';
-import { buildSchema, execute, parse } from 'graphql';
+import { buildSchema, execute, parse } from "graphql";
+import { resolve } from "path";
+import { Introspection, SchemaLoader } from "../interface";
+import { query as introspectionQuery } from "../utility";
 
-import { query as introspectionQuery } from '../utility';
-import { resolve } from 'path';
+export interface IJsSchemaLoaderOptions {
+  schemaFile: string;
+}
 
-export type TJsSchemaLoaderOptions = {
-    schemaFile: string
-};
+export const jsSchemaLoader: SchemaLoader = async (
+  options: IJsSchemaLoaderOptions
+) => {
+  const schemaPath = resolve(options.schemaFile);
+  let schemaModule = require(schemaPath);
+  let schema: string;
 
-export const jsSchemaLoader: SchemaLoader = async function (options: TJsSchemaLoaderOptions) {
+  // check if exist default in module
+  if (typeof schemaModule === "object") {
+    schemaModule = schemaModule.default;
+  }
 
-    const schemaPath = resolve(options.schemaFile);
-    let schemaModule = require(schemaPath);
-    let schema: string;
-
-    // check if exist default in module
-    if (typeof schemaModule === 'object') {
-        schemaModule = schemaModule.default
-    }
-
-    // check for array of definition
-    if (Array.isArray(schemaModule)){
-        schema = schemaModule.join('');
+  // check for array of definition
+  if (Array.isArray(schemaModule)) {
+    schema = schemaModule.join("");
 
     // check for array array wrapped in a function
-    } else if  (typeof schemaModule === 'function')  {
-        schema = schemaModule().join('');
+  } else if (typeof schemaModule === "function") {
+    schema = schemaModule().join("");
+  } else {
+    throw new Error(
+      `Unexpected schema definition on "${schemaModule}", must be an array or function`
+    );
+  }
 
-    } else {
-        throw new Error(`Unexpected schema definition on "${schemaModule}", must be an array or function`)
-    }
+  const introspection = (await execute(
+    buildSchema(schema),
+    parse(introspectionQuery)
+  )) as Introspection;
 
-    const introspection = await execute(
-        buildSchema(schema),
-        parse(introspectionQuery)
-    ) as Introspection;
-
-    return introspection.data.__schema;
+  return introspection.data.__schema;
 };

@@ -32,10 +32,19 @@
   "bugs": {
     "url": "https://github.com/2fd/graphdoc/issues"
   },
+  "jest": {
+    "testRegex": "\\.(test|spec)\\.js$",
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
   "homepage": "https://github.com/2fd/graphdoc#readme",
   "devDependencies": {
     "@salesforce-ux/design-system": "2.2.1",
-    "@types/bluebird": "~3.0.0",
+    "@types/bluebird": "^3.0.37",
     "@types/chai": "^3.4.34",
     "@types/fs-extra": "0.0.32",
     "@types/glob": "^5.0.30",
@@ -45,23 +54,28 @@
     "@types/mocha": "^2.2.32",
     "@types/mustache": "^0.8.28",
     "@types/node": "^6.0.32",
-    "@types/request": "^0.0.40",
+    "@types/request": "0.0.40",
     "@types/striptags": "^0.0.5",
     "chai": "^3.5.0",
-    "handlebars": "^4.0.10",
-    "jest": "^18.1.0",
-    "node-sass": "^3.8.0",
-    "typescript": "~2.3.0"
+    "express": "^4.17.1",
+    "express-graphql": "^0.8.0",
+    "handlebars": "^4.1.2",
+    "jest": "^24.8.0",
+    "node-sass": "^4.12.0",
+    "prettier": "^1.18.2",
+    "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.2"
   },
   "dependencies": {
     "@2fd/command": "^1.1.2",
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.5",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",
-    "graphql": "^0.7.0",
-    "marked": "^0.3.6",
+    "graphql": "^0.12.0",
+    "marked": "^0.6.2",
     "mustache": "^2.2.1",
-    "request": "^2.79.0",
+    "request": "^2.88.0",
     "slug": "^0.9.1",
     "striptags": "^3.0.1",
     "word-wrap": "^1.2.1"
