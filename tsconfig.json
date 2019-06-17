@@ -5,6 +5,8 @@
         "moduleResolution": "node",
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "module": "commonjs",
         "lib": [
             "es5",
