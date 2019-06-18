@@ -90,7 +90,7 @@ export default class RequireByPlugin extends Plugin implements PluginInterface {
         deps.push(getTypeOf(t).name);
       });
     }
-    
+
     return deps;
   }
 
