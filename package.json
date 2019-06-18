@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@2fd/command": "^1.1.2",
+    "bluebird": "^3.5.5",
     "deepmerge": "^2.0.1",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",
