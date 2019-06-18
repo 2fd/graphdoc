@@ -1,14 +1,12 @@
 import Bluebird from "bluebird";
 import request from "request";
-
 import {
+  ApolloIntrospection,
+  GraphQLIntrospection,
   Introspection,
   Schema,
-  SchemaLoader,
-  ApolloIntrospection,
-  GraphQLIntrospection
+  SchemaLoader
 } from "../interface";
-
 import { query as introspectionQuery } from "../utility";
 
 export interface IHttpSchemaLoaderOptions {

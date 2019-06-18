@@ -8,9 +8,7 @@ import { readFile, writeFile } from "./lib/utility/fs";
 import { execSync } from "child_process";
 
 Handlebars.registerHelper("bash", (command: string) => {
-  return execSync(command)
-    .toString()
-    .replace(/\[\d{1,2}m/gi, "");
+  return execSync(command).toString("ascii");
 });
 
 async function fromGithub(endpoint: string) {

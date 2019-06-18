@@ -1,9 +1,16 @@
 #!/usr/bin/env node
 
 "use strict";
-var command_1 = require("@2fd/command");
-var command_2 = require("../lib/command");
-new command_2.GraphQLDocumentGenerator().handle(
-  new command_1.ArgvInput(process.argv),
-  new command_1.ColorConsoleOutput()
+const {
+  ArgvInput,
+  ColorConsoleOutput,
+  ConsoleOutput
+} = require("@2fd/command");
+const { GraphQLDocumentGenerator } = require("../lib/command");
+const argv = process.argv.filter(arg => arg !== "--no-color");
+new GraphQLDocumentGenerator().handle(
+  new ArgvInput(argv),
+  argv.length === process.argv.length
+    ? new ColorConsoleOutput()
+    : new ConsoleOutput()
 );

@@ -10,7 +10,7 @@
     "sass": "node-sass --output-style compressed template/slds/styles/graphdoc.scss > template/slds/styles/graphdoc.css",
     "compile": "tsc -p .",
     "declaration": "tsc -d -p tsconfig.json",
-    "readme": "node ./README.js",
+    "readme": "tsc -p . && node ./README.js",
     "doc.github": "node bin/graphdoc.js -c example.github.json -f -v",
     "doc.pokemon": "node bin/graphdoc.js -c example.pokemon.json -f -v",
     "doc.shopify": "node bin/graphdoc.js -c example.shopify.json -f -v",
