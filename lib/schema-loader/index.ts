@@ -1,4 +1,10 @@
-export { THttpSchemaLoaderOptions, httpSchemaLoader } from './http';
-export { TIDLSchemaLoaderOptions, idlSchemaLoader } from './idl';
-export { TJsSchemaLoaderOptions, jsSchemaLoader } from './js';
-export { TJsonSchemaLoaderOptions, jsonSchemaLoader } from './json';
+export { IHttpSchemaLoaderOptions, httpSchemaLoader } from "./http";
+export { IIdlSchemaLoaderOptions, idlSchemaLoader } from "./idl";
+export {
+  IJsSchemaLoaderOptions as TJsSchemaLoaderOptions,
+  jsSchemaLoader
+} from "./js";
+export {
+  IJsonSchemaLoaderOptions as TJsonSchemaLoaderOptions,
+  jsonSchemaLoader
+} from "./json";
