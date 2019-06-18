@@ -1,6 +1,11 @@
 import { buildSchema, execute, parse } from "graphql";
 import { resolve } from "path";
-import { Introspection, SchemaLoader } from "../interface";
+import {
+  ApolloIntrospection,
+  GraphQLIntrospection,
+  Introspection,
+  SchemaLoader
+} from "../interface";
 import { query as introspectionQuery } from "../utility";
 import { readFile } from "../utility/fs";
 
@@ -18,5 +23,8 @@ export const idlSchemaLoader: SchemaLoader = async (
     parse(introspectionQuery)
   )) as Introspection;
 
-  return introspection.data.__schema;
+  return (
+    (introspection as ApolloIntrospection).__schema ||
+    (introspection as GraphQLIntrospection).data.__schema
+  );
 };

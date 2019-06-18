@@ -1,7 +1,13 @@
 import Bluebird from "bluebird";
 import request from "request";
 
-import { Introspection, Schema, SchemaLoader } from "../interface";
+import {
+  Introspection,
+  Schema,
+  SchemaLoader,
+  ApolloIntrospection,
+  GraphQLIntrospection
+} from "../interface";
 
 import { query as introspectionQuery } from "../utility";
 
@@ -43,7 +49,10 @@ async function r(options: request.OptionsWithUrl) {
         );
       }
 
-      return resolve(body.data.__schema);
+      return resolve(
+        (body as ApolloIntrospection).__schema ||
+          (body as GraphQLIntrospection).data.__schema
+      );
     });
   });
 }

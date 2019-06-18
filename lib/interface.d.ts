@@ -151,13 +151,15 @@ type refToUrl = (typeName: TypeRef) => string;
 /**
  * Introspection types
  */
-type Introspection = {
-    data: {
-        __schema: Schema
-    }
-} | {
-    __schema: Schema
+type GraphQLIntrospection = {
+  data: {
+    __schema: Schema;
+  };
 };
+type ApolloIntrospection = {
+  __schema: Schema;
+};
+type Introspection = GraphQLIntrospection | ApolloIntrospection;
 
 type Schema = {
   queryType: Description | null;
