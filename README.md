@@ -38,8 +38,7 @@ npm install -g @2fd/graphdoc
 > graphdoc -s ./schema.graphql -o ./doc/schema
 ```
 
-### Generate documentation from for the ["modularized
-schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
+### Generate documentation from for the ["modularized schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
 
 ```bash
 > graphdoc -s ./schema.js -o ./doc/schema
@@ -64,12 +63,12 @@ query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
 // package.json
 
 {
-"name": "project",
-// [...]
-"graphdoc": {
-"endpoint": "http://localhost:8080/graphql",
-"output": "./doc/schema",
-}
+  "name": "project",
+  // [...]
+  "graphdoc": {
+    "endpoint": "http://localhost:8080/graphql",
+    "output": "./doc/schema",
+  }
 }
 ```
 
@@ -141,9 +140,9 @@ flag).
 
 // es2015 export constructor
 export default class MyPlugin {
-constructor(schema, projectPackage, graphdocPackage){}
-getAssets() { /* ... */ }
-/* ... */
+  constructor(schema, projectPackage, graphdocPackage){}
+  getAssets() { /* ... */ }
+  /* ... */
 }
 
 ```
@@ -151,8 +150,8 @@ getAssets() { /* ... */ }
 ```typescript
 // es2015 export plain object
 export default cost myPlugin = {
-getAssets() { /* ... */ },
-/* ... */
+  getAssets() { /* ... */ },
+  /* ... */
 }
 ```
 
@@ -172,8 +171,8 @@ exports.default = MyPlugin;
 // export plain object
 
 exports.default = {
-getAssets: function() { /* ... */ },
-/* ... */
+  getAssets: function() { /* ... */ },
+  /* ... */
 }
 
 ```
@@ -198,17 +197,17 @@ You can use the plugins in 2 ways.
 // package.json
 
 {
-"name": "project",
-// [...]
-"graphdoc": {
-"endpoint": "http://localhost:8080/graphql",
-"output": "./doc/schema",
-"plugins": [
-"graphdoc/plugins/default",
-"some-dependencie/plugin",
-"./lib/plugin/my-own-plugin"
-]
-}
+  "name": "project",
+  // [...]
+  "graphdoc": {
+    "endpoint": "http://localhost:8080/graphql",
+    "output": "./doc/schema",
+    "plugins": [
+      "graphdoc/plugins/default",
+      "some-dependencie/plugin",
+      "./lib/plugin/my-own-plugin"
+    ]
+  }
 }
 ```
 
@@ -219,7 +218,6 @@ You can use the plugins in 2 ways.
 ## Template
 
 > TODO
-
 
 ## Contributors
 
