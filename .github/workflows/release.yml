@@ -41,9 +41,9 @@ jobs:
       - name: installing
         run: npm ci
       - name: build
-        run: npm run compile
+        run: npm run compile -- --coverage
       - name: testing
-        run: npm test --coverage
+        run: npm test
         env:
           CI: true
       - name: uploading to codecov
