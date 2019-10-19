@@ -1,0 +1,28 @@
+name: release workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  support:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [6.x, 8.x, 10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: installing
+        run: npm ci
+      - name: build
+        run: npm run compile
+      - name: testing
+        run: npm test
+        env:
+          CI: true
