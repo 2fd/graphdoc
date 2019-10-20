@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.org/2fd/graphdoc.svg?branch=master)](https://travis-ci.org/2fd/graphdoc)
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
-[![Coverage Status](https://coveralls.io/repos/github/2fd/graphdoc/badge.svg?branch=master)](https://coveralls.io/github/2fd/graphdoc?branch=master)
+[![Coverage
+Status](https://coveralls.io/repos/github/2fd/graphdoc/badge.svg?branch=master)](https://coveralls.io/github/2fd/graphdoc?branch=master)
 
 - [demos](#demos)
 - [install](#install)
@@ -65,12 +66,11 @@ schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modu
 // package.json
 
 {
-"name": "project",
-// [...]
-"graphdoc": {
-"endpoint": "http://localhost:8080/graphql",
-"output": "./doc/schema",
-}
+  "name": "project",
+  "graphdoc": {
+    "endpoint": "http://localhost:8080/graphql",
+    "output": "./doc/schema",
+  }
 }
 ```
 
@@ -88,9 +88,9 @@ And execute
 
     Static page generator for documenting GraphQL Schema v2.4.0
 
-    Usage: node bin/graphdoc.js [OPTIONS]
+    Usage: node bin/graphdoc.js [OPTIONS] 
 
-
+    
     [OPTIONS]:
     -c, --config                   Configuration file [./package.json].
     -e, --endpoint                 Graphql http endpoint ["https://domain.com/graphql"].
@@ -145,15 +145,15 @@ export default class MyPlugin {
   getAssets() {
     /* ... */
   }
-  /* ... */
 }
 ```
 
 ```typescript
 // es2015 export plain object
 export default cost myPlugin = {
-getAssets() { /* ... */ },
-/* ... */
+  getAssets() {
+    /* ... */
+  },
 }
 ```
 
@@ -166,7 +166,6 @@ function MyPlugin(schema, projectPackage, graphdocPackage) {
 MyPlugin.prototype.getAssets = function() {
   /* ... */
 };
-/* ... */
 
 exports.default = MyPlugin;
 ```
@@ -178,7 +177,6 @@ exports.default = {
   getAssets: function() {
     /* ... */
   }
-  /* ... */
 };
 ```
 
@@ -190,9 +188,9 @@ You can use the plugins in 2 ways.
 
 ```bash
 > graphdoc -p graphdoc/plugins/default \
--p some-dependencies/plugin \
--p ./lib/plugin/my-own-plugin \
--s ./schema.json -o ./doc/schema
+    -p some-dependencies/plugin \
+    -p ./lib/plugin/my-own-plugin \
+    -s ./schema.json -o ./doc/schema
 ```
 
 #### Use plugins with `package.json`
@@ -201,17 +199,16 @@ You can use the plugins in 2 ways.
 // package.json
 
 {
-"name": "project",
-// [...]
-"graphdoc": {
-"endpoint": "http://localhost:8080/graphql",
-"output": "./doc/schema",
-"plugins": [
-"graphdoc/plugins/default",
-"some-dependencie/plugin",
-"./lib/plugin/my-own-plugin"
-]
-}
+  "name": "project",
+  "graphdoc": {
+    "endpoint": "http://localhost:8080/graphql",
+    "output": "./doc/schema",
+    "plugins": [
+      "graphdoc/plugins/default",
+      "some-dependencie/plugin",
+      "./lib/plugin/my-own-plugin"
+    ]
+  }
 }
 ```
 
