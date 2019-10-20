@@ -3,20 +3,21 @@
 [![Build Status](https://travis-ci.org/2fd/graphdoc.svg?branch=master)](https://travis-ci.org/2fd/graphdoc)
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
+[![codecov](https://codecov.io/gh/2fd/graphdoc/branch/master/graph/badge.svg)](https://codecov.io/gh/2fd/graphdoc)
 
-* [demos](#demos)
-* [install](#install)
-* [use](#use)
-* [plugin](#plugin)
-* [template](#template)
-* [contributors](#contributors)
+- [demos](#demos)
+- [install](#install)
+- [use](#use)
+- [plugin](#plugin)
+- [template](#template)
+- [contributors](#contributors)
 
 ## Demos
 
-* Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
-* [Github V4 API](https://2fd.github.io/graphdoc/github)
-* [Shopify API](https://2fd.github.io/graphdoc/shopify/)
-* [Pokemon GraphQL](https://2fd.github.io/graphdoc/pokemon)
+- Facebook Test [Star Wars](https://2fd.github.io/graphdoc/star-wars)
+- [Github V4 API](https://2fd.github.io/graphdoc/github)
+- [Shopify API](https://2fd.github.io/graphdoc/shopify/)
+- [Pokemon GraphQL](https://2fd.github.io/graphdoc/pokemon)
 
 ## Install
 
@@ -39,6 +40,7 @@ npm install -g @2fd/graphdoc
 ```
 
 ### Generate documentation from for the ["modularized
+
 schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
 
 ```bash
@@ -46,8 +48,7 @@ schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modu
 ```
 
 > [`./schema.graphql`](https://github.com/2fd/graphdoc/blob/master/test/starwars.graphql) must be able to be interpreted
-with [graphql-js/utilities#buildSchema](http://graphql.org/graphql-js/utilities/#buildschema)
-
+> with [graphql-js/utilities#buildSchema](http://graphql.org/graphql-js/utilities/#buildschema)
 
 ### Generate documentation from json file
 
@@ -56,7 +57,7 @@ with [graphql-js/utilities#buildSchema](http://graphql.org/graphql-js/utilities/
 ```
 
 > `./schema.json` contains the result of [GraphQL introspection
-query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+> query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
 
 ### Puts the options in your `package.json`
 
@@ -87,9 +88,9 @@ And execute
 
     Static page generator for documenting GraphQL Schema v2.4.0
 
-    Usage: node bin/graphdoc.js [OPTIONS] 
+    Usage: node bin/graphdoc.js [OPTIONS]
 
-    
+
     [OPTIONS]:
     -c, --config                   Configuration file [./package.json].
     -e, --endpoint                 Graphql http endpoint ["https://domain.com/graphql"].
@@ -125,11 +126,11 @@ or a `constructor` and export it as `default`
 If you export your plugin as a constructor, when going to be initialized,
 will receive three parameters
 
-* `schema`: The full the result of [GraphQL introspection
-query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
-* `projectPackage`: The content of `package.json` of current project (or the content of file defined with `--config`
-flag).
-* `graphdocPackage`: The content of `package.json` of graphdoc.
+- `schema`: The full the result of [GraphQL introspection
+  query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+- `projectPackage`: The content of `package.json` of current project (or the content of file defined with `--config`
+  flag).
+- `graphdocPackage`: The content of `package.json` of graphdoc.
 
 > For performance reasons all plugins receive the reference to the same object
 > and therefore should not modify them directly as it could affect the behavior
@@ -138,14 +139,14 @@ flag).
 #### Examples
 
 ```typescript
-
 // es2015 export constructor
 export default class MyPlugin {
-constructor(schema, projectPackage, graphdocPackage){}
-getAssets() { /* ... */ }
-/* ... */
+  constructor(schema, projectPackage, graphdocPackage) {}
+  getAssets() {
+    /* ... */
+  }
+  /* ... */
 }
-
 ```
 
 ```typescript
@@ -157,31 +158,33 @@ getAssets() { /* ... */ },
 ```
 
 ```javascript
-
 // export constructor
-function MyPlugin(schema, projectPackage, graphdocPackage) { /* ... */ }
+function MyPlugin(schema, projectPackage, graphdocPackage) {
+  /* ... */
+}
 
-MyPlugin.prototype.getAssets = function() { /* ... */ };
+MyPlugin.prototype.getAssets = function() {
+  /* ... */
+};
 /* ... */
 
 exports.default = MyPlugin;
 ```
 
 ```javascript
-
 // export plain object
 
 exports.default = {
-getAssets: function() { /* ... */ },
-/* ... */
-}
-
+  getAssets: function() {
+    /* ... */
+  }
+  /* ... */
+};
 ```
 
 ### Use plugin
 
 You can use the plugins in 2 ways.
-
 
 #### Use plugins with command line
 
@@ -220,14 +223,13 @@ You can use the plugins in 2 ways.
 
 > TODO
 
-
 ## Contributors
 
-* [<img src="https://avatars2.githubusercontent.com/u/1301838?v=4" width="40"> bitliner](https://github.com/bitliner)
-* [<img src="https://avatars0.githubusercontent.com/u/605742?v=4" width="40"> kbariotis](https://github.com/kbariotis)
-* [<img src="https://avatars3.githubusercontent.com/u/26602940?v=4" width="40"> 0xflotus](https://github.com/0xflotus)
-* [<img src="https://avatars1.githubusercontent.com/u/1648214?v=4" width="40"> Joatin](https://github.com/Joatin)
-* [<img src="https://avatars0.githubusercontent.com/u/226612?v=4" width="40"> shiroyuki](https://github.com/shiroyuki)
-* [<img src="https://avatars3.githubusercontent.com/u/35507645?v=4" width="40"> kristiehowboutdat](https://github.com/kristiehowboutdat)
-* [<img src="https://avatars0.githubusercontent.com/u/26336?v=4" width="40"> tony](https://github.com/tony)
-* [<img src="https://avatars1.githubusercontent.com/u/2903325?v=4" width="40"> dnalborczyk](https://github.com/dnalborczyk)
+- [<img src="https://avatars2.githubusercontent.com/u/1301838?v=4" width="40"> bitliner](https://github.com/bitliner)
+- [<img src="https://avatars0.githubusercontent.com/u/605742?v=4" width="40"> kbariotis](https://github.com/kbariotis)
+- [<img src="https://avatars3.githubusercontent.com/u/26602940?v=4" width="40"> 0xflotus](https://github.com/0xflotus)
+- [<img src="https://avatars1.githubusercontent.com/u/1648214?v=4" width="40"> Joatin](https://github.com/Joatin)
+- [<img src="https://avatars0.githubusercontent.com/u/226612?v=4" width="40"> shiroyuki](https://github.com/shiroyuki)
+- [<img src="https://avatars3.githubusercontent.com/u/35507645?v=4" width="40"> kristiehowboutdat](https://github.com/kristiehowboutdat)
+- [<img src="https://avatars0.githubusercontent.com/u/26336?v=4" width="40"> tony](https://github.com/tony)
+- [<img src="https://avatars1.githubusercontent.com/u/2903325?v=4" width="40"> dnalborczyk](https://github.com/dnalborczyk)
