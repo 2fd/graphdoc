@@ -1,0 +1,52 @@
+name: pull request workflow
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  support:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [6.x, 8.x, 10.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: updating npm
+        run: npm i -g npm
+      - name: installing
+        run: npm ci
+      - name: build
+        run: npm run compile
+      - name: testing
+        run: npm test
+        env:
+          CI: true
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: installing
+        run: npm ci
+      - name: build
+        run: npm run compile
+      - name: testing
+        run: npm test -- --coverage
+        env:
+          CI: true
+      - name: coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
