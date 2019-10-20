@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/2fd/graphdoc.svg?branch=master)](https://travis-ci.org/2fd/graphdoc)
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
-[![codecov](https://codecov.io/gh/2fd/graphdoc/branch/master/graph/badge.svg)](https://codecov.io/gh/2fd/graphdoc)
+[![Coverage Status](https://coveralls.io/repos/github/2fd/graphdoc/badge.svg?branch=master)](https://coveralls.io/github/2fd/graphdoc?branch=master)
 
 - [demos](#demos)
 - [install](#install)
