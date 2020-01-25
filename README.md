@@ -68,8 +68,12 @@ schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modu
 {
   "name": "project",
   "graphdoc": {
+    "title": "Graphdoc", // Custom title
     "endpoint": "http://localhost:8080/graphql",
+    "template": "./template/slds", // Path to your template
     "output": "./doc/schema",
+    "graphiql": "http://localhost:8080/graphql", // GraphiQL URL
+    "ga": "UA-XXXXXXXX-X", // Google Analytics UA Number
   }
 }
 ```
