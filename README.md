@@ -40,9 +40,7 @@ npm install -g @2fd/graphdoc
 > graphdoc -s ./schema.graphql -o ./doc/schema
 ```
 
-### Generate documentation from for the ["modularized
-
-schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
+### Generate documentation from for the ["modularized schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
 
 ```bash
 > graphdoc -s ./schema.js -o ./doc/schema
