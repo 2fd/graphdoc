@@ -77,7 +77,7 @@
     "marked": "^0.7.0",
     "mustache": "^2.2.1",
     "request": "^2.88.0",
-    "slug": "^0.9.1",
+    "slug": "^4.0.1",
     "striptags": "^3.1.1",
     "word-wrap": "^1.2.1"
   },
