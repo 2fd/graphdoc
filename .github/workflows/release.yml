@@ -7,7 +7,7 @@ on:
 
 jobs:
   support:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         node-version: [6.x, 8.x, 10.x]
@@ -30,7 +30,7 @@ jobs:
           CI: true
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v1
