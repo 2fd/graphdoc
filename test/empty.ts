@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import express from "express";
 // tslint:disable-next-line:no-implicit-dependencies
-import graphqlHTTP from "express-graphql";
+import { graphqlHTTP } from "express-graphql";
 import {
   GraphQLNonNull,
   GraphQLObjectType,
