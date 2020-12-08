@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "@2fd/command": "^1.1.2",
-    "acorn": "^5.7.4",
+    "acorn": "^8.0.4",
     "bluebird": "^3.5.5",
     "deepmerge": "^4.2.2",
     "fs-extra": "^0.30.0",
