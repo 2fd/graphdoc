@@ -77,7 +77,7 @@
     "graphql": "^15.4.0",
     "lodash": "^4.17.20",
     "marked": "^0.7.0",
-    "mustache": "^2.2.1",
+    "mustache": "^4.1.0",
     "request": "^2.88.0",
     "slug": "^4.0.2",
     "striptags": "^3.1.1",
