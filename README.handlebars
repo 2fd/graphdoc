@@ -22,7 +22,7 @@
 ## Install
 
 ```bash
-npm install -g @2fd/graphdoc
+  npm install -g @2fd/graphdoc
 ```
 
 ## Use
@@ -30,20 +30,19 @@ npm install -g @2fd/graphdoc
 ### Generate documentation from live endpoint
 
 ```bash
-> graphdoc -e http://localhost:8080/graphql -o ./doc/schema
+  > graphdoc -e http://localhost:8080/graphql -o ./doc/schema
 ```
 
 ### Generate documentation from IDL file
 
 ```bash
-> graphdoc -s ./schema.graphql -o ./doc/schema
+  > graphdoc -s ./schema.graphql -o ./doc/schema
 ```
 
-### Generate documentation from for the ["modularized
-schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
+### Generate documentation from for the ["modularized schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
 
 ```bash
-> graphdoc -s ./schema.js -o ./doc/schema
+  > graphdoc -s ./schema.js -o ./doc/schema
 ```
 
 > [`./schema.graphql`](https://github.com/2fd/graphdoc/blob/master/test/starwars.graphql) must be able to be interpreted
@@ -52,7 +51,7 @@ schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modu
 ### Generate documentation from json file
 
 ```bash
-> graphdoc -s ./schema.json -o ./doc/schema
+  > graphdoc -s ./schema.json -o ./doc/schema
 ```
 
 > `./schema.json` contains the result of [GraphQL introspection
@@ -61,29 +60,29 @@ schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modu
 ### Puts the options in your `package.json`
 
 ```javascript
-// package.json
+  // package.json
 
-{
-"name": "project",
-"graphdoc": {
-"endpoint": "http://localhost:8080/graphql",
-"output": "./doc/schema",
-}
-}
+  {
+    "name": "project",
+    "graphdoc": {
+      "endpoint": "http://localhost:8080/graphql",
+      "output": "./doc/schema",
+    }
+  }
 ```
 
 And execute
 
 ```bash
-> graphdoc
+  > graphdoc
 ```
 
 ### Help
 
 ```bash
 
-> graphdoc -h
-{{{bash "node ./bin/graphdoc.js --no-color --help"}}}
+  > graphdoc -h
+  {{{bash "node ./bin/graphdoc.js --no-color --help"}}}
 ```
 
 ## Plugin
@@ -102,8 +101,7 @@ or a `constructor` and export it as `default`
 If you export your plugin as a constructor, when going to be initialized,
 will receive three parameters
 
-- `schema`: The full the result of [GraphQL introspection
-query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+- `schema`: The full the result of [GraphQL introspection query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
 - `projectPackage`: The content of `package.json` of current project (or the content of file defined with `--config`
 flag).
 - `graphdocPackage`: The content of `package.json` of graphdoc.
@@ -115,45 +113,50 @@ flag).
 #### Examples
 
 ```typescript
-// es2015 export constructor
-export default class MyPlugin {
-constructor(schema, projectPackage, graphdocPackage) {}
-getAssets() {
-/* ... */
-}
-}
+  // es2015 export constructor
+
+  export default class MyPlugin {
+
+    constructor(schema, projectPackage, graphdocPackage) {}
+
+    getAssets() {
+      /* ... */
+    }
+  }
 ```
 
 ```typescript
-// es2015 export plain object
-export default cost myPlugin = {
-getAssets() {
-/* ... */
-},
-}
+  // es2015 export plain object
+
+  export default cost myPlugin = {
+    getAssets() {
+      /* ... */
+    },
+  }
 ```
 
 ```javascript
-// export constructor
-function MyPlugin(schema, projectPackage, graphdocPackage) {
-/* ... */
-}
+  // export constructor
 
-MyPlugin.prototype.getAssets = function() {
-/* ... */
-};
+  function MyPlugin(schema, projectPackage, graphdocPackage) {
+    /* ... */
+  }
 
-exports.default = MyPlugin;
+  MyPlugin.prototype.getAssets = function() {
+    /* ... */
+  };
+
+  exports.default = MyPlugin;
 ```
 
 ```javascript
-// export plain object
+  // export plain object
 
-exports.default = {
-getAssets: function() {
-/* ... */
-}
-};
+  exports.default = {
+    getAssets: function() {
+      /* ... */
+    }
+  };
 ```
 
 ### Use plugin
@@ -163,29 +166,29 @@ You can use the plugins in 2 ways.
 #### Use plugins with command line
 
 ```bash
-> graphdoc -p graphdoc/plugins/default \
--p some-dependencies/plugin \
--p ./lib/plugin/my-own-plugin \
--s ./schema.json -o ./doc/schema
+  > graphdoc -p graphdoc/plugins/default \
+  -p some-dependencies/plugin \
+  -p ./lib/plugin/my-own-plugin \
+  -s ./schema.json -o ./doc/schema
 ```
 
 #### Use plugins with `package.json`
 
 ```javascript
-// package.json
+  // package.json
 
-{
-"name": "project",
-"graphdoc": {
-"endpoint": "http://localhost:8080/graphql",
-"output": "./doc/schema",
-"plugins": [
-"graphdoc/plugins/default",
-"some-dependencie/plugin",
-"./lib/plugin/my-own-plugin"
-]
-}
-}
+  {
+    "name": "project",
+    "graphdoc": {
+      "endpoint": "http://localhost:8080/graphql",
+      "output": "./doc/schema",
+      "plugins": [
+        "graphdoc/plugins/default",
+        "some-dependencie/plugin",
+        "./lib/plugin/my-own-plugin"
+      ]
+    }
+  }
 ```
 
 ### Build-in plugin
