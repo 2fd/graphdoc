@@ -29,7 +29,7 @@ jobs:
         env:
           CI: true
 
-  test:
+  build:
     runs-on: ubuntu-20.04
 
     steps:
