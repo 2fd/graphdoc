@@ -1,10 +1,9 @@
 # Static page generator for documenting GraphQL Schema
 
-[![build](https://github.com/2fd/graphdoc/workflows/release/badge.svg?branch=master)](https://github.com/2fd/graphdoc/actions)
-![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
-![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
-[![Coverage
-Status](https://coveralls.io/repos/github/2fd/graphdoc/badge.svg?branch=master)](https://coveralls.io/github/2fd/graphdoc?branch=master)
+[![build](https://github.com/2fd/graphdoc/workflows/build/badge.svg?branch=master)](https://github.com/2fd/graphdoc/actions)
+[![coverage](https://coveralls.io/repos/github/2fd/graphdoc/badge.svg?branch=master)](https://coveralls.io/github/2fd/graphdoc?branch=master)
+![npm](https://img.shields.io/npm/v/@2fd/graphdoc.svg)
+![tag](https://img.shields.io/github/tag/2fd/graphdoc.svg)
 
 - [demos](#demos)
 - [install](#install)
@@ -41,7 +40,6 @@ npm install -g @2fd/graphdoc
 ```
 
 ### Generate documentation from for the ["modularized
-
 schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
 
 ```bash
@@ -88,9 +86,9 @@ And execute
 
     Static page generator for documenting GraphQL Schema v2.4.0
 
-    Usage: node bin/graphdoc.js [OPTIONS]
+    Usage: node bin/graphdoc.js [OPTIONS] 
 
-
+    
     [OPTIONS]:
     -c, --config                   Configuration file [./package.json].
     -e, --endpoint                 Graphql http endpoint ["https://domain.com/graphql"].
@@ -127,9 +125,9 @@ If you export your plugin as a constructor, when going to be initialized,
 will receive three parameters
 
 - `schema`: The full the result of [GraphQL introspection
-  query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
 - `projectPackage`: The content of `package.json` of current project (or the content of file defined with `--config`
-  flag).
+flag).
 - `graphdocPackage`: The content of `package.json` of graphdoc.
 
 > For performance reasons all plugins receive the reference to the same object
@@ -141,10 +139,10 @@ will receive three parameters
 ```typescript
 // es2015 export constructor
 export default class MyPlugin {
-  constructor(schema, projectPackage, graphdocPackage) {}
-  getAssets() {
-    /* ... */
-  }
+constructor(schema, projectPackage, graphdocPackage) {}
+getAssets() {
+/* ... */
+}
 }
 ```
 
@@ -160,11 +158,11 @@ getAssets() {
 ```javascript
 // export constructor
 function MyPlugin(schema, projectPackage, graphdocPackage) {
-  /* ... */
+/* ... */
 }
 
 MyPlugin.prototype.getAssets = function() {
-  /* ... */
+/* ... */
 };
 
 exports.default = MyPlugin;
@@ -174,9 +172,9 @@ exports.default = MyPlugin;
 // export plain object
 
 exports.default = {
-  getAssets: function() {
-    /* ... */
-  }
+getAssets: function() {
+/* ... */
+}
 };
 ```
 
