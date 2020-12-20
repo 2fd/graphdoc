@@ -1,6 +1,6 @@
 # Static page generator for documenting GraphQL Schema
 
-[![Build Status](https://travis-ci.org/2fd/graphdoc.svg?branch=master)](https://travis-ci.org/2fd/graphdoc)
+[![build](https://github.com/2fd/graphdoc/workflows/release/badge.svg?branch=master)](https://github.com/2fd/graphdoc/actions)
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
 [![Coverage
@@ -40,7 +40,9 @@ npm install -g @2fd/graphdoc
 > graphdoc -s ./schema.graphql -o ./doc/schema
 ```
 
-### Generate documentation from for the ["modularized schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
+### Generate documentation from for the ["modularized
+
+schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
 
 ```bash
 > graphdoc -s ./schema.js -o ./doc/schema
@@ -64,11 +66,11 @@ npm install -g @2fd/graphdoc
 // package.json
 
 {
-  "name": "project",
-  "graphdoc": {
-    "endpoint": "http://localhost:8080/graphql",
-    "output": "./doc/schema",
-  }
+"name": "project",
+"graphdoc": {
+"endpoint": "http://localhost:8080/graphql",
+"output": "./doc/schema",
+}
 }
 ```
 
@@ -86,9 +88,9 @@ And execute
 
     Static page generator for documenting GraphQL Schema v2.4.0
 
-    Usage: node bin/graphdoc.js [OPTIONS] 
+    Usage: node bin/graphdoc.js [OPTIONS]
 
-    
+
     [OPTIONS]:
     -c, --config                   Configuration file [./package.json].
     -e, --endpoint                 Graphql http endpoint ["https://domain.com/graphql"].
@@ -149,9 +151,9 @@ export default class MyPlugin {
 ```typescript
 // es2015 export plain object
 export default cost myPlugin = {
-  getAssets() {
-    /* ... */
-  },
+getAssets() {
+/* ... */
+},
 }
 ```
 
@@ -186,9 +188,9 @@ You can use the plugins in 2 ways.
 
 ```bash
 > graphdoc -p graphdoc/plugins/default \
-    -p some-dependencies/plugin \
-    -p ./lib/plugin/my-own-plugin \
-    -s ./schema.json -o ./doc/schema
+-p some-dependencies/plugin \
+-p ./lib/plugin/my-own-plugin \
+-s ./schema.json -o ./doc/schema
 ```
 
 #### Use plugins with `package.json`
@@ -197,16 +199,16 @@ You can use the plugins in 2 ways.
 // package.json
 
 {
-  "name": "project",
-  "graphdoc": {
-    "endpoint": "http://localhost:8080/graphql",
-    "output": "./doc/schema",
-    "plugins": [
-      "graphdoc/plugins/default",
-      "some-dependencie/plugin",
-      "./lib/plugin/my-own-plugin"
-    ]
-  }
+"name": "project",
+"graphdoc": {
+"endpoint": "http://localhost:8080/graphql",
+"output": "./doc/schema",
+"plugins": [
+"graphdoc/plugins/default",
+"some-dependencie/plugin",
+"./lib/plugin/my-own-plugin"
+]
+}
 }
 ```
 
@@ -220,6 +222,7 @@ You can use the plugins in 2 ways.
 
 ## Contributors
 
+- [<img src="https://avatars3.githubusercontent.com/in/2141?v=4" width="40"> dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
 - [<img src="https://avatars2.githubusercontent.com/u/1301838?v=4" width="40"> bitliner](https://github.com/bitliner)
 - [<img src="https://avatars0.githubusercontent.com/u/605742?v=4" width="40"> kbariotis](https://github.com/kbariotis)
 - [<img src="https://avatars3.githubusercontent.com/u/26602940?v=4" width="40"> 0xflotus](https://github.com/0xflotus)

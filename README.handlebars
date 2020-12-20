@@ -1,6 +1,6 @@
 # {{project.description}}
 
-[![Build Status](https://travis-ci.org/2fd/graphdoc.svg?branch=master)](https://travis-ci.org/2fd/graphdoc)
+[![build](https://github.com/2fd/graphdoc/workflows/build/badge.svg?branch=master)](https://github.com/2fd/graphdoc/actions)
 ![npm (scoped)](https://img.shields.io/npm/v/@2fd/graphdoc.svg?style=flat-square)
 ![GitHub tag](https://img.shields.io/github/tag/2fd/graphdoc.svg?style=flat-square)
 [![Coverage
@@ -40,7 +40,8 @@ npm install -g @2fd/graphdoc
 > graphdoc -s ./schema.graphql -o ./doc/schema
 ```
 
-### Generate documentation from for the ["modularized schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
+### Generate documentation from for the ["modularized
+schema"](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#modularizing) of graphql-tools
 
 ```bash
 > graphdoc -s ./schema.js -o ./doc/schema
@@ -64,11 +65,11 @@ npm install -g @2fd/graphdoc
 // package.json
 
 {
-  "name": "project",
-  "graphdoc": {
-    "endpoint": "http://localhost:8080/graphql",
-    "output": "./doc/schema",
-  }
+"name": "project",
+"graphdoc": {
+"endpoint": "http://localhost:8080/graphql",
+"output": "./doc/schema",
+}
 }
 ```
 
@@ -83,7 +84,7 @@ And execute
 ```bash
 
 > graphdoc -h
-{{{bash "node ./bin/graphdoc.js  --no-color --help"}}}
+{{{bash "node ./bin/graphdoc.js --no-color --help"}}}
 ```
 
 ## Plugin
@@ -103,9 +104,9 @@ If you export your plugin as a constructor, when going to be initialized,
 will receive three parameters
 
 - `schema`: The full the result of [GraphQL introspection
-  query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
+query](https://github.com/2fd/graphdoc/blob/gh-pages/introspection.graphql)
 - `projectPackage`: The content of `package.json` of current project (or the content of file defined with `--config`
-  flag).
+flag).
 - `graphdocPackage`: The content of `package.json` of graphdoc.
 
 > For performance reasons all plugins receive the reference to the same object
@@ -117,30 +118,30 @@ will receive three parameters
 ```typescript
 // es2015 export constructor
 export default class MyPlugin {
-  constructor(schema, projectPackage, graphdocPackage) {}
-  getAssets() {
-    /* ... */
-  }
+constructor(schema, projectPackage, graphdocPackage) {}
+getAssets() {
+/* ... */
+}
 }
 ```
 
 ```typescript
 // es2015 export plain object
 export default cost myPlugin = {
-  getAssets() {
-    /* ... */
-  },
+getAssets() {
+/* ... */
+},
 }
 ```
 
 ```javascript
 // export constructor
 function MyPlugin(schema, projectPackage, graphdocPackage) {
-  /* ... */
+/* ... */
 }
 
 MyPlugin.prototype.getAssets = function() {
-  /* ... */
+/* ... */
 };
 
 exports.default = MyPlugin;
@@ -150,9 +151,9 @@ exports.default = MyPlugin;
 // export plain object
 
 exports.default = {
-  getAssets: function() {
-    /* ... */
-  }
+getAssets: function() {
+/* ... */
+}
 };
 ```
 
@@ -164,9 +165,9 @@ You can use the plugins in 2 ways.
 
 ```bash
 > graphdoc -p graphdoc/plugins/default \
-    -p some-dependencies/plugin \
-    -p ./lib/plugin/my-own-plugin \
-    -s ./schema.json -o ./doc/schema
+-p some-dependencies/plugin \
+-p ./lib/plugin/my-own-plugin \
+-s ./schema.json -o ./doc/schema
 ```
 
 #### Use plugins with `package.json`
@@ -175,16 +176,16 @@ You can use the plugins in 2 ways.
 // package.json
 
 {
-  "name": "project",
-  "graphdoc": {
-    "endpoint": "http://localhost:8080/graphql",
-    "output": "./doc/schema",
-    "plugins": [
-      "graphdoc/plugins/default",
-      "some-dependencie/plugin",
-      "./lib/plugin/my-own-plugin"
-    ]
-  }
+"name": "project",
+"graphdoc": {
+"endpoint": "http://localhost:8080/graphql",
+"output": "./doc/schema",
+"plugins": [
+"graphdoc/plugins/default",
+"some-dependencie/plugin",
+"./lib/plugin/my-own-plugin"
+]
+}
 }
 ```
 
