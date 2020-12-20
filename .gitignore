@@ -39,6 +39,7 @@ jspm_packages
 
 .vscode
 *.js
+*.scss
 !template/**/*.js
 !plugins/**/assets/*.js
 *.js.map
