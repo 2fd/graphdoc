@@ -19,7 +19,18 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
   })
 
   test("plugin return navigation", () => {
-    const plugin = new NavigationSchema(schema.data.__schema, projectPackage, {});
+    const plugin = new NavigationSchema(
+      {
+        ...schema.data.__schema,
+        subscriptionType: {
+          "name": "Subscription",
+          "description": "The subscription root of GitHub's GraphQL interface.",
+          "kind": "OBJECT"
+        },
+      },
+      projectPackage,
+      {}
+    );
     expect(plugin.getNavigations("Query")).toEqual([
       {
         title: "Schema",
@@ -33,7 +44,12 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
             "href": "/mutation.doc.html",
             "isActive": false,
             "text": "Mutation",
-          }
+          },
+          {
+            "href": "/subscription.doc.html",
+            "isActive": false,
+            "text": "Subscription"
+          },
         ]
       }
     ]);
