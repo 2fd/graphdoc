@@ -1,6 +1,6 @@
-import NavigationDirectives from "../navigation.directive";
-import schema from "./empty.schema.json";
-import projectPackage from "./projectPackage.json";
+import NavigationDirectives from "./navigation.directive";
+import projectPackage from "../test/empty.package.json";
+import schema from "../test/empty.schema.json";
 
 describe("pĺugins/navigation.directive#NavigationDirectives", () => {
 
