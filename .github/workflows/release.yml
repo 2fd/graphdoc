@@ -40,8 +40,6 @@ jobs:
           node-version: 14
       - name: installing
         run: npm ci
-      - name: build
-        run: npm run compile
       - name: testing
         run: npm test -- --coverage
         env:
