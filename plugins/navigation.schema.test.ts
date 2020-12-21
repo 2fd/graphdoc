@@ -1,6 +1,6 @@
 import projectPackage from "../test/empty.package.json";
 import NavigationSchema from "./navigation.schema";
-import schema from "../test/empty.schema.json";
+import schema from "../test/github.json";
 
 describe("pĺugins/navigation.directive#NavigationDirectives", () => {
   test("plugin return empty", () => {
@@ -28,6 +28,11 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
             "href": "/query.doc.html",
             "isActive": true,
             "text": "Query"
+          },
+          {
+            "href": "/mutation.doc.html",
+            "isActive": false,
+            "text": "Mutation",
           }
         ]
       }
