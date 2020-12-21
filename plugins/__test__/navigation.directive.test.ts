@@ -3,16 +3,29 @@ import schema from "./empty.schema.json";
 import projectPackage from "./projectPackage.json";
 
 describe("pĺugins/navigation.directive#NavigationDirectives", () => {
-  const plugin = new NavigationDirectives(
-    schema.data.__schema,
-    projectPackage,
-    {}
-  );
+
+  test("plugin return empty", () => {
+    const plugin = new NavigationDirectives(
+      {
+        ...schema.data.__schema,
+        directives: []
+      },
+      projectPackage,
+      {}
+    );
+
+    expect(plugin.getNavigations("Query")).toEqual([])
+  })
 
   test("plugin return navigation", () => {
-    const nav = plugin.getNavigations("Query");
-    expect(nav).toBeInstanceOf(Array);
-    expect(nav).toEqual([
+
+    const plugin = new NavigationDirectives(
+      schema.data.__schema,
+      projectPackage,
+      {}
+    );
+
+    expect(plugin.getNavigations("Query")).toEqual([
       {
         title: "Directives",
         items: [
