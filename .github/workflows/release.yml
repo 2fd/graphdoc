@@ -22,8 +22,6 @@ jobs:
         run: npm i -g npm
       - name: installing
         run: npm ci
-      - name: build
-        run: npm run compile
       - name: testing
         run: npm test
         env:
