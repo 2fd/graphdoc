@@ -4,6 +4,15 @@ import { NavigationItem, NavigationSection, Plugin } from "../lib/utility";
 export default class NavigationSchema extends Plugin
   implements PluginInterface {
   getNavigations(buildFrom?: string): NavigationSectionInterface[] {
+
+    if (
+      !this.document.queryType &&
+      !this.document.mutationType &&
+      !this.document.subscriptionType
+    ) {
+      return []
+    }
+
     const section = new NavigationSection("Schema", []);
 
     // Query

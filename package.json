@@ -74,8 +74,8 @@
     "request": "^2.88.0",
     "slug": "^4.0.2",
     "striptags": "^3.1.1",
-    "ts-node": "^9.1.1",
     "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
     "word-wrap": "^1.2.1"
   },
   "graphdoc": {
