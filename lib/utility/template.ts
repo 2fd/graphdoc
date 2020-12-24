@@ -46,11 +46,11 @@ export async function createData(
   ]);
 
   const title =
-    name || projectPackage.graphdoc.title || "Graphql schema documentation";
+    name || (projectPackage && projectPackage.graphdoc && projectPackage.graphdoc.title) || "Graphql schema documentation";
 
   const description = type
     ? marked(type.description || "")
-    : projectPackage.description;
+    : marked(projectPackage.description || "");
 
   return {
     title,
