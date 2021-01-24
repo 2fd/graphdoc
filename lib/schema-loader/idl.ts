@@ -4,7 +4,7 @@ import {
   ApolloIntrospection,
   GraphQLIntrospection,
   Introspection,
-  SchemaLoader
+  SchemaLoader,
 } from "../interface";
 import { query as introspectionQuery } from "../utility";
 import { readFile } from "../utility/fs";

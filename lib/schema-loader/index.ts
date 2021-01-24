@@ -2,9 +2,9 @@ export { IHttpSchemaLoaderOptions, httpSchemaLoader } from "./http";
 export { IIdlSchemaLoaderOptions, idlSchemaLoader } from "./idl";
 export {
   IJsSchemaLoaderOptions as TJsSchemaLoaderOptions,
-  jsSchemaLoader
+  jsSchemaLoader,
 } from "./js";
 export {
   IJsonSchemaLoaderOptions as TJsonSchemaLoaderOptions,
-  jsonSchemaLoader
+  jsonSchemaLoader,
 } from "./json";

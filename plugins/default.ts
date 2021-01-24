@@ -2,7 +2,7 @@ import {
   DocumentSectionInterface,
   NavigationSectionInterface,
   PluginInterface,
-  Schema
+  Schema,
 } from "../lib/interface";
 import { Plugin } from "../lib/utility";
 import RequireByPlugin from "./document.require-by";
@@ -16,7 +16,8 @@ import NavigationScalar from "./navigation.scalar";
 import NavigationSchema from "./navigation.schema";
 import NavigationUnion from "./navigation.union";
 
-export default class NavigationDirectives extends Plugin
+export default class NavigationDirectives
+  extends Plugin
   implements PluginInterface {
   plugins: PluginInterface[];
 
@@ -32,7 +33,7 @@ export default class NavigationDirectives extends Plugin
       new NavigationInput(document, graphdocPackage, projectPackage),
       new NavigationDirective(document, graphdocPackage, projectPackage),
       new DocumentSchema(document, graphdocPackage, projectPackage),
-      new RequireByPlugin(document, graphdocPackage, projectPackage)
+      new RequireByPlugin(document, graphdocPackage, projectPackage),
     ];
   }
 

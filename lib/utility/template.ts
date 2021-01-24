@@ -4,7 +4,7 @@ import {
   DocumentSectionInterface,
   NavigationSectionInterface,
   PluginInterface,
-  TypeRef
+  TypeRef,
 } from "../interface";
 import { Plugin } from "./plugin";
 
@@ -42,11 +42,15 @@ export async function createData(
   ] = await Promise.all([
     Plugin.collectHeaders(plugins, name),
     Plugin.collectNavigations(plugins, name),
-    Plugin.collectDocuments(plugins, name)
+    Plugin.collectDocuments(plugins, name),
   ]);
 
   const title =
-    name || (projectPackage && projectPackage.graphdoc && projectPackage.graphdoc.title) || "Graphql schema documentation";
+    name ||
+    (projectPackage &&
+      projectPackage.graphdoc &&
+      projectPackage.graphdoc.title) ||
+    "Graphql schema documentation";
 
   const description = type
     ? marked(type.description || "")
@@ -61,6 +65,6 @@ export async function createData(
     documents,
     projectPackage,
     graphdocPackage,
-    slug: slugTemplate
+    slug: slugTemplate,
   };
 }

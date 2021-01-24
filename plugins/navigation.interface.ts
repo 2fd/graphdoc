@@ -3,16 +3,17 @@ import {
   INTERFACE,
   NavigationItem,
   NavigationSection,
-  Plugin
+  Plugin,
 } from "../lib/utility";
 
-export default class NavigationInterfaces extends Plugin
+export default class NavigationInterfaces
+  extends Plugin
   implements PluginInterface {
   getTypes(buildForType: string): NavigationItemInterface[] {
     return this.document.types
-      .filter(type => type.kind === INTERFACE)
+      .filter((type) => type.kind === INTERFACE)
       .map(
-        type =>
+        (type) =>
           new NavigationItem(
             type.name,
             this.url(type),

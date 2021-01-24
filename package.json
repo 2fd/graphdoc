@@ -16,7 +16,8 @@
     "doc.scaphold": "node bin/graphdoc.js -c example.scaphold.json -f -v",
     "doc.starwars": "node bin/graphdoc.js -c example.starWars.json -f -v",
     "doc.starwars-js": "node bin/graphdoc.js -c example.starWars-js.json -f -v",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier lib plugins template test --write"
   },
   "repository": {
     "type": "git",
@@ -55,7 +56,7 @@
     "express-graphql": "^0.12.0",
     "handlebars": "^4.7.6",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
+    "prettier": "^2.2.1",
     "ts-jest": "^24.3.0",
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",

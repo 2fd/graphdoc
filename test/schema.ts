@@ -14,7 +14,7 @@ import {
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
-  GraphQLString
+  GraphQLString,
 } from "graphql";
 
 /**
@@ -78,17 +78,17 @@ const episodeEnum = new GraphQLEnumType({
   values: {
     EMPIRE: {
       description: "Released in 1980.",
-      value: 5
+      value: 5,
     },
     JEDI: {
       description: "Released in 1983.",
-      value: 6
+      value: 6,
     },
     NEWHOPE: {
       description: "Released in 1977.",
-      value: 4
-    }
-  }
+      value: 4,
+    },
+  },
 });
 
 /**
@@ -109,27 +109,28 @@ const characterInterface = new GraphQLInterfaceType({
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLID),
-      description: "The id of the character."
+      description: "The id of the character.",
     },
     name: {
       type: GraphQLString,
-      description: "The name of the character."
+      description: "The name of the character.",
     },
     friends: {
       type: new GraphQLList(characterInterface),
       description:
-        "The friends of the character, or an empty list if they " + "have none."
+        "The friends of the character, or an empty list if they " +
+        "have none.",
     },
     appearsIn: {
       type: new GraphQLList(episodeEnum),
-      description: "Which movies they appear in."
+      description: "Which movies they appear in.",
     },
     secretBackstory: {
       type: GraphQLString,
-      description: "All secrets about their past."
-    }
+      description: "All secrets about their past.",
+    },
   }),
-  resolveType: _ => humanType
+  resolveType: (_) => humanType,
 });
 
 /**
@@ -150,35 +151,35 @@ const humanType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLID),
-      description: "The id of the human."
+      description: "The id of the human.",
     },
     name: {
       type: GraphQLString,
-      description: "The name of the human."
+      description: "The name of the human.",
     },
     friends: {
       type: new GraphQLList(characterInterface),
       description:
         "The friends of the human, or an empty list if they " + "have none.",
-      resolve: human => human
+      resolve: (human) => human,
     },
     appearsIn: {
       type: new GraphQLList(episodeEnum),
-      description: "Which movies they appear in."
+      description: "Which movies they appear in.",
     },
     homePlanet: {
       type: GraphQLString,
-      description: "The home planet of the human, or null if unknown."
+      description: "The home planet of the human, or null if unknown.",
     },
     secretBackstory: {
       type: GraphQLString,
       description: "Where are they from and how they came to be who they are.",
       resolve: () => {
         throw new Error("secretBackstory is secret.");
-      }
-    }
+      },
+    },
   }),
-  interfaces: [characterInterface]
+  interfaces: [characterInterface],
 });
 
 /**
@@ -200,35 +201,35 @@ const droidType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLID),
-      description: "The id of the droid."
+      description: "The id of the droid.",
     },
     name: {
       type: GraphQLString,
-      description: "The name of the droid."
+      description: "The name of the droid.",
     },
     friends: {
       type: new GraphQLList(characterInterface),
       description:
         "The friends of the droid, or an empty list if they " + "have none.",
-      resolve: droid => droid
+      resolve: (droid) => droid,
     },
     appearsIn: {
       type: new GraphQLList(episodeEnum),
-      description: "Which movies they appear in."
+      description: "Which movies they appear in.",
     },
     secretBackstory: {
       type: GraphQLString,
       description: "Construction date and the name of the designer.",
       resolve: () => {
         throw new Error("secretBackstory is secret.");
-      }
+      },
     },
     primaryFunction: {
       type: GraphQLString,
-      description: "The primary function of the droid."
-    }
+      description: "The primary function of the droid.",
+    },
   }),
-  interfaces: [characterInterface]
+  interfaces: [characterInterface],
 });
 
 /**
@@ -257,10 +258,10 @@ const queryType = new GraphQLObjectType({
           description:
             "If omitted, returns the hero of the whole saga. If " +
             "provided, returns the hero of that particular episode.",
-          type: episodeEnum
-        }
+          type: episodeEnum,
+        },
       },
-      resolve: () => null
+      resolve: () => null,
     },
     human: {
       type: humanType,
@@ -268,10 +269,10 @@ const queryType = new GraphQLObjectType({
       args: {
         id: {
           description: "id of the human",
-          type: new GraphQLNonNull(GraphQLID)
-        }
+          type: new GraphQLNonNull(GraphQLID),
+        },
       },
-      resolve: () => null
+      resolve: () => null,
     },
     droid: {
       type: droidType,
@@ -279,12 +280,12 @@ const queryType = new GraphQLObjectType({
       args: {
         id: {
           description: "id of the droid",
-          type: new GraphQLNonNull(GraphQLID)
-        }
+          type: new GraphQLNonNull(GraphQLID),
+        },
       },
-      resolve: () => null
-    }
-  })
+      resolve: () => null,
+    },
+  }),
 });
 
 /**
@@ -302,12 +303,12 @@ const mutationType = new GraphQLObjectType({
       args: {
         episode: {
           type: new GraphQLNonNull(episodeEnum),
-          description: "Favorite episode."
-        }
+          description: "Favorite episode.",
+        },
       },
-      resolve: (_, { episode }) => episode
-    }
-  })
+      resolve: (_, { episode }) => episode,
+    },
+  }),
 });
 
 /**
@@ -316,5 +317,5 @@ const mutationType = new GraphQLObjectType({
  */
 export const StarWarsSchema = new GraphQLSchema({
   query: queryType,
-  mutation: mutationType
+  mutation: mutationType,
 });

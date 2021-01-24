@@ -13,11 +13,15 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
       {}
     );
 
-    expect(plugin.getNavigations("Query")).toEqual([])
-  })
+    expect(plugin.getNavigations("Query")).toEqual([]);
+  });
 
   test("plugin return navigation", () => {
-    const plugin = new NavigationEnums(schema.data.__schema, projectPackage, {});
+    const plugin = new NavigationEnums(
+      schema.data.__schema,
+      projectPackage,
+      {}
+    );
     expect(plugin.getNavigations("Query")).toEqual([
       {
         title: "Enums",
@@ -25,11 +29,11 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
           {
             text: "__DirectiveLocation",
             href: "/directivelocation.spec.html",
-            isActive: false
+            isActive: false,
           },
-          { text: "__TypeKind", href: "/typekind.spec.html", isActive: false }
-        ]
-      }
+          { text: "__TypeKind", href: "/typekind.spec.html", isActive: false },
+        ],
+      },
     ]);
   });
 });

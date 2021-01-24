@@ -1,11 +1,12 @@
 import { NavigationItemInterface, PluginInterface } from "../lib/interface";
 import { NavigationItem, NavigationSection, Plugin } from "../lib/utility";
 
-export default class NavigationDirectives extends Plugin
+export default class NavigationDirectives
+  extends Plugin
   implements PluginInterface {
   getTypes(buildForType: string): NavigationItemInterface[] {
     return this.document.directives.map(
-      directive =>
+      (directive) =>
         new NavigationItem(
           directive.name,
           this.url(directive),

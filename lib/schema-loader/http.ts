@@ -5,7 +5,7 @@ import {
   GraphQLIntrospection,
   Introspection,
   Schema,
-  SchemaLoader
+  SchemaLoader,
 } from "../interface";
 import { query as introspectionQuery } from "../utility";
 
@@ -62,7 +62,7 @@ export const httpSchemaLoader: SchemaLoader = async (
     url: options.endpoint,
     method: "POST",
     body: { query: introspectionQuery },
-    json: true
+    json: true,
   };
 
   requestOptions.headers = options.headers.reduce(

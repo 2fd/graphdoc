@@ -56,10 +56,10 @@ export async function createBuildDirectory(
     files
 
       // ignore *.mustache templates
-      .filter(file => path.extname(file) !== ".mustache")
+      .filter((file) => path.extname(file) !== ".mustache")
 
       // copy recursive
-      .map(file =>
+      .map((file) =>
         copyAll(
           path.resolve(templateDirectory, file),
           path.resolve(buildDirectory, file)
@@ -71,7 +71,7 @@ export async function createBuildDirectory(
   await mkDir(path.resolve(buildDirectory, "assets"));
 
   await Bluebird.all(
-    assets.map(asset =>
+    assets.map((asset) =>
       copyAll(
         asset,
         path.resolve(buildDirectory, "assets", path.basename(asset))

@@ -13,7 +13,7 @@ describe("pĺugins/navigation.interface#NavigationInterfaces", () => {
       {}
     );
 
-    expect(plugin.getNavigations("Query")).toEqual([])
+    expect(plugin.getNavigations("Query")).toEqual([]);
   });
 
   test("plugin return navigation", () => {
@@ -28,82 +28,82 @@ describe("pĺugins/navigation.interface#NavigationInterfaces", () => {
         title: "Interfaces",
         items: [
           {
-            "href": "/author.doc.html",
-            "isActive": false,
-            "text": "Author",
+            href: "/author.doc.html",
+            isActive: false,
+            text: "Author",
           },
           {
-            "href": "/comment.doc.html",
-            "isActive": false,
-            "text": "Comment",
+            href: "/comment.doc.html",
+            isActive: false,
+            text: "Comment",
           },
           {
-            "href": "/gitobject.doc.html",
-            "isActive": false,
-            "text": "GitObject",
+            href: "/gitobject.doc.html",
+            isActive: false,
+            text: "GitObject",
           },
           {
-            "href": "/gitsignature.doc.html",
-            "isActive": false,
-            "text": "GitSignature",
+            href: "/gitsignature.doc.html",
+            isActive: false,
+            text: "GitSignature",
           },
           {
-            "href": "/issueevent.doc.html",
-            "isActive": false,
-            "text": "IssueEvent",
+            href: "/issueevent.doc.html",
+            isActive: false,
+            text: "IssueEvent",
           },
           {
-            "href": "/issueish.doc.html",
-            "isActive": false,
-            "text": "Issueish",
+            href: "/issueish.doc.html",
+            isActive: false,
+            text: "Issueish",
           },
           {
-            "href": "/node.doc.html",
-            "isActive": false,
-            "text": "Node",
+            href: "/node.doc.html",
+            isActive: false,
+            text: "Node",
           },
           {
-            "href": "/projectowner.doc.html",
-            "isActive": false,
-            "text": "ProjectOwner",
+            href: "/projectowner.doc.html",
+            isActive: false,
+            text: "ProjectOwner",
           },
           {
-            "href": "/reactable.doc.html",
-            "isActive": false,
-            "text": "Reactable",
+            href: "/reactable.doc.html",
+            isActive: false,
+            text: "Reactable",
           },
           {
-            "href": "/repositoryinfo.doc.html",
-            "isActive": false,
-            "text": "RepositoryInfo",
+            href: "/repositoryinfo.doc.html",
+            isActive: false,
+            text: "RepositoryInfo",
           },
           {
-            "href": "/repositorynode.doc.html",
-            "isActive": false,
-            "text": "RepositoryNode",
+            href: "/repositorynode.doc.html",
+            isActive: false,
+            text: "RepositoryNode",
           },
           {
-            "href": "/repositoryowner.doc.html",
-            "isActive": false,
-            "text": "RepositoryOwner",
+            href: "/repositoryowner.doc.html",
+            isActive: false,
+            text: "RepositoryOwner",
           },
           {
-            "href": "/subscribable.doc.html",
-            "isActive": false,
-            "text": "Subscribable",
+            href: "/subscribable.doc.html",
+            isActive: false,
+            text: "Subscribable",
           },
           {
-            "href": "/timeline.doc.html",
-            "isActive": false,
-            "text": "Timeline",
+            href: "/timeline.doc.html",
+            isActive: false,
+            text: "Timeline",
           },
           {
-            "href": "/uniformresourcelocatable.doc.html",
-            "isActive": false,
-            "text": "UniformResourceLocatable",
+            href: "/uniformresourcelocatable.doc.html",
+            isActive: false,
+            text: "UniformResourceLocatable",
           },
-        ]
-      }
+        ],
+      },
     ]);
   });
 });
