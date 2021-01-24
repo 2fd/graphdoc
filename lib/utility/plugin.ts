@@ -9,7 +9,7 @@ import {
   PluginInterface,
   Schema,
   SchemaType,
-  TypeRef
+  TypeRef,
 } from "../interface";
 import { getFilenameOf } from "./introspection";
 
@@ -20,7 +20,7 @@ export abstract class Plugin {
   static collect<T>(collection: T[][]): T[] {
     let result: T[] = [];
 
-    collection.forEach(item => {
+    collection.forEach((item) => {
       if (Array.isArray(item)) {
         result = result.concat(item);
       }
@@ -36,7 +36,7 @@ export abstract class Plugin {
     const navigationCollection = await Promise.all<
       NavigationSectionInterface[]
     >(
-      plugins.map(plugin => {
+      plugins.map((plugin) => {
         return plugin.getNavigations
           ? plugin.getNavigations(buildForType)
           : (null as any);
@@ -51,7 +51,7 @@ export abstract class Plugin {
     buildForType?: string
   ): Promise<DocumentSectionInterface[]> {
     const navigationCollection = await Promise.all<DocumentSectionInterface[]>(
-      plugins.map(plugin => {
+      plugins.map((plugin) => {
         return plugin.getDocuments
           ? plugin.getDocuments(buildForType)
           : (null as any);
@@ -66,7 +66,7 @@ export abstract class Plugin {
     buildForType?: string
   ): Promise<string[]> {
     const headerCollection = await Promise.all<string[]>(
-      plugins.map(plugin => {
+      plugins.map((plugin) => {
         return plugin.getHeaders
           ? plugin.getHeaders(buildForType)
           : (null as any);
@@ -78,7 +78,7 @@ export abstract class Plugin {
 
   static async collectAssets(plugins: PluginInterface[]): Promise<string[]> {
     const assetCollection = await Promise.all<string[]>(
-      plugins.map(plugin => {
+      plugins.map((plugin) => {
         return plugin.getAssets ? plugin.getAssets() : (null as any);
       })
     );
@@ -116,11 +116,11 @@ export abstract class Plugin {
         )
       : [];
 
-    this.document.types.forEach(type => {
+    this.document.types.forEach((type) => {
       this.typeMap[type.name || ""] = type;
     });
 
-    this.document.directives.forEach(directive => {
+    this.document.directives.forEach((directive) => {
       this.directiveMap[directive.name || ""] = directive;
     });
 

@@ -3,16 +3,17 @@ import {
   INPUT_OBJECT,
   NavigationItem,
   NavigationSection,
-  Plugin
+  Plugin,
 } from "../lib/utility";
 
-export default class NavigationInputs extends Plugin
+export default class NavigationInputs
+  extends Plugin
   implements PluginInterface {
   getTypes(buildForType: string): NavigationItemInterface[] {
     return this.document.types
-      .filter(type => type.kind === INPUT_OBJECT)
+      .filter((type) => type.kind === INPUT_OBJECT)
       .map(
-        type =>
+        (type) =>
           new NavigationItem(
             type.name,
             this.url(type),

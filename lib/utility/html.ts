@@ -18,8 +18,9 @@ export class HTML {
 
   line(code?: string): string {
     const row = this.index++;
-    return `<tr class="row"><td id="L${row}" class="td-index">${row}</td><td id="LC${row}" class="td-code">${code ||
-      ""}</td></tr>`;
+    return `<tr class="row"><td id="L${row}" class="td-index">${row}</td><td id="LC${row}" class="td-code">${
+      code || ""
+    }</td></tr>`;
   }
 
   tab(code: string): string {

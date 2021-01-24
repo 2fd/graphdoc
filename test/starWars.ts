@@ -129,5 +129,5 @@ export default () => [
   Human,
   Mutation,
   Query,
-  Schema
+  Schema,
 ];

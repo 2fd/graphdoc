@@ -13,37 +13,41 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
       {}
     );
 
-    expect(plugin.getNavigations("Query")).toEqual([])
-  })
+    expect(plugin.getNavigations("Query")).toEqual([]);
+  });
 
   test("plugin return navigation", () => {
-    const plugin = new NavigationUnion(schema.data.__schema, projectPackage, {});
+    const plugin = new NavigationUnion(
+      schema.data.__schema,
+      projectPackage,
+      {}
+    );
     expect(plugin.getNavigations("Query")).toEqual([
       {
         title: "Unions",
         items: [
           {
-            "href": "/issuetimelineitem.doc.html",
-            "isActive": false,
-            "text": "IssueTimelineItem",
+            href: "/issuetimelineitem.doc.html",
+            isActive: false,
+            text: "IssueTimelineItem",
           },
           {
-            "href": "/projectcarditem.doc.html",
-            "isActive": false,
-            "text": "ProjectCardItem",
+            href: "/projectcarditem.doc.html",
+            isActive: false,
+            text: "ProjectCardItem",
           },
           {
-            "href": "/reviewdismissalallowanceactor.doc.html",
-            "isActive": false,
-            "text": "ReviewDismissalAllowanceActor",
+            href: "/reviewdismissalallowanceactor.doc.html",
+            isActive: false,
+            text: "ReviewDismissalAllowanceActor",
           },
           {
-            "href": "/searchresultitem.doc.html",
-            "isActive": false,
-            "text": "SearchResultItem",
+            href: "/searchresultitem.doc.html",
+            isActive: false,
+            text: "SearchResultItem",
           },
-        ]
-      }
+        ],
+      },
     ]);
   });
 });

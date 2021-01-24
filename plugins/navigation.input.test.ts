@@ -13,11 +13,15 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
       {}
     );
 
-    expect(plugin.getNavigations("Query")).toEqual([])
-  })
+    expect(plugin.getNavigations("Query")).toEqual([]);
+  });
 
   test("plugin return navigation", () => {
-    const plugin = new NavigationInputs(schema.data.__schema, projectPackage, {});
+    const plugin = new NavigationInputs(
+      schema.data.__schema,
+      projectPackage,
+      {}
+    );
     expect(plugin.getNavigations("Query")).toEqual([
       {
         title: "Input Objects",
@@ -25,10 +29,10 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
           {
             text: "AddCommentInput",
             href: "/addcommentinput.doc.html",
-            isActive: false
-          }
-        ]
-      }
+            isActive: false,
+          },
+        ],
+      },
     ]);
   });
 });

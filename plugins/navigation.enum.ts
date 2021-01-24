@@ -3,15 +3,15 @@ import {
   ENUM,
   NavigationItem,
   NavigationSection,
-  Plugin
+  Plugin,
 } from "../lib/utility";
 
 export default class NavigationEnums extends Plugin implements PluginInterface {
   getTypes(buildForType: string): NavigationItemInterface[] {
     return this.document.types
-      .filter(type => type.kind === ENUM)
+      .filter((type) => type.kind === ENUM)
       .map(
-        type =>
+        (type) =>
           new NavigationItem(
             type.name,
             this.url(type),

@@ -3,16 +3,17 @@ import {
   NavigationItem,
   NavigationSection,
   Plugin,
-  UNION
+  UNION,
 } from "../lib/utility";
 
-export default class NavigationScalars extends Plugin
+export default class NavigationScalars
+  extends Plugin
   implements PluginInterface {
   getTypes(buildForType: string): NavigationItemInterface[] {
     return this.document.types
-      .filter(type => type.kind === UNION)
+      .filter((type) => type.kind === UNION)
       .map(
-        type =>
+        (type) =>
           new NavigationItem(
             type.name,
             this.url(type),

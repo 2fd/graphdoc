@@ -4,7 +4,7 @@ import {
   GraphQLIntrospection,
   Introspection,
   Schema,
-  SchemaLoader
+  SchemaLoader,
 } from "../interface";
 
 export interface IJsonSchemaLoaderOptions {

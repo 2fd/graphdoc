@@ -5,7 +5,7 @@ export {
   NavigationSection,
   DocumentSection,
   Plugin,
-  sortTypes
+  sortTypes,
 } from "./plugin";
 
 export {
@@ -19,7 +19,7 @@ export {
   NON_NULL,
   OBJECT,
   SCALAR,
-  UNION
+  UNION,
 } from "./introspection";
 
 export { Output } from "./output";
