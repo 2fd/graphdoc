@@ -46,7 +46,7 @@
     "@types/jest": "^18.1.1",
     "@types/marked": "1.2.1",
     "@types/mocha": "^8.0.4",
-    "@types/mustache": "^0.8.28",
+    "@types/mustache": "^4.1.1",
     "@types/node": "^14.14.10",
     "@types/request": "^2.48.5",
     "@types/striptags": "^3.1.1",
