@@ -103,6 +103,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       this.html.property(arg.name) +
       ": " +
       this.html.useIdentifier(arg.type, this.url(arg.type)) // + ' ' + this.deprecated(arg);
+      + this.defaultValue(arg)
     );
   }
 
@@ -333,12 +334,22 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       .concat(argDescription)
       .concat([
         this.html.property(arg.name) +
-          ": " +
-          this.html.useIdentifier(arg.type, this.url(arg.type)) // + ' ' + this.deprecated(arg)
+        ": " +
+        this.html.useIdentifier(arg.type, this.url(arg.type)) // + ' ' + this.deprecated(arg)
+        + this.defaultValue(arg)
       ])
       .map(line => this.html.line(this.html.tab(line)))
       .join("");
   }
+
+  defaultValue(input: InputValue) {
+    if (input.defaultValue === null) {
+      return "";
+    }
+
+    return " = " + input.defaultValue;
+  }
+
 
   interfaces(type: SchemaType): string {
     return (
