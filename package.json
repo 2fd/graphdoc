@@ -43,7 +43,7 @@
     "@types/fs-extra": "0.0.32",
     "@types/glob": "^7.1.3",
     "@types/graphql": "^0.8.6",
-    "@types/jest": "^18.1.1",
+    "@types/jest": "^26.0.24",
     "@types/marked": "1.2.1",
     "@types/mocha": "^8.0.4",
     "@types/mustache": "^0.8.28",
