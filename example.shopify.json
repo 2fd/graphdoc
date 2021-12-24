@@ -4,7 +4,7 @@
   "graphdoc": {
     "ga": "UA-54154153-2",
     "graphiql": "https://help.shopify.com/api/storefront-api/graphql-explorer/graphiql",
-    "logo": "<a href=\"/shopify\" target=\"_blank\" style=\"display:block;padding:1rem 15%\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/e/e1/Shopify_Logo.png\" /></a>",
+    "logo": "<a href=\"/shopify\" target=\"_blank\" style=\"display:block;padding:1rem 15%\"><img src=\"https://cdn.shopify.com/shopifycloud/brochure/assets/brand-assets/shopify-logo-shopping-bag-full-color-66166b2e55d67988b56b4bd28b63c271e2b9713358cb723070a92bde17ad7d63.svg\" /></a>",
     "schemaFile": "./test/shopify.json",
     "output": "./gh-pages/shopify",
     "baseUrl": "./"
