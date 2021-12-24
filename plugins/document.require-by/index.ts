@@ -95,6 +95,7 @@ export default class RequireByPlugin extends Plugin implements PluginInterface {
   }
 
   getDescription(type: SchemaType): string {
+    const description = type.description || "";
     return (
       "<li>" +
       '<a href="' +
@@ -102,11 +103,11 @@ export default class RequireByPlugin extends Plugin implements PluginInterface {
       '" title="' +
       type.name +
       " - " +
-      striptags(type.description || "").replace(/"/gi, "&quot;") +
+      striptags(description).replace(/"/gi, "&quot;") +
       '">' +
       type.name +
       "<em>" +
-      type.description +
+      description +
       "</em>" +
       "</a>" +
       "<li>"
