@@ -1,16 +1,16 @@
 import { NavigationSectionInterface, PluginInterface } from "../lib/interface";
 import { NavigationItem, NavigationSection, Plugin } from "../lib/utility";
 
-export default class NavigationSchema extends Plugin
+export default class NavigationSchema
+  extends Plugin
   implements PluginInterface {
   getNavigations(buildFrom?: string): NavigationSectionInterface[] {
-
     if (
       !this.document.queryType &&
       !this.document.mutationType &&
       !this.document.subscriptionType
     ) {
-      return []
+      return [];
     }
 
     const section = new NavigationSection("Schema", []);

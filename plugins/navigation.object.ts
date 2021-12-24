@@ -3,13 +3,14 @@ import {
   NavigationItem,
   NavigationSection,
   OBJECT,
-  Plugin
+  Plugin,
 } from "../lib/utility";
 
-export default class NavigationObjects extends Plugin
+export default class NavigationObjects
+  extends Plugin
   implements PluginInterface {
   getTypes(buildForType: string): NavigationItemInterface[] {
-    const obj = this.document.types.filter(type => {
+    const obj = this.document.types.filter((type) => {
       return (
         type.kind === OBJECT &&
         (!this.queryType || this.queryType.name !== type.name) &&
@@ -19,7 +20,7 @@ export default class NavigationObjects extends Plugin
     });
 
     return obj.map(
-      type =>
+      (type) =>
         new NavigationItem(
           type.name,
           this.url(type),

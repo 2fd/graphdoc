@@ -1,29 +1,29 @@
 .code {
   background-color: #fff;
-  color: #4D4D4C;
-  border: 1px solid #4D4D4C;
+  color: #4d4d4c;
+  border: 1px solid #4d4d4c;
   font-size: 14px;
-  font-family: 'Ubuntu Mono';
+  font-family: "Ubuntu Mono";
   list-style-type: decimal;
-  border-radius: 0.25rem; 
+  border-radius: 0.25rem;
 }
 
 .code .gutter {
   background: #f6f6f6;
-  color: #4D4D4C;
+  color: #4d4d4c;
 }
 
 .code .print-margin {
   width: 1px;
-  background: #f6f6f6
+  background: #f6f6f6;
 }
 
 .code .row:hover {
-  background: #EFEFEF;
+  background: #efefef;
 }
 
 .code .td-index {
-  color: rgba(27, 31, 35, .3);
+  color: rgba(27, 31, 35, 0.3);
   padding: 1px 8px 1px 16px;
   text-align: right;
   width: 1%;
@@ -31,7 +31,7 @@
 
 .code .td-index:hover {
   cursor: pointer;
-  color: rgba(27, 31, 35, .6);
+  color: rgba(27, 31, 35, 0.6);
 }
 
 .code .td-code {
@@ -47,40 +47,40 @@
 }
 
 .code .cursor {
-  color: #AEAFAD
+  color: #aeafad;
 }
 
 .code .marker-layer .selection {
-  background: #D6D6D6
+  background: #d6d6d6;
 }
 
 .code.multiselect .selection.start {
-  box-shadow: 0 0 3px 0px #FFFFFF;
+  box-shadow: 0 0 3px 0px #ffffff;
 }
 
 .code .marker-layer .step {
-  background: rgb(255, 255, 0)
+  background: rgb(255, 255, 0);
 }
 
 .code .marker-layer .bracket {
   margin: -1px 0 0 -1px;
-  border: 1px solid #D1D1D1
+  border: 1px solid #d1d1d1;
 }
 
 .code .marker-layer .active-line {
-  background: #EFEFEF
+  background: #efefef;
 }
 
 .code .gutter-active-line {
-  background-color: #dcdcdc
+  background-color: #dcdcdc;
 }
 
 .code .marker-layer .selected-word {
-  border: 1px solid #D6D6D6
+  border: 1px solid #d6d6d6;
 }
 
 .code .invisible {
-  color: #D1D1D1
+  color: #d1d1d1;
 }
 
 .code .keyword,
@@ -88,11 +88,11 @@
 .code .storage,
 .code .storage.type,
 .code .support.type {
-  color: #8959A8
+  color: #8959a8;
 }
 
 .code .keyword.operator {
-  color: #3E999F
+  color: #3e999f;
 }
 
 .code .constant.character,
@@ -100,44 +100,44 @@
 .code .constant.numeric,
 .code .keyword.other.unit,
 .code .support.constant {
-  color: #F5871F
+  color: #f5871f;
 }
 
 .code .constant.other {
-  color: #666969
+  color: #666969;
 }
 
 .code .invalid {
-  color: #FFFFFF;
-  background-color: #C82829
+  color: #ffffff;
+  background-color: #c82829;
 }
 
 .code .invalid.deprecated {
-  color: #FFFFFF;
-  background-color: #8959A8
+  color: #ffffff;
+  background-color: #8959a8;
 }
 
 .code .fold {
-  background-color: #4271AE;
-  border-color: #4D4D4C
+  background-color: #4271ae;
+  border-color: #4d4d4c;
 }
 
 .code .entity.name.function,
 .code .support.function,
 .code .variable.parameter,
 .code .variable {
-  color: #4271AE
+  color: #4271ae;
 }
 
 .code .support.class,
 .code .support.type {
-  color: #C99E00
+  color: #c99e00;
 }
 
 .code .heading,
 .code .markup.heading,
 .code .string {
-  color: #718C00
+  color: #718c00;
 }
 
 .code .entity.name.tag,
@@ -145,13 +145,14 @@
 .code .meta.tag,
 .code .string.regexp,
 .code .variable {
-  color: #C82829
+  color: #c82829;
 }
 
 .code .comment {
-  color: #8E908C
+  color: #8e908c;
 }
 
 .code .indent-guide {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==) right repeat-y
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==)
+    right repeat-y;
 }

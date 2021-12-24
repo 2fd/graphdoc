@@ -13,47 +13,51 @@ describe("pĺugins/navigation.directive#NavigationDirectives", () => {
       {}
     );
 
-    expect(plugin.getNavigations("Query")).toEqual([])
-  })
+    expect(plugin.getNavigations("Query")).toEqual([]);
+  });
 
   test("plugin return navigation", () => {
-    const plugin = new NavigationScalar(schema.data.__schema, projectPackage, {});
+    const plugin = new NavigationScalar(
+      schema.data.__schema,
+      projectPackage,
+      {}
+    );
     expect(plugin.getNavigations("Query")).toEqual([
       {
         title: "Objects",
         items: [
           {
-            "href": "/directive.spec.html",
-            "isActive": false,
-            "text": "__Directive",
+            href: "/directive.spec.html",
+            isActive: false,
+            text: "__Directive",
           },
           {
-            "href": "/enumvalue.spec.html",
-            "isActive": false,
-            "text": "__EnumValue",
+            href: "/enumvalue.spec.html",
+            isActive: false,
+            text: "__EnumValue",
           },
           {
-            "href": "/field.spec.html",
-            "isActive": false,
-            "text": "__Field",
+            href: "/field.spec.html",
+            isActive: false,
+            text: "__Field",
           },
           {
-            "href": "/inputvalue.spec.html",
-            "isActive": false,
-            "text": "__InputValue",
+            href: "/inputvalue.spec.html",
+            isActive: false,
+            text: "__InputValue",
           },
           {
-            "href": "/schema.spec.html",
-            "isActive": false,
-            "text": "__Schema",
+            href: "/schema.spec.html",
+            isActive: false,
+            text: "__Schema",
           },
           {
-            "href": "/type.spec.html",
-            "isActive": false,
-            "text": "__Type",
+            href: "/type.spec.html",
+            isActive: false,
+            text: "__Type",
           },
-        ]
-      }
+        ],
+      },
     ]);
   });
 });

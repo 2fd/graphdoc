@@ -8,7 +8,7 @@ import {
   InputValue,
   PluginInterface,
   Schema,
-  SchemaType
+  SchemaType,
 } from "../../lib/interface";
 import {
   DocumentSection,
@@ -19,7 +19,7 @@ import {
   OBJECT,
   Plugin,
   SCALAR,
-  UNION
+  UNION,
 } from "../../lib/utility";
 
 const MAX_CODE_LEN = 80;
@@ -32,14 +32,14 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
     return [
       '<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">',
       '<link type="text/css" rel="stylesheet" href="./assets/code.css" />',
-      '<script src="./assets/line-link.js"></script>'
+      '<script src="./assets/line-link.js"></script>',
     ];
   }
 
   getAssets() {
     return [
       resolve(__dirname, "assets/code.css"),
-      resolve(__dirname, "assets/line-link.js")
+      resolve(__dirname, "assets/line-link.js"),
     ];
   }
 
@@ -49,7 +49,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
 
     if (code) {
       return [
-        new DocumentSection("GraphQL Schema definition", this.html.code(code))
+        new DocumentSection("GraphQL Schema definition", this.html.code(code)),
       ];
     }
 
@@ -62,7 +62,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
     }
 
     const directive = this.document.directives.find(
-      eachDirective => eachDirective.name === (buildForType as string)
+      (eachDirective) => eachDirective.name === (buildForType as string)
     );
 
     if (directive) {
@@ -70,7 +70,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
     }
 
     const type = this.document.types.find(
-      eachType => eachType.name === (buildForType as string)
+      (eachType) => eachType.name === (buildForType as string)
     );
 
     if (type) {
@@ -117,7 +117,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
 
     return (
       "(" +
-      fieldOrDirectives.args.map(arg => this.argument(arg)).join(", ") +
+      fieldOrDirectives.args.map((arg) => this.argument(arg)).join(", ") +
       ")"
     );
   }
@@ -162,7 +162,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       descriptions.concat(this.argumentDescription(arg));
 
     return fieldOrDirectives.args.reduce(reduceArguments, [
-      this.html.comment("Arguments")
+      this.html.comment("Arguments"),
     ]);
   }
 
@@ -202,10 +202,10 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
   description(description: string | null): string[] {
     if (description) {
       return wrap(description, {
-        width: MAX_CODE_LEN
+        width: MAX_CODE_LEN,
       })
         .split("\n")
-        .map(l => this.html.comment(l));
+        .map((l) => this.html.comment(l));
     }
 
     return [];
@@ -219,7 +219,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
         this.arguments(directive) +
         " on " +
         directive.locations
-          .map(location => this.html.keyword(location))
+          .map((location) => this.html.keyword(location))
           .join(" | ")
     );
   }
@@ -227,7 +227,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
   enum(type: SchemaType): string {
     const reduceEnumValues = (lines: string[], enumValue: EnumValue) =>
       lines.concat([""], this.description(enumValue.description), [
-        this.html.property(enumValue.name) + this.deprecated(enumValue)
+        this.html.property(enumValue.name) + this.deprecated(enumValue),
       ]);
 
     return (
@@ -236,7 +236,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       ) +
       (type.enumValues || [])
         .reduce(reduceEnumValues, [])
-        .map(line => this.html.line(this.html.tab(line)))
+        .map((line) => this.html.line(this.html.tab(line)))
         .join("") +
       this.html.line("}")
     );
@@ -258,11 +258,11 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
           // ): ReturnType [@deprecated...]
           [
             this.html.property(field.name) + "(",
-            ...this.argumentsMultiline(field).map(l => this.html.tab(l)),
+            ...this.argumentsMultiline(field).map((l) => this.html.tab(l)),
             "): " +
               this.html.useIdentifier(field.type, this.url(field.type)) +
               " " +
-              this.deprecated(field)
+              this.deprecated(field),
           ]
         : // Single line
           // fieldName(argumentName: ArgumentType): ReturnType [@deprecated...]
@@ -272,14 +272,14 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
               ": " +
               this.html.useIdentifier(field.type, this.url(field.type)) +
               " " +
-              this.deprecated(field)
+              this.deprecated(field),
           ];
 
     return ([] as string[])
       .concat(fieldDescription)
       .concat(argumentsDescription)
       .concat(fieldDefinition)
-      .map(line => this.html.line(this.html.tab(line)))
+      .map((line) => this.html.line(this.html.tab(line)))
       .join("");
   }
 
@@ -298,7 +298,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
     let fields = "";
     fields += this.html.line();
     fields += (type.fields || [])
-      .map(field => this.field(field))
+      .map((field) => this.field(field))
       .join(this.html.line());
 
     if (type.fields && type.fields.length > 0) {
@@ -320,7 +320,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
 
   inputValues(inputValues: InputValue[]): string {
     return inputValues
-      .map(inputValue =>
+      .map((inputValue) =>
         this.html.line(this.html.tab(this.inputValue(inputValue)))
       )
       .join("");
@@ -334,9 +334,9 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       .concat([
         this.html.property(arg.name) +
           ": " +
-          this.html.useIdentifier(arg.type, this.url(arg.type)) // + ' ' + this.deprecated(arg)
+          this.html.useIdentifier(arg.type, this.url(arg.type)), // + ' ' + this.deprecated(arg)
       ])
-      .map(line => this.html.line(this.html.tab(line)))
+      .map((line) => this.html.line(this.html.tab(line)))
       .join("");
   }
 
@@ -352,7 +352,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
 
   object(type: SchemaType): string {
     const interfaces = (type.interfaces || [])
-      .map(i => this.html.useIdentifier(i, this.url(i)))
+      .map((i) => this.html.useIdentifier(i, this.url(i)))
       .join(", ");
 
     const implement =
@@ -386,7 +386,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       definition +=
         this.html.line() +
         this.description(schema.queryType.description)
-          .map(line => this.html.line(this.html.tab(line)))
+          .map((line) => this.html.line(this.html.tab(line)))
           .join("") +
         this.html.line(
           this.html.tab(
@@ -404,7 +404,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       definition +=
         this.html.line() +
         this.description(schema.mutationType.description)
-          .map(line => this.html.line(this.html.tab(line)))
+          .map((line) => this.html.line(this.html.tab(line)))
           .join("") +
         this.html.line(
           this.html.tab(
@@ -422,7 +422,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
       definition +=
         this.html.line() +
         this.description(schema.subscriptionType.description)
-          .map(line => this.html.line(this.html.tab(line)))
+          .map((line) => this.html.line(this.html.tab(line)))
           .join("") +
         this.html.line(
           this.html.tab(
@@ -475,7 +475,7 @@ export default class SchemaPlugin extends Plugin implements PluginInterface {
         this.html.identifier(type) +
         " = " +
         (type.possibleTypes || [])
-          .map(eachType =>
+          .map((eachType) =>
             this.html.useIdentifier(eachType, this.url(eachType))
           )
           .join(" | ")

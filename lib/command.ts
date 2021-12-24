@@ -5,7 +5,7 @@ import {
   ListValueFlag,
   NoParams,
   OutputInterface,
-  ValueFlag
+  ValueFlag,
 } from "@2fd/command";
 import Bluebird from "bluebird";
 import fs from "fs";
@@ -17,7 +17,7 @@ import {
   httpSchemaLoader,
   idlSchemaLoader,
   jsonSchemaLoader,
-  jsSchemaLoader
+  jsSchemaLoader,
 } from "./schema-loader";
 import { createData, getFilenameOf, Output, Plugin } from "./utility";
 import {
@@ -25,7 +25,7 @@ import {
   readFile,
   removeBuildDirectory,
   resolve,
-  writeFile
+  writeFile,
 } from "./utility/fs";
 
 // tslint:disable-next-line:no-var-requires
@@ -116,7 +116,7 @@ export class GraphQLDocumentGenerator extends Command<IFlags, {}> {
       "Delete outputDirectory if exists."
     ),
     new BooleanFlag("verbose", ["-v", "--verbose"], "Output more information."),
-    new BooleanFlag("version", ["-V", "--version"], "Show graphdoc version.")
+    new BooleanFlag("version", ["-V", "--version"], "Show graphdoc version."),
   ];
 
   public async action(input: Input, out: OutputInterface) {
@@ -143,13 +143,13 @@ export class GraphQLDocumentGenerator extends Command<IFlags, {}> {
         graphdocPackageJSON
       );
 
-      projectPackageJSON.graphdoc.plugins.forEach(plugin =>
+      projectPackageJSON.graphdoc.plugins.forEach((plugin) =>
         output.info("use plugin", plugin)
       );
 
       // Collect assets
       const assets: string[] = await Plugin.collectAssets(plugins);
-      assets.forEach(asset =>
+      assets.forEach((asset) =>
         output.info("use asset", path.relative(process.cwd(), asset))
       );
 
@@ -261,7 +261,7 @@ export class GraphQLDocumentGenerator extends Command<IFlags, {}> {
     projectPackageJSON: object,
     pluginGraphdocPackageJSON: object
   ): PluginInterface[] {
-    return paths.map(p => {
+    return paths.map((p) => {
       const absolutePaths = resolve(p);
       const plugin = require(absolutePaths).default;
 
@@ -284,10 +284,10 @@ export class GraphQLDocumentGenerator extends Command<IFlags, {}> {
     )("**/*.mustache", { cwd: templateDir });
 
     await Promise.all(
-      files.map(file => {
+      files.map((file) => {
         const name = path.basename(file, ".mustache");
         return readFile(path.resolve(templateDir, file), "utf8").then(
-          content => (partials[name] = content)
+          (content) => (partials[name] = content)
         );
       })
     );

@@ -6,7 +6,7 @@ import {
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
-  GraphQLString
+  GraphQLString,
 } from "graphql";
 import pack from "../package.json";
 
@@ -19,17 +19,17 @@ export const EmptySchema = new GraphQLSchema({
     fields: {
       version: {
         type: new GraphQLNonNull(GraphQLString),
-        resolve: () => pack.version
-      }
-    }
-  })
+        resolve: () => pack.version,
+      },
+    },
+  }),
 });
 
 app.use(
   "/graphql",
   graphqlHTTP({
     schema: EmptySchema,
-    graphiql: true
+    graphiql: true,
   })
 );
 app.listen(4000);
