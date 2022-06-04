@@ -34,6 +34,9 @@ export const writeFile = Bluebird.promisify<undefined, string, any>(
 );
 export const copyAll = Bluebird.promisify<undefined, string, string>(
   (from: string, to: string, cb: (err: Error, result?: undefined) => void) =>
+    /* TODO: JSFIX could not patch the breaking change:
+    Allow copying broken symlinks 
+    Suggested fix: You can use the exists and existsSync functions https://nodejs.org/api/fs.html#fsexistspath-callback from the fs module to check if a symlink is broken. */
     fse.copy(from, to, cb)
 );
 export const readDir = Bluebird.promisify<string[], string>(fs.readdir);
